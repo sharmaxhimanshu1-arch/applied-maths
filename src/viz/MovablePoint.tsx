@@ -21,6 +21,8 @@ type MovablePointProps = {
   /** Show a coordinate bubble while dragging. */
   showCoords?: boolean
   decimals?: number
+  /** Delete/Backspace (or double-click) removes the point. */
+  onRemove?: () => void
 }
 
 /**
@@ -41,6 +43,7 @@ export function MovablePoint({
   onDragEnd,
   showCoords = false,
   decimals = 2,
+  onRemove,
 }: MovablePointProps) {
   const t = usePlot()
   const grab = useRef<Vec2 | null>(null)
@@ -72,6 +75,11 @@ export function MovablePoint({
   }
 
   function onKeyDown(e: KeyboardEvent<SVGGElement>) {
+    if (onRemove && (e.key === 'Delete' || e.key === 'Backspace')) {
+      e.preventDefault()
+      onRemove()
+      return
+    }
     const k = e.shiftKey ? step * 5 : step
     const delta: Record<string, Vec2> = {
       ArrowLeft: [-k, 0],
@@ -102,6 +110,7 @@ export function MovablePoint({
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
       onKeyDown={onKeyDown}
+      onDoubleClick={onRemove}
     >
       <circle cx={cx} cy={cy} r={Math.max(18, size + 10)} fill="transparent" />
       <circle

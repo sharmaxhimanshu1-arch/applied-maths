@@ -1,4 +1,8 @@
+import type { DataLabPreset, DataLabState } from '@/tools/data/DataLab'
 import type { GrapherPreset, GrapherState } from '@/tools/grapher/model'
+import type { MatrixLabPreset, MatrixLabState } from '@/tools/matrix/MatrixLab'
+import type { ProbabilityPreset, ProbabilityState } from '@/tools/probability/ProbabilityLab'
+import type { UnitCirclePreset, UnitCircleState } from '@/tools/unit-circle/UnitCircle'
 
 /**
  * Every interactive a lite lab can embed: its preset props and the state it reports.
@@ -6,6 +10,10 @@ import type { GrapherPreset, GrapherState } from '@/tools/grapher/model'
  */
 export interface WidgetDefs {
   grapher: { props: GrapherPreset; state: GrapherState }
+  matrix: { props: MatrixLabPreset; state: MatrixLabState }
+  unitCircle: { props: UnitCirclePreset; state: UnitCircleState }
+  probability: { props: ProbabilityPreset; state: ProbabilityState }
+  data: { props: DataLabPreset; state: DataLabState }
 }
 
 export type WidgetType = keyof WidgetDefs

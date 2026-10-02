@@ -282,7 +282,8 @@ function Axes({ piTicks, labels }: { piTicks: boolean; labels: boolean }) {
 
 function AxisNames({ x, y }: { x?: string; y?: string }) {
   const t = usePlot()
-  const ax = Math.min(t.height - 20, Math.max(2, t.sy(0) - 20))
+  // Sit just above the x-axis, or above the bottom tick labels when y = 0 is off-screen.
+  const ax = Math.min(t.height - 40, Math.max(2, t.sy(0) - 22))
   const ay = Math.min(t.width - 20, Math.max(32, t.sx(0) + 8))
   return (
     <>
