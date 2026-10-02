@@ -151,6 +151,22 @@
     font-variant-numeric: tabular-nums;
   }
 
+  /* Draggable plot handles: ring grows on hover, focus ring for keyboard users. */
+  .viz-handle .viz-handle-ring {
+    transition:
+      fill-opacity 150ms ease,
+      stroke-opacity 150ms ease;
+  }
+  .viz-handle:hover .viz-handle-ring {
+    fill-opacity: 0.24;
+  }
+  .viz-handle:focus-visible .viz-handle-ring {
+    stroke: var(--focus-ring);
+    stroke-opacity: 1;
+    stroke-width: 2.5;
+    fill-opacity: 0.24;
+  }
+
   /* Range slider: big touch target, filled track up to the thumb (--fill set inline). */
   .range {
     --range-color: var(--accent);
@@ -223,6 +239,44 @@
 @layer utilities {
   .scrollbar-thin {
     scrollbar-width: thin;
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 

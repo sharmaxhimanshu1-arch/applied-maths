@@ -1,4 +1,4 @@
-import type { ComponentType } from 'react'
+import { lazy, type ComponentType, type LazyExoticComponent } from 'react'
 
 /**
  * Deep labs live in src/labs/<concept-id>/index.tsx and are discovered automatically.
@@ -16,6 +16,6 @@ export function hasDeepLab(conceptId: string): boolean {
   return loaders.has(conceptId)
 }
 
-export function loadDeepLab(conceptId: string) {
-  return loaders.get(conceptId)?.()
-}
+/** Lazy component per deep lab, created once at module load (nothing downloads until rendered). */
+export const DEEP_LABS: Readonly<Record<string, LazyExoticComponent<ComponentType>>> =
+  Object.fromEntries([...loaders].map(([id, load]) => [id, lazy(load)]))
