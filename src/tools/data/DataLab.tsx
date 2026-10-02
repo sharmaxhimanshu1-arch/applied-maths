@@ -539,7 +539,11 @@ function DotsLab({
           </div>
         )}
         <div className="flex flex-wrap items-center gap-2 text-sm text-ink-2">
-          <span>Drag dots along the line. Click the line to add a value; Delete removes one.</span>
+          <span>
+            {(preset.editable ?? true)
+              ? 'Drag dots along the line. Click the line to add a value; Delete removes one.'
+              : 'Drag the dots along the line.'}
+          </span>
           <Button
             size="sm"
             variant="ghost"

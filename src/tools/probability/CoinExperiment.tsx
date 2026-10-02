@@ -111,7 +111,7 @@ export function CoinExperiment({
         ))}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]">
         <div>
           <div className="mb-1 text-sm font-medium">Counts</div>
           <BarChart

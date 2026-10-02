@@ -38,10 +38,13 @@ type PlotProps = {
   ratio?: number
   maxHeight?: number
   grid?: boolean
-  axes?: boolean
+  /** 'x' draws only the horizontal axis (number lines, dot plots). */
+  axes?: boolean | 'x'
   tickLabels?: boolean
   /** Label the x-axis in multiples of π (trigonometry). */
   piTicks?: boolean
+  /** Only whole-number ticks on the x-axis (counts, bins). */
+  xIntegers?: boolean
   xLabel?: string
   yLabel?: string
   /** Wheel zoom: always (tool pages), only with Ctrl/⌘ (embedded), or never. */
@@ -69,6 +72,7 @@ export function Plot({
   axes = true,
   tickLabels = true,
   piTicks = false,
+  xIntegers = false,
   xLabel,
   yLabel,
   wheelZoom = 'modifier',
@@ -156,8 +160,15 @@ export function Plot({
                   : undefined
               }
             />
-            {grid && <Grid piTicks={piTicks} />}
-            {axes && <Axes piTicks={piTicks} labels={tickLabels} />}
+            {grid && <Grid piTicks={piTicks} xIntegers={xIntegers} />}
+            {axes && (
+              <Axes
+                piTicks={piTicks}
+                xIntegers={xIntegers}
+                labels={tickLabels}
+                xOnly={axes === 'x'}
+              />
+            )}
             <g clipPath={`url(#${uid}-clip)`}>{children}</g>
           </svg>
           {(xLabel || yLabel) && <AxisNames x={xLabel} y={yLabel} />}
@@ -194,20 +205,22 @@ function squareStep(pxPerUnit: number): number {
 }
 
 /** Tick spacing for both axes; equal-aspect plots share one step so grid cells stay square. */
-function tickSteps(t: Transform, piTicks: boolean): [number, number] {
+function tickSteps(t: Transform, piTicks: boolean, xIntegers = false): [number, number] {
+  if (xIntegers) return [Math.max(1, Math.round(xStep(t, false))), yStep(t)]
   if (piTicks || Math.abs(t.kx - t.ky) > 0.01 * t.kx) return [xStep(t, piTicks), yStep(t)]
   const step = squareStep(t.kx)
   return [step, step]
 }
 
-function Grid({ piTicks }: { piTicks: boolean }) {
+function Grid({ piTicks, xIntegers }: { piTicks: boolean; xIntegers: boolean }) {
   const t = usePlot()
-  const [xs, ys] = tickSteps(t, piTicks)
+  const [xs, ys] = tickSteps(t, piTicks, xIntegers)
   const minorX = piTicks ? xs / 2 : xs / 5
   const minorY = ys / 5
   return (
     <g aria-hidden shapeRendering="crispEdges">
-      {t.kx * minorX > 12 &&
+      {!xIntegers &&
+        t.kx * minorX > 12 &&
         ticks(t.view.xMin, t.view.xMax, minorX).map((x) => (
           <line
             key={`mx${x}`}
@@ -255,14 +268,27 @@ function Grid({ piTicks }: { piTicks: boolean }) {
   )
 }
 
-function Axes({ piTicks, labels }: { piTicks: boolean; labels: boolean }) {
+function Axes({
+  piTicks,
+  xIntegers,
+  labels,
+  xOnly,
+}: {
+  piTicks: boolean
+  xIntegers: boolean
+  labels: boolean
+  xOnly: boolean
+}) {
   const t = usePlot()
-  const [xs, ys] = tickSteps(t, piTicks)
+  const [xs, ys] = tickSteps(t, piTicks, xIntegers)
   // Axis lines sit at 0 when visible; tick labels hug the nearest edge otherwise.
-  const ax = Math.min(t.height - 18, Math.max(4, t.sy(0)))
-  const ay = Math.min(t.width - 8, Math.max(26, t.sx(0)))
   const decimalsX = Math.max(0, -Math.floor(Math.log10(xs) + 1e-9))
   const decimalsY = Math.max(0, -Math.floor(Math.log10(ys) + 1e-9))
+  const yTicks = ticks(t.view.yMin, t.view.yMax, ys)
+  // Leave room for the widest y label so long numbers aren't clipped at the left edge.
+  const labelRoom = Math.max(3, ...yTicks.map((y) => formatNumber(y, decimalsY).length)) * 6.4 + 8
+  const ax = Math.min(t.height - 18, Math.max(4, t.sy(0)))
+  const ay = Math.min(t.width - 8, Math.max(labelRoom, t.sx(0)))
   return (
     <g aria-hidden className="font-sans" fontSize={11} fill="var(--ink-3)">
       {t.view.yMin <= 0 && t.view.yMax >= 0 && (
@@ -275,7 +301,7 @@ function Axes({ piTicks, labels }: { piTicks: boolean; labels: boolean }) {
           strokeWidth={1.25}
         />
       )}
-      {t.view.xMin <= 0 && t.view.xMax >= 0 && (
+      {!xOnly && t.view.xMin <= 0 && t.view.xMax >= 0 && (
         <line
           y1={0}
           y2={t.height}
@@ -287,14 +313,15 @@ function Axes({ piTicks, labels }: { piTicks: boolean; labels: boolean }) {
       )}
       {labels &&
         ticks(t.view.xMin, t.view.xMax, xs).map((x) =>
-          x === 0 || t.sx(x) < 12 || t.sx(x) > t.width - 12 ? null : (
+          (x === 0 && !xOnly) || t.sx(x) < 12 || t.sx(x) > t.width - 12 ? null : (
             <text key={`tx${x}`} x={t.sx(x)} y={ax + 14} textAnchor="middle" className="tabular">
               {piTicks ? piLabel(x, xs >= Math.PI ? Math.PI : xs) : formatNumber(x, decimalsX)}
             </text>
           ),
         )}
       {labels &&
-        ticks(t.view.yMin, t.view.yMax, ys).map((y) =>
+        !xOnly &&
+        yTicks.map((y) =>
           y === 0 || t.sy(y) < 10 || t.sy(y) > t.height - 8 ? null : (
             <text key={`ty${y}`} x={ay - 6} y={t.sy(y) + 4} textAnchor="end" className="tabular">
               {formatNumber(y, decimalsY)}

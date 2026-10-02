@@ -51,7 +51,7 @@ const TABS: { value: Experiment; label: string }[] = [
 export default function ProbabilityLabPage() {
   const [tab, setTab] = useState<Experiment>('coin')
   return (
-    <div className="grid gap-4">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-4">
       <Segmented label="Experiment" value={tab} onChange={setTab} options={TABS} />
       <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-sm">
         <ProbabilityExperiment key={tab} preset={{ experiment: tab } as ProbabilityPreset} />

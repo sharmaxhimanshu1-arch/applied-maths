@@ -123,7 +123,7 @@ export function SamplingExperiment({
 
   return (
     <div className="grid gap-5 p-3 sm:p-4">
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-4 md:grid-cols-[repeat(2,minmax(0,1fr))]">
         <div>
           <div className="mb-1 flex items-center justify-between gap-2 text-sm font-medium">
             <span>The population</span>
