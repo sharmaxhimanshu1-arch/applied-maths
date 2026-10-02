@@ -60,3 +60,11 @@ export function formatNumber(value: number, decimals = 2): string {
   }
   return text.replace(/^-/, '−')
 }
+
+/** Decimal places implied by a slider step (0.1 → 1, 0.25 → 2, 1 → 0). */
+export function decimalsFor(step: number): number {
+  if (step >= 1) return 0
+  const s = String(step)
+  const dot = s.indexOf('.')
+  return dot === -1 ? 2 : Math.min(4, s.length - dot - 1)
+}
