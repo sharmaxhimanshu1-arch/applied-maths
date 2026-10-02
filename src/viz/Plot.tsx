@@ -28,6 +28,8 @@ import {
 type PlotProps = {
   /** The math window to show. With aspect="equal" the shorter side is expanded. */
   view: View
+  /** A tighter window for phone-sized plots (under 560px wide), so small content stays grabbable. */
+  narrowView?: View
   /** Make the plot pannable/zoomable; called with the new window. */
   onViewChange?: (view: View) => void
   aspect?: 'equal' | 'free'
@@ -56,7 +58,8 @@ type PlotProps = {
  * MovablePoint…) that read the transform from context; <Label>s portal into an HTML layer.
  */
 export function Plot({
-  view: requested,
+  view: wideView,
+  narrowView,
   onViewChange,
   aspect = 'free',
   height: fixedHeight,
@@ -89,7 +92,13 @@ export function Plot({
     return () => ro.disconnect()
   }, [])
 
-  const height = fixedHeight ?? Math.min(maxHeight, Math.max(200, Math.round(width / ratio)))
+  const requested = narrowView && width > 0 && width < 560 ? narrowView : wideView
+  // Equal-aspect plots take the window's own proportions so no space is wasted.
+  const naturalRatio =
+    aspect === 'equal'
+      ? (requested.xMax - requested.xMin) / (requested.yMax - requested.yMin)
+      : ratio
+  const height = fixedHeight ?? Math.min(maxHeight, Math.max(220, Math.round(width / naturalRatio)))
 
   const t: Transform | null = useMemo(() => {
     if (!width) return null
@@ -173,10 +182,27 @@ function yStep(t: Transform) {
   return niceStep(t.view.yMax - t.view.yMin, t.height / 70)
 }
 
+/** Smallest 1-2-5 step whose labels have room (decimal labels are wider, so need more). */
+function squareStep(pxPerUnit: number): number {
+  for (let mag = 10 ** Math.floor(Math.log10(40 / pxPerUnit)); ; mag *= 10) {
+    for (const m of [1, 2, 5]) {
+      const step = m * mag
+      const whole = Math.abs(step - Math.round(step)) < 1e-9
+      if (step * pxPerUnit >= (whole ? 44 : 64)) return step
+    }
+  }
+}
+
+/** Tick spacing for both axes; equal-aspect plots share one step so grid cells stay square. */
+function tickSteps(t: Transform, piTicks: boolean): [number, number] {
+  if (piTicks || Math.abs(t.kx - t.ky) > 0.01 * t.kx) return [xStep(t, piTicks), yStep(t)]
+  const step = squareStep(t.kx)
+  return [step, step]
+}
+
 function Grid({ piTicks }: { piTicks: boolean }) {
   const t = usePlot()
-  const xs = xStep(t, piTicks)
-  const ys = yStep(t)
+  const [xs, ys] = tickSteps(t, piTicks)
   const minorX = piTicks ? xs / 2 : xs / 5
   const minorY = ys / 5
   return (
@@ -231,8 +257,7 @@ function Grid({ piTicks }: { piTicks: boolean }) {
 
 function Axes({ piTicks, labels }: { piTicks: boolean; labels: boolean }) {
   const t = usePlot()
-  const xs = xStep(t, piTicks)
-  const ys = yStep(t)
+  const [xs, ys] = tickSteps(t, piTicks)
   // Axis lines sit at 0 when visible; tick labels hug the nearest edge otherwise.
   const ax = Math.min(t.height - 18, Math.max(4, t.sy(0)))
   const ay = Math.min(t.width - 8, Math.max(26, t.sx(0)))

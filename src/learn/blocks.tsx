@@ -98,17 +98,20 @@ export function TryThis({
   }, [when, done, complete, id])
 
   return (
-    <li className="flex items-start gap-2.5 text-[0.9375rem]">
+    <li className="flex items-start gap-2.5 text-[0.9375rem]" data-done={done}>
       {done ? (
         <CircleCheck
           className="mt-0.5 size-4.5 shrink-0 animate-[pop_300ms_ease]"
           style={{ color: 'var(--good)' }}
-          aria-label="Done"
+          aria-hidden
         />
       ) : (
-        <Circle className="mt-0.5 size-4.5 shrink-0 text-ink-3" aria-label="Not yet" />
+        <Circle className="mt-0.5 size-4.5 shrink-0 text-ink-3" aria-hidden />
       )}
-      <span className={cn(done && 'text-ink-2')}>{children}</span>
+      <span className={cn(done && 'text-ink-2')}>
+        <span className="sr-only">{done ? 'Done: ' : 'To do: '}</span>
+        {children}
+      </span>
     </li>
   )
 }
@@ -149,12 +152,18 @@ export function Callout({
   )
 }
 
+/** String captions may use the inline `$tex$` / `**bold**` markup. */
+const captionNode = (caption: ReactNode) =>
+  typeof caption === 'string' ? <Inline text={caption} /> : caption
+
 /** A displayed formula with an optional plain-language caption. */
 export function Formula({ tex, caption }: { tex: string; caption?: ReactNode }) {
   return (
     <figure className="my-5 rounded-2xl border border-line bg-surface px-4 py-3 text-center shadow-sm">
       <Tex display>{tex}</Tex>
-      {caption && <figcaption className="pb-1 text-sm text-ink-2">{caption}</figcaption>}
+      {caption && (
+        <figcaption className="pb-1 text-sm text-ink-2">{captionNode(caption)}</figcaption>
+      )}
     </figure>
   )
 }
@@ -182,7 +191,14 @@ export function Readouts({
             )}
             {it.label}
           </dt>
-          <dd className="tabular font-mono font-medium">{it.value}</dd>
+          <dd
+            className={cn(
+              'font-medium',
+              typeof it.value === 'string' && /[a-z]{3}/i.test(it.value) ? '' : 'tabular font-mono',
+            )}
+          >
+            {it.value}
+          </dd>
         </div>
       ))}
     </dl>
@@ -302,7 +318,9 @@ export function Figure({ children, caption }: { children: ReactNode; caption?: R
       <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-sm">
         {children}
       </div>
-      {caption && <figcaption className="mt-2 text-sm text-ink-2">{caption}</figcaption>}
+      {caption && (
+        <figcaption className="mt-2 text-sm text-ink-2">{captionNode(caption)}</figcaption>
+      )}
     </figure>
   )
 }

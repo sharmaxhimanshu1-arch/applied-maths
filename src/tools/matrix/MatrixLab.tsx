@@ -1,5 +1,5 @@
 import { Pause, Play, RotateCcw } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { formatNumber } from '@/math/core'
 import {
   apply,
@@ -15,7 +15,7 @@ import {
   type Vec2,
 } from '@/math/linalg'
 import { Button } from '@/ui/Button'
-import { MATRIX_PRESETS } from './presets'
+import { F_SHAPE, MATRIX_PRESETS } from './presets'
 import { Switch } from '@/ui/Switch'
 import { Tex } from '@/ui/Tex'
 import { cn } from '@/ui/cn'
@@ -65,20 +65,6 @@ export interface MatrixLabState {
   t: number
 }
 
-// An asymmetric "F" so reflections and rotations are obvious.
-const F_SHAPE: Vec2[] = [
-  [0.2, 0.2],
-  [0.45, 0.2],
-  [0.45, 0.85],
-  [0.85, 0.85],
-  [0.85, 1.1],
-  [0.45, 1.1],
-  [0.45, 1.45],
-  [0.95, 1.45],
-  [0.95, 1.7],
-  [0.2, 1.7],
-]
-
 const I_COLOR = 'var(--c-green)'
 const J_COLOR = 'var(--c-red)'
 
@@ -89,6 +75,8 @@ type Props = {
   onMatrixChange?: (m: Mat2) => void
   onStateChange?: (s: MatrixLabState) => void
   ariaLabel?: string
+  /** Extra plot layers drawn under the basis arrows; receives the matrix on screen (mid-animation too). */
+  overlay?: (shown: Mat2) => ReactNode
 }
 
 export function MatrixLab({
@@ -97,6 +85,7 @@ export function MatrixLab({
   onMatrixChange,
   onStateChange,
   ariaLabel,
+  overlay,
 }: Props) {
   const [own, setOwn] = useState<Mat2>(preset.matrix ?? [1, 1, 0, 1])
   const target = controlled ?? own
@@ -247,6 +236,8 @@ export function MatrixLab({
             />
           </>
         )}
+
+        {overlay?.(m)}
 
         <Vector to={iHat} color={I_COLOR} />
         <Vector to={jHat} color={J_COLOR} />

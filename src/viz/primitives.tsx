@@ -467,7 +467,7 @@ export function Label({
   return createPortal(
     <div
       className={cn(
-        'absolute rounded-md px-1 text-sm leading-tight font-medium whitespace-nowrap text-ink',
+        'absolute rounded-md bg-surface/80 px-1 text-sm leading-tight font-medium whitespace-nowrap text-ink',
         className,
       )}
       style={{ left, top, transform: ANCHOR[anchor], color }}
