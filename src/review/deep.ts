@@ -1075,6 +1075,72 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
         '$\\tfrac12(3 + \\tfrac{10}{3}) = \\tfrac{19}{6} \\approx 3.1667$, close to $\\sqrt{10} \\approx 3.1623$.',
     },
   ],
+  'integration-techniques': [
+    {
+      kind: 'expression',
+      id: 'r1',
+      prompt:
+        'Find an antiderivative of $3x^2 e^{x^3}$ (leave out the $+ C$). Type $e^{\\ldots}$ as exp(…).',
+      answer: 'exp(x^3)',
+      hint: 'Let $u = x^3$.',
+      explain: 'With $u = x^3$, $du = 3x^2\\,dx$, so it is $\\int e^u\\,du = e^{x^3}$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt:
+        'For $\\displaystyle\\int x\\cos x\\,dx$ by parts, which choice of $u$ makes it easier?',
+      options: [
+        { text: '$u = x$, $dv = \\cos x\\,dx$', correct: true },
+        {
+          text: '$u = \\cos x$, $dv = x\\,dx$',
+          why: 'Then $\\int v\\,du$ contains $x^2 \\sin x$: harder.',
+        },
+        { text: 'Substitution with $u = \\cos x$', why: 'There is no $\\sin x$ factor to absorb.' },
+        { text: 'It cannot be integrated', why: 'Parts gives $x\\sin x + \\cos x + C$.' },
+      ],
+      explain: 'Pick $u$ to be the part that simplifies when differentiated: $x \\to 1$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'Find $\\displaystyle\\int_0^{\\sqrt{\\pi/2}} 2x\\cos(x^2)\\,dx$.',
+      answer: 1,
+      tolerance: 0.001,
+      explain:
+        'With $u = x^2$ the limits become 0 and $\\tfrac\\pi2$: $\\sin\\tfrac\\pi2 - \\sin 0 = 1$.',
+    },
+  ],
+  'infinite-series': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Find $\\tfrac12 + \\tfrac14 + \\tfrac18 + \\cdots$.',
+      answer: 1,
+      explain: 'Geometric with $a = \\tfrac12$, $r = \\tfrac12$: $\\dfrac{1/2}{1 - 1/2} = 1$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Which series converges?',
+      options: [
+        { text: '$\\sum 1/n^2$', correct: true },
+        { text: '$\\sum 1/n$', why: 'The harmonic series diverges, slowly.' },
+        { text: '$\\sum 2^n$', why: 'Its terms grow, so the sum blows up.' },
+        { text: '$\\sum 1$', why: 'Adding 1 forever grows without bound.' },
+      ],
+      explain: '$\\sum 1/n^p$ converges for $p > 1$; $\\sum 1/n^2 = \\pi^2/6$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'A ball dropped from 10 m bounces back to half its height each time. How far does it travel in total (down and up)?',
+      answer: 30,
+      hint: 'First drop 10, then each bounce goes up and down: $2(5 + 2.5 + \\cdots)$.',
+      explain: '$10 + 2 \\cdot \\dfrac{5}{1 - 1/2} = 10 + 20 = 30$ m.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
