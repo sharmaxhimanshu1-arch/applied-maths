@@ -63,7 +63,7 @@ export function Dialog({
       {open && (
         <div
           className={cn(
-            'flex max-h-[inherit] flex-col overflow-hidden border border-line bg-surface shadow-lg',
+            'flex flex-col overflow-hidden border border-line bg-surface shadow-lg',
             variant === 'center'
               ? 'max-h-[85dvh] rounded-2xl'
               : 'h-full rounded-l-2xl max-sm:rounded-t-2xl max-sm:rounded-bl-none',

@@ -1,7 +1,7 @@
 import { Flag, X } from 'lucide-react'
 import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router'
-import { conceptById } from '@/curriculum'
+import { conceptById, trackById } from '@/curriculum'
 import type { ConceptId } from '@/curriculum/types'
 import { ConceptPanel } from '@/map/ConceptPanel'
 import type { CenterRequest } from '@/map/KnowledgeMap'
@@ -54,6 +54,12 @@ export function MapPage() {
   useEffect(() => {
     if (goalParam) setGoal(goalParam)
   }, [goalParam, setGoal])
+
+  // A ?track= link switches the highlighted track.
+  const trackParam = params.get('track')
+  useEffect(() => {
+    if (trackParam && trackById.has(trackParam)) setTrack(trackParam)
+  }, [trackParam, setTrack])
 
   // Where the camera starts: the focused concept, else the next step towards the goal.
   const [initialFocus] = useState<ConceptId>(
