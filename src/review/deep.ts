@@ -1011,6 +1011,70 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: 'Power rule with $n = \\tfrac12$: $\\tfrac12 x^{-1/2} = \\dfrac{1}{2\\sqrt x}$.',
     },
   ],
+  optimization: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Where does $f(x) = -x^2 + 8x - 3$ reach its maximum?',
+      answer: 4,
+      explain: "$f'(x) = -2x + 8 = 0$ at $x = 4$.",
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'A rectangle has perimeter 40. What is the largest area it can have?',
+      answer: 100,
+      hint: 'Sides $x$ and $20 - x$; maximise $x(20 - x)$.',
+      explain: "$A'(x) = 20 - 2x = 0$ at $x = 10$: a $10 \\times 10$ square with area 100.",
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: "At a critical point $c$, $f'$ is positive on both sides. What is $c$?",
+      options: [
+        { text: 'Neither a maximum nor a minimum', correct: true },
+        { text: 'A maximum', why: 'For a peak the slope must turn negative afterwards.' },
+        { text: 'A minimum', why: 'For a valley the slope must be negative before.' },
+        { text: 'Impossible', why: '$x^3$ at 0 is exactly this.' },
+      ],
+      explain: 'The curve climbs, pauses flat, and keeps climbing, like $x^3$ at 0.',
+    },
+  ],
+  'newtons-method': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'One Newton step for $f(x) = x^2 - 9$ from $x_0 = 2$.',
+      answer: 3.25,
+      tolerance: 0.001,
+      explain: '$2 - \\dfrac{4 - 9}{4} = 2 + 1.25 = 3.25$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Geometrically, a Newton step from $x_n$ goes to…',
+      options: [
+        { text: 'Where the tangent at $x_n$ crosses the $x$-axis', correct: true },
+        { text: 'The midpoint of an interval containing the root', why: 'That is bisection.' },
+        {
+          text: 'Where the curve crosses the axis',
+          why: 'That is the root itself, which we do not know yet.',
+        },
+        { text: 'The lowest point of the curve', why: 'Newton finds roots, not minima (here).' },
+      ],
+      explain: 'Replace the curve by its tangent, solve the line, and repeat.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'Using $x_{n+1} = \\tfrac12\\big(x_n + \\tfrac{a}{x_n}\\big)$ with $a = 10$ and $x_0 = 3$, find $x_1$. (Decimals are fine.)',
+      answer: 19 / 6,
+      tolerance: 0.001,
+      explain:
+        '$\\tfrac12(3 + \\tfrac{10}{3}) = \\tfrac{19}{6} \\approx 3.1667$, close to $\\sqrt{10} \\approx 3.1623$.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
