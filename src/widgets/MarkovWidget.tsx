@@ -265,7 +265,7 @@ export default function MarkovWidget({ preset, onStateChange }: WidgetComponentP
           </div>
         ))}
         <p className="text-xs text-ink-3">
-          Bars: share of time so far. Black tick: the long-run share.
+          Bars: share of time so far. Tick mark: the long-run share.
         </p>
       </div>
       <div className="grid gap-4 border-t border-line p-3 sm:grid-cols-2 sm:p-4">

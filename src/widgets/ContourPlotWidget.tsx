@@ -487,7 +487,7 @@ function GradientMode({
           ]}
         />
         <p className="mt-2 text-sm text-ink-2">
-          The black arrow is the gradient: it points straight uphill, at right angles to the purple
+          The arrow is the gradient: it points straight uphill, at right angles to the purple
           contour through the point.
         </p>
       </div>
@@ -616,7 +616,7 @@ function ConstraintMode({
       >
         <Circle center={[0, 0]} r={radius} stroke="var(--ink)" strokeWidth={2.5} />
         <Vector from={[x, y]} to={unit([gx, gy], 0.9)} color={P_COLOR} width={2.5} />
-        <Vector from={[x, y]} to={unit(g, 0.9)} color="var(--ink)" width={2.5} />
+        <Vector from={[x, y]} to={unit(g, 0.9)} color="var(--c-aqua)" width={2.5} />
         <MovablePoint
           x={x}
           y={y}
@@ -634,8 +634,8 @@ function ConstraintMode({
           ]}
         />
         <p className="mt-2 text-sm text-ink-2" aria-live="polite">
-          You may only move along the black circle <Tex>{`x^2 + y^2 = ${radius * radius}`}</Tex>.
-          Orange arrow: <Tex>{'\\nabla f'}</Tex>. Black arrow: the circle’s own gradient.{' '}
+          You may only move along the circle <Tex>{`x^2 + y^2 = ${radius * radius}`}</Tex>. Orange
+          arrow: <Tex>{'\\nabla f'}</Tex>. Teal arrow: the circle’s own gradient.{' '}
           {parallel
             ? 'They line up: the contour just touches the circle, so this is a highest or lowest point on it.'
             : 'They point different ways, so sliding along the circle can still change f.'}

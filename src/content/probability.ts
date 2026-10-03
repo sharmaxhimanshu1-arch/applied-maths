@@ -435,7 +435,7 @@ const content: ContentModule = {
       type: 'simulation',
       props: { mode: 'ci', n: 25, level: '95' },
       caption:
-        'Each sample gives one interval. The true mean (black line) is fixed; the intervals move. Count how many catch it.',
+        'Each sample gives one interval. The true mean (the upright line) is fixed; the intervals move. Count how many catch it.',
       tryThis: [
         {
           id: 't-many',

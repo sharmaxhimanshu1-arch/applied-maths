@@ -252,7 +252,8 @@ function GaltonExplorer() {
       </Figure>
       <TryThisList>
         <TryThis id="t-drop" when={(state?.balls ?? 0) >= 200}>
-          Drop at least 200 balls. How well does the pile match the black theory marks?
+          Drop at least 200 balls. How well does the pile match the theory marks (the short lines
+          across the bars)?
         </TryThis>
         <TryThis
           id="t-tilt"

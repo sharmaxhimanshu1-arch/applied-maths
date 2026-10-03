@@ -1171,7 +1171,7 @@ const content: ContentModule = {
       type: 'contourPlot',
       props: { mode: 'gradient', fn: 'hills', start: [-2.2, -2] },
       caption:
-        'Two hills of different heights. The black arrow is the gradient at your point. Climb by following it.',
+        'Two hills of different heights. The arrow is the gradient at your point. Climb by following it.',
       tryThis: [
         {
           id: 't-climb',

@@ -191,7 +191,7 @@ const content: ContentModule = {
         ],
       },
       caption:
-        'Arrows show the chance of each move. Take steps and compare the time spent in each state with the long-run share (black tick).',
+        'Arrows show the chance of each move. Take steps and compare the time spent in each state with the long-run share (the tick mark).',
       tryThis: [
         {
           id: 't-settle',
