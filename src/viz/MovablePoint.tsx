@@ -1,5 +1,5 @@
 import { useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
-import { formatNumber } from '@/math/core'
+import { formatNumber, roundTo } from '@/math/core'
 import type { Vec2 } from '@/math/linalg'
 import { usePlot } from './context'
 
@@ -94,14 +94,15 @@ export function MovablePoint({
     onMove(nx, ny)
   }
 
-  const coords = `(${formatNumber(x, decimals)}, ${formatNumber(y, decimals)})`
+  // Round first so floating-point dust (cos 90° = 6e-17) reads as 0, not in exponent form.
+  const coords = `(${formatNumber(roundTo(x, decimals), decimals)}, ${formatNumber(roundTo(y, decimals), decimals)})`
 
   return (
     <g
       role="slider"
       tabIndex={0}
       aria-label={label}
-      aria-valuenow={x}
+      aria-valuenow={roundTo(x, 6)}
       aria-valuetext={coords}
       className="viz-handle"
       style={{ cursor: dragging ? 'grabbing' : 'grab', touchAction: 'none', outline: 'none' }}

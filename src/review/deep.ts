@@ -1141,6 +1141,449 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: '$10 + 2 \\cdot \\dfrac{5}{1 - 1/2} = 10 + 20 = 30$ m.',
     },
   ],
+  angles: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Two angles on a straight line: one is $47^\\circ$. What is the other?',
+      answer: 133,
+      explain: '$180 - 47 = 133$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Which angle is reflex?',
+      options: [
+        { text: '$250^\\circ$', correct: true },
+        { text: '$90^\\circ$', why: 'That is a right angle.' },
+        { text: '$150^\\circ$', why: 'Between 90° and 180° is obtuse.' },
+        { text: '$180^\\circ$', why: 'That is a straight angle.' },
+      ],
+      explain: 'Reflex angles are bigger than $180^\\circ$ and less than $360^\\circ$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'Four angles meet at a point. Three of them are $90^\\circ$, $80^\\circ$ and $110^\\circ$. Find the fourth.',
+      answer: 80,
+      explain: 'Around a point: $360 - 90 - 80 - 110 = 80$.',
+    },
+  ],
+  'area-perimeter': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'A rectangle is 9 by 4. What is its area?',
+      answer: 36,
+      explain: '$9 \\times 4 = 36$ square units.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'A parallelogram has base 8 and perpendicular height 5 (its slanted side is 6). What is its area?',
+      answer: 40,
+      explain:
+        'Base times perpendicular height: $8 \\times 5 = 40$. The slanted side is not needed.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which rectangle with perimeter 24 has the largest area?',
+      options: [
+        { text: '$6 \\times 6$', correct: true },
+        { text: '$10 \\times 2$', why: 'Area 20.' },
+        { text: '$8 \\times 4$', why: 'Area 32.' },
+        { text: '$11 \\times 1$', why: 'Area 11.' },
+      ],
+      explain: 'For a fixed perimeter, the square wins: $6 \\times 6 = 36$.',
+    },
+  ],
+  triangles: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'A right-angled triangle has one angle of $35^\\circ$. What is the third angle?',
+      answer: 55,
+      explain: '$180 - 90 - 35 = 55$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Which set of lengths can form a triangle?',
+      options: [
+        { text: '4, 5, 8', correct: true },
+        { text: '1, 2, 5', why: '$1 + 2 < 5$.' },
+        { text: '3, 3, 6', why: '$3 + 3 = 6$ exactly: it would be flat.' },
+        { text: '2, 7, 10', why: '$2 + 7 < 10$.' },
+      ],
+      explain: '$4 + 5 = 9 > 8$, and the other pairs are fine too.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'What is each angle of an equilateral triangle?',
+      answer: 60,
+      explain: 'Three equal angles sharing $180^\\circ$: $60^\\circ$ each.',
+    },
+  ],
+  'circles-pi': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Find the area of a circle with diameter 10. (Decimals are fine.)',
+      answer: 25 * Math.PI,
+      tolerance: 0.05,
+      explain: 'Radius 5: $\\pi \\cdot 5^2 = 25\\pi \\approx 78.54$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'A bike wheel has radius 0.35 m. How far does it roll in one turn, in m?',
+      answer: 0.7 * Math.PI,
+      tolerance: 0.01,
+      explain: 'One circumference: $2\\pi \\times 0.35 \\approx 2.20$ m.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Why is $C \\div d$ the same for every circle?',
+      options: [
+        { text: 'All circles are scaled copies of each other', correct: true },
+        { text: 'Because $\\pi = 3$', why: '$\\pi$ is about 3.14159, and the reason is scaling.' },
+        { text: 'It is only true for the unit circle', why: 'It holds for circles of every size.' },
+        { text: 'Because circles have no corners', why: 'Scaling is what keeps the ratio fixed.' },
+      ],
+      explain:
+        'Scaling multiplies both the circumference and the diameter by the same factor, so their ratio is unchanged.',
+    },
+  ],
+  'pythagorean-theorem': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'A right triangle has legs 9 and 12. How long is the hypotenuse?',
+      answer: 15,
+      explain: '$\\sqrt{81 + 144} = \\sqrt{225} = 15$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'A TV screen is 48 inches wide and 36 inches tall. How long is its diagonal, in inches?',
+      answer: 60,
+      explain: '$\\sqrt{48^2 + 36^2} = \\sqrt{3600} = 60$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'A triangle has sides 7, 8 and 12. The angle opposite the 12 is…',
+      options: [
+        { text: 'Obtuse', correct: true },
+        { text: 'Right', why: '$49 + 64 = 113 \\ne 144$.' },
+        { text: 'Acute', why: '$a^2 + b^2 = 113$ is less than $c^2 = 144$.' },
+        { text: 'Impossible to tell', why: 'Compare $a^2 + b^2$ with $c^2$.' },
+      ],
+      explain: '$7^2 + 8^2 = 113 < 144 = 12^2$, so the angle opposite 12 is obtuse.',
+    },
+  ],
+  similarity: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'On a 1 : 100 scale drawing, a wall is 4.5 cm long. How long is the real wall, in m?',
+      answer: 4.5,
+      tolerance: 0.001,
+      explain: '$4.5 \\times 100 = 450$ cm $= 4.5$ m.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'Two similar rectangles have widths 3 and 12. The small one has area 5. What is the area of the big one?',
+      answer: 80,
+      explain: 'Scale factor 4, so area $\\times 16$: $5 \\times 16 = 80$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which stays the same when a shape is enlarged?',
+      options: [
+        { text: 'Its angles', correct: true },
+        { text: 'Its perimeter', why: 'It scales by $k$.' },
+        { text: 'Its area', why: 'It scales by $k^2$.' },
+        { text: 'Its side lengths', why: 'They scale by $k$.' },
+      ],
+      explain: 'Enlargement changes size, not shape: angles are preserved.',
+    },
+  ],
+  'distance-midpoint': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'How far apart are $(-1, 3)$ and $(5, -5)$?',
+      answer: 10,
+      explain: '$\\sqrt{6^2 + 8^2} = 10$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is the $y$-coordinate of the midpoint of $(4, -3)$ and $(0, 9)$?',
+      answer: 3,
+      explain: '$\\tfrac{-3 + 9}{2} = 3$. (The midpoint is $(2, 3)$.)',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which point lies on the circle $x^2 + y^2 = 25$?',
+      options: [
+        { text: '$(-3, 4)$', correct: true },
+        { text: '$(2, 3)$', why: '$4 + 9 = 13$.' },
+        { text: '$(5, 5)$', why: '$25 + 25 = 50$.' },
+        { text: '$(1, 4)$', why: '$1 + 16 = 17$.' },
+      ],
+      explain: '$9 + 16 = 25$: it is exactly 5 from the origin.',
+    },
+  ],
+  'geometric-transformations': [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'Rotate $(3, 1)$ by $180^\\circ$ about the origin.',
+      options: [
+        { text: '$(-3, -1)$', correct: true },
+        { text: '$(-1, 3)$', why: 'That is a quarter turn.' },
+        { text: '$(3, -1)$', why: 'That is a reflection in the $x$-axis.' },
+        { text: '$(1, 3)$', why: 'That is a reflection in $y = x$.' },
+      ],
+      explain: 'A half turn negates both coordinates.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Reflect $(2, 5)$ in the $y$-axis. What is the new $x$-coordinate?',
+      answer: -2,
+      explain: 'The $y$-axis mirror maps $(x, y) \\mapsto (-x, y)$: $(-2, 5)$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which property can a rigid transformation change?',
+      options: [
+        { text: 'Position', correct: true },
+        { text: 'Side lengths', why: 'Rigid moves preserve lengths.' },
+        { text: 'Angles', why: 'Rigid moves preserve angles.' },
+        { text: 'Area', why: 'The image is congruent, so area is unchanged.' },
+      ],
+      explain:
+        'Rigid transformations move shapes without stretching them: only position (and, for reflections, orientation) changes.',
+    },
+  ],
+  'volume-surface-area': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Find the volume of a $4 \\times 3 \\times 5$ box.',
+      answer: 60,
+      explain: '$4 \\times 3 \\times 5 = 60$ cubic units.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Find the surface area of a $4 \\times 3 \\times 5$ box.',
+      answer: 94,
+      explain: '$2(12 + 20 + 15) = 94$ square units.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'A cone and a cylinder share a base and height. The cylinder holds 30 litres. How much does the cone hold?',
+      answer: 10,
+      explain: 'A cone is a third of its cylinder: $30 / 3 = 10$ litres.',
+    },
+  ],
+  'right-triangle-trig': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        'You stand 30 m from a building and look up $45^\\circ$ to its roof. How tall is it above eye level, in m?',
+      answer: 30,
+      explain: '$\\tan 45^\\circ = 1$, so the height is $30 \\times 1 = 30$ m.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'A right triangle has hypotenuse 13 and the side opposite $\\theta$ is 5. What is $\\sin\\theta$? (decimal)',
+      answer: 5 / 13,
+      tolerance: 0.001,
+      explain:
+        '$\\sin\\theta = \\tfrac{\\text{opp}}{\\text{hyp}} = \\tfrac{5}{13} \\approx 0.385$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt:
+        'Two right triangles both have a $40^\\circ$ angle, but one is three times bigger. Their values of $\\tan 40^\\circ$ are…',
+      options: [
+        { text: 'Equal', correct: true },
+        { text: 'Three times bigger for the big one', why: 'Both sides of the ratio grow by 3.' },
+        { text: 'Nine times bigger for the big one', why: 'That is how areas scale, not ratios.' },
+      ],
+      explain:
+        'The triangles are similar, so every ratio of sides, including opp/adj, is the same.',
+    },
+  ],
+  radians: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Convert $45^\\circ$ to radians, as a decimal.',
+      answer: Math.PI / 4,
+      tolerance: 0.01,
+      explain: '$45 \\times \\tfrac{\\pi}{180} = \\tfrac{\\pi}{4} \\approx 0.785$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Convert $\\tfrac{3\\pi}{2}$ radians to degrees.',
+      answer: 270,
+      unit: '°',
+      explain: '$\\tfrac{3\\pi}{2} \\times \\tfrac{180}{\\pi} = 270^\\circ$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'A clock’s minute hand is 12 cm long. How far does its tip travel in 15 minutes, in cm? (decimal)',
+      answer: 6 * Math.PI,
+      tolerance: 0.05,
+      explain:
+        'A quarter turn is $\\tfrac{\\pi}{2}$ rad, so $s = r\\theta = 12 \\times \\tfrac{\\pi}{2} = 6\\pi \\approx 18.85$ cm.',
+    },
+  ],
+  'trig-identities': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: '$\\cos\\theta = 0.28$ and $\\theta$ is acute. What is $\\sin\\theta$?',
+      answer: 0.96,
+      tolerance: 0.001,
+      explain: '$\\sin\\theta = \\sqrt{1 - 0.28^2} = \\sqrt{0.9216} = 0.96$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: '$\\cos(-\\theta)$ equals…',
+      options: [
+        { text: '$\\cos\\theta$', correct: true },
+        { text: '$-\\cos\\theta$', why: 'Mirroring in the x-axis keeps the x-coordinate.' },
+        { text: '$\\sin\\theta$', why: 'That would be $\\cos(90^\\circ - \\theta)$.' },
+      ],
+      explain:
+        'The point for $-\\theta$ is the mirror image in the x-axis: same x, so the same cosine.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        '$\\sin\\theta = 0.6$. What is $\\cos 2\\theta$? (Use $\\cos 2\\theta = 1 - 2\\sin^2\\theta$.)',
+      answer: 0.28,
+      tolerance: 0.001,
+      explain: '$1 - 2 \\times 0.36 = 0.28$.',
+    },
+  ],
+  'law-of-sines-cosines': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Two sides of 5 and 8 meet at $60^\\circ$. How long is the third side?',
+      answer: 7,
+      explain: '$c^2 = 25 + 64 - 2 \\cdot 5 \\cdot 8 \\cdot \\tfrac12 = 49$, so $c = 7$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'In a triangle, $A = 45^\\circ$, $B = 30^\\circ$ and $b = 6$. How long is side $a$? (decimal)',
+      answer: 6 * Math.SQRT2,
+      tolerance: 0.01,
+      explain:
+        '$a = b \\cdot \\tfrac{\\sin A}{\\sin B} = 6 \\cdot \\tfrac{0.7071}{0.5} \\approx 8.485$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt:
+        'In the law of cosines, $c^2 = a^2 + b^2 - 2ab\\cos C$, what happens when $C = 90^\\circ$?',
+      options: [
+        { text: 'It becomes Pythagoras’ theorem', correct: true },
+        { text: '$c$ becomes 0', why: 'Only the correction term vanishes.' },
+        { text: 'It no longer works', why: 'It works for every angle, right angles included.' },
+      ],
+      explain: '$\\cos 90^\\circ = 0$, so the correction disappears and $c^2 = a^2 + b^2$.',
+    },
+  ],
+  'polar-coordinates': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'How far from the origin is the point $(5, -12)$?',
+      answer: 13,
+      explain: '$r = \\sqrt{25 + 144} = 13$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'The polar point $(4, 30^\\circ)$ has what $y$-coordinate?',
+      answer: 2,
+      tolerance: 0.001,
+      explain: '$y = 4\\sin 30^\\circ = 2$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which polar point is the same place as $(3, 45^\\circ)$?',
+      options: [
+        { text: '$(3, 405^\\circ)$', correct: true },
+        { text: '$(3, 225^\\circ)$', why: 'That is the opposite direction.' },
+        { text: '$(-3, 45^\\circ)$', why: 'A negative $r$ walks backwards, to the opposite side.' },
+      ],
+      explain: 'Adding a full turn ($360^\\circ$) changes nothing.',
+    },
+  ],
+  'eulers-formula': [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'What is $e^{i\\pi}$?',
+      options: [
+        { text: '$-1$', correct: true },
+        { text: '$1$', why: 'That is a full turn, $e^{2\\pi i}$.' },
+        { text: '$i$', why: 'That is a quarter turn, $e^{i\\pi/2}$.' },
+      ],
+      explain: '$\\pi$ radians is half way round the unit circle, at $-1$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is $|3e^{i \\cdot 1.2}|$?',
+      answer: 3,
+      explain: '$|e^{i\\theta}| = 1$, so the length is just 3.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'Multiply $2e^{i\\,20^\\circ}$ by $3e^{i\\,70^\\circ}$. What is the angle of the product, in degrees?',
+      answer: 90,
+      unit: '°',
+      explain: 'Angles add: $20^\\circ + 70^\\circ = 90^\\circ$ (and lengths multiply, to 6).',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
