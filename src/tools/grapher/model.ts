@@ -25,7 +25,7 @@ export interface GrapherPreset {
   /** Plot f′(x) for the expression at this index. */
   derivative?: number
   /** Draggable point on a curve with its tangent; `secantH` starts in secant mode. */
-  tangent?: { expr?: number; x: number; secantH?: number }
+  tangent?: { expr?: number; x: number; secantH?: number; trace?: boolean }
   /** Shaded area under a curve between draggable bounds. */
   area?: { expr?: number; a: number; b: number }
   riemann?: { expr?: number; a: number; b: number; n: number; method?: RiemannMethod }
@@ -41,6 +41,8 @@ export interface GrapherState {
   params: Record<string, number>
   view: View
   tangentX?: number
+  /** f at the tangent (or trace) point. */
+  fx?: number
   slope?: number
   secantH?: number
   area?: number

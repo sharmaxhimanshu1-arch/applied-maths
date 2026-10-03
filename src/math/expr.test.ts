@@ -11,6 +11,8 @@ describe('preprocess', () => {
     expect(preprocess('log(x)')).toBe('log10(x)')
     expect(preprocess('2πx')).toBe('2 pi x')
     expect(preprocess('√x')).toBe(' sqrt x')
+    expect(preprocess('x (10 - 2x)^2')).toBe('x*(10 - 2x)^2')
+    expect(preprocess('f(x) = a(x+1)')).toBe('f(x) = a*(x+1)')
   })
 })
 
@@ -22,6 +24,12 @@ describe('compileExpression', () => {
     expect(r.expr.params).toEqual(['a', 'b'])
     expect(r.expr.evaluate(3, { a: 2, b: 1 })).toBe(19)
     expect(r.expr.derivative!.evaluate(3, { a: 2, b: 1 })).toBe(12)
+  })
+
+  it('reads a variable before a bracket as multiplication', () => {
+    const r = compileExpression(math, 'x (10 - 2x)^2')
+    if (!r.ok) throw new Error(r.error)
+    expect(r.expr.evaluate(1, {})).toBe(64)
   })
 
   it('recognises polar curves, vertical lines and points', () => {

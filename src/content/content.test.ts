@@ -2,12 +2,13 @@ import { describe, expect, it } from 'vitest'
 import { CONCEPTS, areaOf } from '@/curriculum'
 import type { AreaId } from '@/curriculum/types'
 import { DEEP_LAB_IDS } from '@/labs/registry'
+import { expressionsMatch } from '@/math/miniExpr'
 import { WIDGETS } from '@/widgets/registry'
 import { contentLoaders } from './index'
 import type { ContentModule } from './types'
 
 /** Areas whose lite content is complete. Every concept in them must have a lab of some kind. */
-const COMPLETE: AreaId[] = ['foundations', 'algebra', 'geometry']
+const COMPLETE: AreaId[] = ['foundations', 'algebra', 'geometry', 'calculus']
 
 const modules = Object.fromEntries(
   await Promise.all(
@@ -53,6 +54,9 @@ describe('lite content', () => {
         expect(check.options.length, check.id).toBeGreaterThanOrEqual(2)
       }
       if (check.kind === 'numeric') expect(Number.isFinite(check.answer), check.id).toBe(true)
+      // The answer key must parse, and so accept itself.
+      if (check.kind === 'expression')
+        expect(expressionsMatch(check.answer, check.answer, check.vars), check.id).toBe(true)
     }
   })
 

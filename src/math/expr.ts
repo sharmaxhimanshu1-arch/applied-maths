@@ -73,17 +73,23 @@ export function preprocess(src: string): string {
     .replace(/[·×⋅]/g, '*')
     .replace(/[−–]/g, '-')
     .replace(/÷/g, '/')
-  return s.replace(/[A-Za-z]+/g, (word) => {
-    const out: string[] = []
-    let rest = word
-    while (rest.length) {
-      const known = KNOWN.find((k) => rest.startsWith(k))
-      const piece = known ?? rest[0]
-      out.push(ALIASES[piece] ?? piece)
-      rest = rest.slice(piece.length)
-    }
-    return out.join(' ')
-  })
+  return (
+    s
+      .replace(/[A-Za-z]+/g, (word) => {
+        const out: string[] = []
+        let rest = word
+        while (rest.length) {
+          const known = KNOWN.find((k) => rest.startsWith(k))
+          const piece = known ?? rest[0]
+          out.push(ALIASES[piece] ?? piece)
+          rest = rest.slice(piece.length)
+        }
+        return out.join(' ')
+      })
+      // A lone variable before a bracket multiplies it: "x (10 - 2x)" is x·(10 − 2x), not a call.
+      // f and g stay free for function notation such as f(x) = ….
+      .replace(/(^|[^A-Za-z])([a-eh-zA-Z])\s*\(/g, '$1$2*(')
+  )
 }
 
 export type ExprKind = 'function' | 'vertical' | 'polar' | 'point'

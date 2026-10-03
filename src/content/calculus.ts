@@ -1,5 +1,1894 @@
 import type { ContentModule } from './types'
 
-const content: ContentModule = {}
+const near = (a: number | undefined, b: number, tol = 1e-6) =>
+  a !== undefined && Math.abs(a - b) < tol
+
+const content: ContentModule = {
+  limits: {
+    hook: 'What is $\\dfrac{\\sin x}{x}$ when $x = 0$? Plug it in and you get $0/0$, which means nothing. But you can ask a better question: what value does it **approach** as $x$ gets closer and closer to 0? That question, and its answer, is a **limit**, the idea all of calculus is built on.',
+    explore: {
+      type: 'grapher',
+      props: {
+        expressions: ['sin(x)/x'],
+        view: { xMin: -10, xMax: 10, yMin: -0.6, yMax: 1.4 },
+        tangent: { x: 3, trace: true },
+        height: 300,
+      },
+      caption:
+        'Slide the point along $y = \\dfrac{\\sin x}{x}$ and watch the readout for $f(x)$. There is a hole at $x = 0$.',
+      tryThis: [
+        {
+          id: 't-right',
+          text: 'Creep towards 0 from the right, closer than 0.1. What is $f(x)$ approaching?',
+          when: (s) => s.tangentX !== undefined && s.tangentX > 0 && s.tangentX < 0.1,
+        },
+        {
+          id: 't-left',
+          text: 'Now approach from the left. Same answer?',
+          when: (s) => s.tangentX !== undefined && s.tangentX < 0 && s.tangentX > -0.1,
+        },
+        {
+          id: 't-zero',
+          text: 'Find the first place right of 0 where the curve reaches zero.',
+          when: (s) => near(s.tangentX, Math.PI, 0.03),
+        },
+      ],
+    },
+    explain:
+      'We write $\\lim_{x \\to a} f(x) = L$ when $f(x)$ can be made as close as you like to $L$ by taking $x$ close enough to $a$ (but not equal to it). The value **at** $a$ does not matter, and need not even exist.\n\nHere $\\lim_{x \\to 0} \\dfrac{\\sin x}{x} = 1$, even though the formula breaks at 0. A limit exists only if the approaches from the left and from the right agree.',
+    formula: {
+      tex: '\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1',
+      caption: 'The value the function heads towards, not the value it has.',
+    },
+    misconception:
+      '$0/0$ is not 0, 1 or infinity: it is undecided. Limits are exactly the tool for deciding such cases one at a time.',
+    checks: [
+      {
+        kind: 'numeric',
+        id: 'c-cancel',
+        prompt: 'Find $\\displaystyle\\lim_{x \\to 3} \\frac{x^2 - 9}{x - 3}$.',
+        answer: 6,
+        hint: 'Factor the top.',
+        explain: '$\\dfrac{(x - 3)(x + 3)}{x - 3} = x + 3 \\to 6$.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-inf',
+        prompt: 'Find $\\displaystyle\\lim_{x \\to \\infty} \\frac{1}{x}$.',
+        answer: 0,
+        explain: 'Dividing 1 by bigger and bigger numbers gets as close to 0 as you like.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-sides',
+        prompt: 'Does $\\displaystyle\\lim_{x \\to 0} \\frac{|x|}{x}$ exist?',
+        options: [
+          { text: 'No: from the left it is $-1$, from the right $+1$', correct: true },
+          { text: 'Yes, it is 0', why: 'The function is never 0: it is $\\pm1$.' },
+          { text: 'Yes, it is 1', why: 'Only from the right.' },
+        ],
+        explain: 'Left and right limits disagree, so there is no limit.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Instant speed',
+        body: 'A speedometer shows a limit: distance over time, for a time interval shrinking towards zero.',
+      },
+      {
+        title: 'Compound interest',
+        body: 'Compounding more and more often approaches a limit, which is how the number $e$ was discovered.',
+      },
+    ],
+    takeaways: [
+      'A limit is the value a function approaches, not the value it takes.',
+      'Left and right approaches must agree.',
+      'Limits resolve forms like $0/0$.',
+    ],
+  },
+
+  continuity: {
+    hook: 'Can you draw the graph without lifting your pen? If so, the function is **continuous**. Continuous functions cannot jump: a car cannot go from 30 to 60 km/h without passing through every speed in between.',
+    explore: {
+      type: 'grapher',
+      props: {
+        expressions: ['x/2 + k sign(x)'],
+        params: { k: { value: 1, min: -2, max: 2, step: 0.5 } },
+        view: { xMin: -5, xMax: 5, yMin: -4, yMax: 4 },
+        tangent: { x: 1, trace: true },
+        height: 300,
+      },
+      caption:
+        'The graph of $y = \\tfrac{x}{2} + k\\,\\mathrm{sign}(x)$. Slide the point towards 0 from each side and compare.',
+      tryThis: [
+        {
+          id: 't-close',
+          text: 'Make the function continuous: remove the jump entirely.',
+          when: (s) => s.params.k === 0,
+        },
+        {
+          id: 't-big',
+          text: 'Make a jump of size 4 at $x = 0$.',
+          when: (s) => Math.abs(s.params.k) === 2,
+        },
+        {
+          id: 't-left',
+          text: 'With a jump, trace close to 0 from the left. What value do you approach?',
+          when: (s) =>
+            s.params.k !== 0 && s.tangentX !== undefined && s.tangentX < 0 && s.tangentX > -0.1,
+        },
+      ],
+    },
+    explain:
+      'A function is continuous at $a$ when three things hold: $f(a)$ exists, $\\lim_{x \\to a} f(x)$ exists, and they are equal. Breaks come in three kinds: a **hole** (one missing point), a **jump** (left and right limits differ) and an **infinite** break (like $1/x$ at 0).\n\nContinuity buys a powerful guarantee, the **intermediate value theorem**: if a continuous $f$ is negative at one point and positive at another, it must be zero somewhere in between.',
+    formula: {
+      tex: '\\lim_{x \\to a} f(x) = f(a)',
+      caption: 'Continuous at $a$: no hole, no jump, no blow-up.',
+    },
+    misconception:
+      'Continuous does not mean smooth. $|x|$ is continuous everywhere, even though it has a sharp corner at 0.',
+    checks: [
+      {
+        kind: 'mcq',
+        id: 'c-which',
+        prompt: 'Which function is continuous at $x = 0$?',
+        options: [
+          { text: '$|x|$', correct: true },
+          { text: '$1/x$', why: 'It is not even defined at 0.' },
+          {
+            text: '$\\lfloor x \\rfloor$ (round down)',
+            why: 'It jumps from $-1$ to 0 at $x = 0$.',
+          },
+        ],
+        explain: '$|x|$ has a corner but no break.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-fill',
+        prompt:
+          'What value should $f(2)$ take to make $f(x) = \\dfrac{x^2 - 4}{x - 2}$ continuous at 2?',
+        answer: 4,
+        explain: 'The limit is $x + 2 \\to 4$; filling the hole with 4 makes it continuous.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-ivt',
+        prompt: 'A continuous $f$ has $f(1) = -3$ and $f(4) = 5$. What must be true?',
+        options: [
+          { text: '$f(c) = 0$ for some $c$ between 1 and 4', correct: true },
+          { text: '$f(2.5) = 1$', why: 'The function could take any path between.' },
+          { text: '$f$ is increasing', why: 'It could wiggle up and down.' },
+        ],
+        explain: 'The intermediate value theorem: it must cross 0 on the way from $-3$ to 5.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Root finding',
+        body: 'Bisection, a reliable way to solve equations numerically, depends on the intermediate value theorem.',
+      },
+      {
+        title: 'Tax brackets',
+        body: 'Good tax systems are designed so that take-home pay is continuous: earning one more euro never costs you hundreds.',
+      },
+    ],
+    takeaways: [
+      'Continuous: the limit equals the value.',
+      'Breaks: holes, jumps and infinite blow-ups.',
+      'Continuous functions cannot skip values.',
+    ],
+  },
+
+  derivatives: {
+    hook: 'How steep is a curve **at one point**? A slope needs two points, so take a second point nearby, then slide it closer and closer. The slope settles down to a single number: the **derivative**, the instantaneous rate of change.',
+    explore: {
+      type: 'grapher',
+      props: {
+        expressions: ['x^2'],
+        view: { xMin: -3, xMax: 3, yMin: -1, yMax: 7 },
+        tangent: { x: 1, secantH: 1.5 },
+        height: 320,
+      },
+      caption:
+        'The line through two points of $y = x^2$, a gap $h$ apart. Shrink $h$ and the secant turns into the tangent.',
+      tryThis: [
+        {
+          id: 't-shrink',
+          text: 'Shrink $h$ below 0.05. Which number does the secant slope settle on?',
+          when: (s) => s.secantH !== undefined && s.secantH !== 0 && Math.abs(s.secantH) < 0.05,
+        },
+        {
+          id: 't-flat',
+          text: 'Move the point to where the tangent is flat.',
+          when: (s) => near(s.tangentX, 0, 0.03),
+        },
+        {
+          id: 't-four',
+          text: 'Find the point where the slope is 4. Compare with $2x$.',
+          when: (s) => near(s.slope, 4, 0.06),
+        },
+      ],
+    },
+    explain:
+      "The slope between $x$ and $x + h$ is $\\dfrac{f(x + h) - f(x)}{h}$. The derivative is its limit as $h \\to 0$. For $f(x) = x^2$:\n\n$$\\frac{(x + h)^2 - x^2}{h} = \\frac{2xh + h^2}{h} = 2x + h \\to 2x.$$\n\nSo the slope of $x^2$ at any point is $2x$. The derivative $f'(x)$ is a new function that tells you the steepness of $f$ everywhere.",
+    formula: {
+      tex: "f'(x) = \\lim_{h \\to 0} \\frac{f(x + h) - f(x)}{h}",
+      caption: 'Rise over run, with the run shrunk to nothing.',
+    },
+    misconception:
+      'The derivative is not the height of the graph but its steepness. $x^2$ is high at $x = 3$ and its derivative there is 6, while at $x = 0$ the height is 0 and so is the slope; they just coincide.',
+    checks: [
+      {
+        kind: 'numeric',
+        id: 'c-slope',
+        prompt: "Using $f'(x) = 2x$, what is the slope of $y = x^2$ at $x = 5$?",
+        answer: 10,
+        explain: '$2 \\times 5 = 10$.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-secant',
+        prompt: 'For $f(x) = x^2$, what is the secant slope between $x = 1$ and $x = 3$?',
+        answer: 4,
+        explain: '$\\dfrac{9 - 1}{3 - 1} = 4$.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-meaning',
+        prompt: "If $s(t)$ is position in metres after $t$ seconds, $s'(3)$ is…",
+        options: [
+          { text: 'the velocity at exactly 3 seconds', correct: true },
+          { text: 'the distance travelled in 3 seconds', why: 'That is $s(3) - s(0)$.' },
+          {
+            text: 'the average speed over 3 seconds',
+            why: 'Average speed uses a secant, not a tangent.',
+          },
+        ],
+        explain: 'The rate of change of position is velocity, measured in m/s.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Physics',
+        body: 'Velocity is the derivative of position; acceleration is the derivative of velocity.',
+      },
+      {
+        title: 'Economics',
+        body: '“Marginal cost” is the derivative of cost: how much one more unit costs to make.',
+      },
+    ],
+    takeaways: [
+      'The derivative is the slope of the tangent: the limit of secant slopes.',
+      'It measures an instantaneous rate of change.',
+      'The derivative of $x^2$ is $2x$.',
+    ],
+  },
+
+  'derivative-rules': {
+    hook: 'Computing limits every time would be exhausting. Luckily a handful of rules take care of almost everything. The most useful one: to differentiate $x^n$, **bring the power down and drop it by one**.',
+    explore: {
+      type: 'grapher',
+      props: {
+        expressions: ['a x^n'],
+        params: {
+          a: { value: 1, min: -2, max: 3, step: 0.5 },
+          n: { value: 2, min: 0, max: 4, step: 1 },
+        },
+        view: { xMin: -3, xMax: 3, yMin: -6, yMax: 8 },
+        derivative: 0,
+        height: 320,
+      },
+      caption: "Blue is $f(x) = ax^n$; the second curve is its derivative $f'(x)$.",
+      tryThis: [
+        {
+          id: 't-cube',
+          text: 'Set $a = 1$, $n = 3$. Is the derivative curve $3x^2$?',
+          when: (s) => s.params.a === 1 && s.params.n === 3,
+        },
+        {
+          id: 't-line',
+          text: 'Make $f$ a straight line ($n = 1$). What does its derivative look like?',
+          when: (s) => s.params.n === 1 && s.params.a !== 0,
+        },
+        {
+          id: 't-const',
+          text: 'Make $f$ a constant ($n = 0$). Where is the derivative?',
+          when: (s) => s.params.n === 0,
+        },
+      ],
+    },
+    explain:
+      "The **power rule**: $\\dfrac{d}{dx} x^n = n x^{n-1}$. Constants come along for the ride ($\\tfrac{d}{dx} 3x^2 = 6x$), and sums are differentiated term by term. A constant on its own has derivative 0, because a flat line has no slope.\n\nProducts and quotients have their own rules: $(fg)' = f'g + fg'$ and $\\left(\\tfrac{f}{g}\\right)' = \\tfrac{f'g - fg'}{g^2}$. A few functions are worth knowing by heart: $(e^x)' = e^x$, $(\\sin x)' = \\cos x$, $(\\cos x)' = -\\sin x$, $(\\ln x)' = 1/x$.",
+    formula: {
+      tex: "\\frac{d}{dx} x^n = n x^{n-1}, \\qquad (fg)' = f'g + fg'",
+      caption: 'The power rule and the product rule.',
+    },
+    misconception:
+      "The derivative of a product is not the product of the derivatives: $(x \\cdot x)' = 2x$, but $1 \\cdot 1 = 1$.",
+    checks: [
+      {
+        kind: 'expression',
+        id: 'c-power',
+        prompt: 'Differentiate $f(x) = 4x^3 - 5x + 7$.',
+        answer: '12x^2 - 5',
+        explain: '$4 \\cdot 3x^2 - 5 + 0 = 12x^2 - 5$.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-eval',
+        prompt: "If $f(x) = x^4$, what is $f'(2)$?",
+        answer: 32,
+        explain: "$f'(x) = 4x^3$, so $f'(2) = 32$.",
+      },
+      {
+        kind: 'expression',
+        id: 'c-product',
+        prompt: 'Differentiate $x^2 \\sin x$ (write sin(x) and cos(x)).',
+        answer: '2x sin(x) + x^2 cos(x)',
+        hint: "Product rule: $f'g + fg'$.",
+        explain: "$(x^2)' \\sin x + x^2 (\\sin x)' = 2x\\sin x + x^2 \\cos x$.",
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Machine learning',
+        body: 'Training a neural network applies these rules millions of times (automatically) to find which way to nudge each weight.',
+      },
+      {
+        title: 'Physics formulas',
+        body: "Drop a ball: height $h = 20 - 4.9t^2$, so velocity $h' = -9.8t$, and acceleration is $-9.8$ m/s².",
+      },
+    ],
+    takeaways: [
+      'Power rule: bring the power down, reduce it by one.',
+      'Sums term by term; constants have derivative 0.',
+      'Products and quotients have their own rules.',
+    ],
+  },
+
+  'chain-rule': {
+    hook: 'Gears inside gears: if the middle gear turns 3 times as fast as the first, and the last turns 2 times as fast as the middle, the last turns $3 \\times 2 = 6$ times as fast as the first. The **chain rule** says rates of change through a chain of functions **multiply**.',
+    explore: {
+      type: 'grapher',
+      props: {
+        expressions: ['sin(k x)'],
+        params: { k: { value: 1, min: 0.5, max: 4, step: 0.5 } },
+        view: { xMin: -4, xMax: 4, yMin: -4.5, yMax: 4.5 },
+        derivative: 0,
+        height: 320,
+      },
+      caption:
+        'Blue is $\\sin(kx)$; the second curve is its derivative. The inside function $kx$ speeds the wave up by $k$.',
+      tryThis: [
+        {
+          id: 't-two',
+          text: 'Set $k = 2$. How tall is the derivative curve now?',
+          when: (s) => s.params.k === 2,
+        },
+        {
+          id: 't-four',
+          text: 'Set $k = 4$. Why does the derivative get taller as the wave gets squeezed?',
+          when: (s) => s.params.k === 4,
+        },
+        {
+          id: 't-slow',
+          text: 'Set $k = 0.5$. What happens to the derivative’s height?',
+          when: (s) => s.params.k === 0.5,
+        },
+      ],
+    },
+    explain:
+      "For a composition $f(g(x))$, the chain rule says $\\dfrac{d}{dx} f(g(x)) = f'(g(x)) \\cdot g'(x)$: the outer derivative (evaluated at the inside) times the inner derivative.\n\nSo $\\dfrac{d}{dx}\\sin(kx) = \\cos(kx) \\cdot k$. Squeezing a wave by $k$ makes it $k$ times steeper. Likewise $\\dfrac{d}{dx}(3x + 1)^5 = 5(3x + 1)^4 \\cdot 3$.",
+    formula: {
+      tex: "\\frac{d}{dx} f(g(x)) = f'(g(x))\\, g'(x)",
+      caption: 'Outside derivative times inside derivative.',
+    },
+    misconception:
+      'Forgetting the inner derivative is the most common calculus slip: $\\tfrac{d}{dx}\\sin(2x)$ is $2\\cos(2x)$, not $\\cos(2x)$.',
+    checks: [
+      {
+        kind: 'expression',
+        id: 'c-power',
+        prompt: 'Differentiate $(x^2 + 1)^3$.',
+        answer: '6x (x^2 + 1)^2',
+        explain: '$3(x^2 + 1)^2 \\cdot 2x = 6x(x^2 + 1)^2$.',
+      },
+      {
+        kind: 'expression',
+        id: 'c-exp',
+        prompt: 'Differentiate $e^{5x}$ (write exp(5x) or e^(5x)).',
+        answer: '5 e^(5x)',
+        explain: 'The outer $e^u$ stays $e^{5x}$; the inner $5x$ contributes 5.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-rates',
+        prompt:
+          'A balloon’s radius grows at 2 cm/s. Its volume changes at $4\\pi r^2$ per cm of radius. At $r = 3$, how fast does the volume grow, in multiples of $\\pi$ cm³/s?',
+        answer: 72,
+        hint: 'Multiply the two rates.',
+        explain: '$4\\pi \\cdot 9 \\cdot 2 = 72\\pi$.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Backpropagation',
+        body: 'Neural networks are long chains of functions; training them is the chain rule applied layer by layer.',
+      },
+      {
+        title: 'Related rates',
+        body: 'How fast does a ladder’s top slide down if its foot slides out at 1 m/s? Chain the rates together.',
+      },
+    ],
+    takeaways: [
+      'Through a chain of functions, rates multiply.',
+      'Outer derivative at the inside, times the inner derivative.',
+    ],
+  },
+
+  optimization: {
+    hook: 'Cut equal squares from the corners of a 10 × 10 sheet and fold up the sides to make an open box. Cut too little and it is flat; cut too much and it is tiny. Somewhere in between is the **biggest** box, and calculus finds it exactly: at the top of a hill, the slope is zero.',
+    explore: {
+      type: 'grapher',
+      props: {
+        expressions: ['x (10 - 2x)^2'],
+        view: { xMin: -0.5, xMax: 5.5, yMin: -10, yMax: 90 },
+        tangent: { x: 0.8 },
+        markers: 'extrema',
+        height: 320,
+      },
+      caption:
+        'Volume $V(x) = x(10 - 2x)^2$ for a cut of size $x$. Slide the tangent point along the curve.',
+      tryThis: [
+        {
+          id: 't-flat',
+          text: 'Find the cut where the tangent is flat. How big is the box there?',
+          when: (s) => near(s.tangentX, 5 / 3, 0.04),
+        },
+        {
+          id: 't-falling',
+          text: 'Find a cut where cutting a bit more would *shrink* the box.',
+          when: (s) => s.slope !== undefined && s.slope < -5 && (s.tangentX ?? 0) > 0,
+        },
+        {
+          id: 't-end',
+          text: 'Try the biggest possible cut, $x = 5$. What is left of the box?',
+          when: (s) => near(s.tangentX, 5, 0.05),
+        },
+      ],
+    },
+    explain:
+      "At a maximum or minimum of a smooth function, the tangent is horizontal, so $f'(x) = 0$. To optimise:\n\n1. Write the quantity as a function of one variable.\n2. Solve $f'(x) = 0$ for the critical points.\n3. Compare them (and the endpoints) to find the best.\n\nHere $V'(x) = (10 - 2x)(10 - 6x)$, which is zero at $x = 5$ (no box) and $x = \\tfrac53$, giving the largest volume $\\approx 74.1$.",
+    formula: {
+      tex: "f'(x) = 0 \\quad \\text{at an interior maximum or minimum}",
+      caption: 'Then check which critical point (or endpoint) is best.',
+    },
+    misconception:
+      "$f'(x) = 0$ does not guarantee a maximum: it might be a minimum, or a flat spot like $x^3$ at 0. Always check.",
+    checks: [
+      {
+        kind: 'numeric',
+        id: 'c-crit',
+        prompt: 'Where does $f(x) = x^2 - 6x + 2$ reach its minimum?',
+        answer: 3,
+        explain: "$f'(x) = 2x - 6 = 0$ gives $x = 3$.",
+      },
+      {
+        kind: 'numeric',
+        id: 'c-fence',
+        prompt: '40 m of fence makes a rectangle. What is the largest possible area, in m²?',
+        answer: 100,
+        hint: 'Sides $x$ and $20 - x$.',
+        explain: "$A = x(20 - x)$, $A' = 20 - 2x = 0$ at $x = 10$: a square of area 100.",
+      },
+      {
+        kind: 'mcq',
+        id: 'c-type',
+        prompt: "If $f'(c) = 0$ and $f''(c) < 0$, then at $c$ there is…",
+        options: [
+          { text: 'a local maximum', correct: true },
+          {
+            text: 'a local minimum',
+            why: 'Negative second derivative means the curve bends downward.',
+          },
+          { text: 'nothing special', why: 'A flat, downward-bending point is a peak.' },
+        ],
+        explain: 'Concave down with a flat tangent: the top of a hill.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Packaging',
+        body: 'Companies choose can and box shapes that hold the most for the least material.',
+      },
+      {
+        title: 'Pricing',
+        body: 'Raise a price and you sell fewer; revenue is maximised where its derivative is zero.',
+      },
+    ],
+    takeaways: [
+      'At a smooth maximum or minimum, the derivative is zero.',
+      'Find critical points, then compare them and the endpoints.',
+    ],
+  },
+
+  'newtons-method': {
+    hook: 'How does a calculator find $\\sqrt2$? It guesses, then improves the guess by sliding down the **tangent line** to where it hits zero. Each step roughly doubles the number of correct digits. That is Newton’s method.',
+    explore: {
+      type: 'iterationPlot',
+      props: { mode: 'newton', fn: 'sqrt2', x0: 3 },
+      caption:
+        'Each step follows the tangent at the current guess down to the x-axis. That crossing is the next guess.',
+      tryThis: [
+        {
+          id: 't-root2',
+          text: 'Take steps until $x^2 - 2$ is within one millionth of zero. How many steps did it take?',
+          when: (s) => s.mode === 'newton' && s.fn === 'sqrt2' && s.residual < 1e-6,
+        },
+        {
+          id: 't-cos',
+          text: 'Switch to $\\cos x - x$ and find where $\\cos x = x$.',
+          when: (s) => s.mode === 'newton' && s.fn === 'cosx' && s.residual < 1e-6,
+        },
+        {
+          id: 't-cubic',
+          text: 'Solve Newton’s own example, $x^3 - 2x - 5 = 0$.',
+          when: (s) => s.mode === 'newton' && s.fn === 'cubic' && s.residual < 1e-6,
+        },
+      ],
+    },
+    explain:
+      "Near a guess $x_n$, the curve looks like its tangent line. Setting that line to zero gives the next guess:\n\n$$x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}.$$\n\nFor $f(x) = x^2 - 2$ this is $x_{n+1} = \\tfrac12\\left(x_n + \\tfrac{2}{x_n}\\right)$, the ancient Babylonian square-root recipe. Close to a root the error roughly squares each step: 0.1, 0.01, 0.0001, …",
+    formula: {
+      tex: "x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}",
+      caption: 'Slide down the tangent to the axis, repeat.',
+    },
+    misconception:
+      'Newton’s method is not guaranteed to work. A bad start (near a flat tangent) can shoot far away or bounce forever.',
+    checks: [
+      {
+        kind: 'numeric',
+        id: 'c-step',
+        prompt: 'One Newton step for $x^2 - 2$ from $x_0 = 1$. What is $x_1$?',
+        answer: 1.5,
+        explain: '$1 - \\dfrac{1 - 2}{2} = 1.5$.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-step2',
+        prompt: 'And from $x_1 = 1.5$, what is $x_2$? (4 decimal places)',
+        answer: 1.4167,
+        tolerance: 0.0001,
+        explain:
+          '$1.5 - \\dfrac{0.25}{3} \\approx 1.4167$; already close to $\\sqrt2 \\approx 1.4142$.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-fail',
+        prompt: 'When does a Newton step break down completely?',
+        options: [
+          { text: "When $f'(x_n) = 0$", correct: true },
+          { text: 'When $f(x_n) = 0$', why: 'Then you have found the root.' },
+          { text: 'When $x_n$ is negative', why: 'Negative guesses are fine.' },
+        ],
+        explain: 'A flat tangent never meets the x-axis, so there is no next guess.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Inside your calculator',
+        body: 'Square roots and divisions in hardware are often computed with a few Newton steps.',
+      },
+      {
+        title: 'Video games',
+        body: 'The famous “fast inverse square root” in Quake III used a clever first guess plus one Newton step.',
+      },
+    ],
+    takeaways: [
+      'Replace the curve by its tangent and solve the line.',
+      'Near a root, correct digits roughly double each step.',
+      'A poor starting guess can fail.',
+    ],
+  },
+
+  integrals: {
+    hook: 'How far does a car travel if its speed keeps changing? If the speed were constant you would multiply. Since it changes, chop the time into small pieces, treat the speed as constant on each, and add up. Make the pieces thinner and thinner, and you get the exact answer: the **integral**, the area under the curve.',
+    explore: {
+      type: 'grapher',
+      props: {
+        expressions: ['0.5 x^2 + 1'],
+        view: { xMin: -0.5, xMax: 4, yMin: -0.5, yMax: 6 },
+        riemann: { a: 0, b: 3, n: 4, method: 'left' },
+        height: 320,
+      },
+      caption:
+        'Rectangles under $y = \\tfrac12 x^2 + 1$ from 0 to 3. Drag the ends, change the number of rectangles and how their height is chosen.',
+      tryThis: [
+        {
+          id: 't-many',
+          text: 'Use at least 40 rectangles. How close is the sum to the exact area?',
+          when: (s) => (s.riemannN ?? 0) >= 40,
+        },
+        {
+          id: 't-close',
+          text: 'Get within 0.01 of the exact area with as few rectangles as you can (try the other heights).',
+          when: (s) =>
+            s.riemannSum !== undefined &&
+            s.area !== undefined &&
+            Math.abs(s.riemannSum - s.area) < 0.01 &&
+            (s.riemannN ?? 99) <= 20,
+        },
+        {
+          id: 't-one',
+          text: 'Use just one rectangle. How bad is the estimate?',
+          when: (s) => s.riemannN === 1,
+        },
+      ],
+    },
+    explain:
+      'Split $[a, b]$ into $n$ strips of width $\\Delta x$. Each strip’s area is about $f(x_i)\\,\\Delta x$, so the total is the **Riemann sum** $\\sum f(x_i)\\,\\Delta x$. The definite integral is the limit as $n \\to \\infty$:\n\n$$\\int_a^b f(x)\\,dx = \\lim_{n \\to \\infty} \\sum_{i=1}^n f(x_i)\\,\\Delta x.$$\n\nThe $\\int$ is a stretched S for “sum”, and $dx$ is the infinitely thin width. Area below the x-axis counts as negative.',
+    formula: {
+      tex: '\\int_a^b f(x)\\,dx = \\lim_{n \\to \\infty} \\sum_{i=1}^{n} f(x_i)\\,\\Delta x',
+      caption: 'Adding up infinitely many infinitely thin strips.',
+    },
+    misconception:
+      'An integral can be negative. It measures *signed* area: regions under the axis subtract.',
+    checks: [
+      {
+        kind: 'numeric',
+        id: 'c-rect',
+        prompt: 'What is $\\int_0^4 3\\,dx$?',
+        answer: 12,
+        explain: 'A 4 × 3 rectangle: area 12.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-tri',
+        prompt: 'What is $\\int_0^6 x\\,dx$?',
+        answer: 18,
+        explain: 'A triangle with base 6 and height 6: $\\tfrac12 \\cdot 6 \\cdot 6 = 18$.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-sign',
+        prompt: 'What is $\\int_{-2}^{2} x\\,dx$?',
+        answer: 0,
+        explain: 'The triangle below the axis cancels the one above.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Distance from speed',
+        body: 'Integrate speed over time to get distance: the area under a speed–time graph.',
+      },
+      {
+        title: 'Energy bills',
+        body: 'Your meter integrates power use over the month to give kilowatt-hours.',
+      },
+    ],
+    takeaways: [
+      'The integral is the limit of Riemann sums: area under the curve.',
+      'Thinner strips give better estimates.',
+      'Area below the axis counts as negative.',
+    ],
+  },
+
+  'fundamental-theorem': {
+    hook: 'Derivatives measure slopes. Integrals measure areas. They look like unrelated problems, yet they are exact **opposites**: the rate at which area accumulates is the height of the curve. This discovery, the Fundamental Theorem of Calculus, turned hours of summing into a single subtraction.',
+    explore: {
+      type: 'grapher',
+      props: {
+        expressions: ['cos(x)', 'sin(x)'],
+        view: { xMin: -0.5, xMax: 7, yMin: -1.6, yMax: 1.6 },
+        area: { a: 0, b: 1 },
+        height: 320,
+      },
+      caption:
+        'The shaded area under $\\cos x$ from 0 to $b$. The orange curve is $\\sin x$. Drag $b$ and compare the area with the height of $\\sin b$.',
+      tryThis: [
+        {
+          id: 't-max',
+          text: 'Make the area as large as possible. Where is $b$, and what is $\\cos b$ there?',
+          when: (s) =>
+            s.areaBounds !== undefined &&
+            near(s.areaBounds[0], 0, 0.02) &&
+            near(s.areaBounds[1], Math.PI / 2, 0.05),
+        },
+        {
+          id: 't-zero',
+          text: 'Find the $b$ (other than 0) where the total area is zero.',
+          when: (s) =>
+            s.areaBounds !== undefined &&
+            near(s.areaBounds[0], 0, 0.02) &&
+            near(s.areaBounds[1], Math.PI, 0.05),
+        },
+        {
+          id: 't-negative',
+          text: 'Make the signed area negative.',
+          when: (s) => s.area !== undefined && s.area < -0.05,
+        },
+      ],
+    },
+    explain:
+      "Let $A(x) = \\int_a^x f(t)\\,dt$ be the area so far. Widen the region by a sliver $h$ and the area grows by about $f(x)\\,h$. So $A'(x) = f(x)$: **the derivative of the area function is the original function**.\n\nThat means to compute $\\int_a^b f(x)\\,dx$ you only need an **antiderivative** $F$ (any function with $F' = f$), and then\n\n$$\\int_a^b f(x)\\,dx = F(b) - F(a).$$\n\nFor $\\cos x$, $F = \\sin x$, so the area from 0 to $b$ is just $\\sin b$: exactly what the picture shows.",
+    formula: {
+      tex: "\\int_a^b f(x)\\,dx = F(b) - F(a) \\quad \\text{where } F' = f",
+      caption: 'Integration undoes differentiation.',
+    },
+    misconception:
+      'Antiderivatives are not unique: $x^2$, $x^2 + 5$ and $x^2 - 1$ all have derivative $2x$. The $+C$ cancels in $F(b) - F(a)$.',
+    checks: [
+      {
+        kind: 'numeric',
+        id: 'c-poly',
+        prompt: 'Compute $\\int_1^3 2x\\,dx$.',
+        answer: 8,
+        explain: '$F = x^2$: $9 - 1 = 8$.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-cube',
+        prompt: 'Compute $\\int_0^2 3x^2\\,dx$.',
+        answer: 8,
+        explain: '$F = x^3$: $8 - 0 = 8$.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-ddx',
+        prompt: 'What is $\\dfrac{d}{dx}\\displaystyle\\int_0^x e^{t^2}\\,dt$?',
+        options: [
+          { text: '$e^{x^2}$', correct: true },
+          { text: '$2x e^{x^2}$', why: 'No chain rule is needed: the upper limit is just $x$.' },
+          { text: 'It cannot be computed', why: 'The FTC gives it directly, without finding $F$.' },
+        ],
+        explain: 'The derivative of the accumulated area is the integrand at $x$.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Physics',
+        body: 'Integrate velocity to get displacement, integrate force over distance to get work: all via antiderivatives.',
+      },
+      {
+        title: 'Probability',
+        body: 'Probabilities for continuous quantities are areas under a density curve, computed with $F(b) - F(a)$.',
+      },
+    ],
+    takeaways: [
+      'The rate of change of accumulated area is the height of the curve.',
+      'Integrals are computed with antiderivatives: $F(b) - F(a)$.',
+    ],
+  },
+
+  'integration-techniques': {
+    hook: 'Differentiating is mechanical; integrating is detective work. You look for a pattern: a function sitting next to its own derivative, or a product you can unwrap. **Substitution** and **integration by parts** are the two most useful tricks, and both are derivative rules run backwards.',
+    explore: {
+      type: 'grapher',
+      props: {
+        expressions: ['2x cos(x^2)', 'sin(x^2)'],
+        view: { xMin: -0.3, xMax: 3, yMin: -5, yMax: 5 },
+        area: { a: 0, b: 1 },
+        height: 320,
+      },
+      caption:
+        'The shaded area under $2x\\cos(x^2)$, and in orange $\\sin(x^2)$, which is its antiderivative. Drag $b$.',
+      tryThis: [
+        {
+          id: 't-one',
+          text: 'Make the area from 0 exactly 1. Check: $\\sin(b^2) = 1$ when $b^2 = \\tfrac{\\pi}{2}$.',
+          when: (s) =>
+            s.areaBounds !== undefined &&
+            near(s.areaBounds[0], 0, 0.02) &&
+            near(s.areaBounds[1], Math.sqrt(Math.PI / 2), 0.03),
+        },
+        {
+          id: 't-zero',
+          text: 'Find $b$ where the area from 0 is back to zero.',
+          when: (s) =>
+            s.areaBounds !== undefined &&
+            near(s.areaBounds[0], 0, 0.02) &&
+            near(s.areaBounds[1], Math.sqrt(Math.PI), 0.03),
+        },
+        {
+          id: 't-neg',
+          text: 'Make the area negative. Which bumps are below the axis?',
+          when: (s) => s.area !== undefined && s.area < -0.05,
+        },
+      ],
+    },
+    explain:
+      '**Substitution** undoes the chain rule. In $\\int 2x\\cos(x^2)\\,dx$, the $2x$ is the derivative of the inside $x^2$. Let $u = x^2$, so $du = 2x\\,dx$, and the integral becomes $\\int \\cos u\\,du = \\sin u = \\sin(x^2) + C$.\n\n**Integration by parts** undoes the product rule: $\\int u\\,dv = uv - \\int v\\,du$. For $\\int x e^x\\,dx$, take $u = x$, $dv = e^x dx$: the answer is $xe^x - e^x + C$. Choose $u$ to be the part that gets simpler when differentiated.',
+    formula: {
+      tex: "\\int f(g(x))g'(x)\\,dx = \\int f(u)\\,du, \\qquad \\int u\\,dv = uv - \\int v\\,du",
+      caption: 'Substitution and integration by parts.',
+    },
+    misconception:
+      'Some integrals have no formula at all: $\\int e^{-x^2}dx$ cannot be written with ordinary functions, though its value can be computed to any accuracy.',
+    checks: [
+      {
+        kind: 'expression',
+        id: 'c-sub',
+        prompt: 'Find an antiderivative of $3x^2 e^{x^3}$ (write e^(x^3)).',
+        answer: 'e^(x^3)',
+        explain: 'With $u = x^3$, $du = 3x^2 dx$: $\\int e^u du = e^{x^3}$.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-def',
+        prompt: 'Compute $\\int_0^1 2x(x^2 + 1)^3\\,dx$.',
+        answer: 3.75,
+        hint: 'Let $u = x^2 + 1$, running from 1 to 2.',
+        explain: '$\\int_1^2 u^3 du = \\tfrac{u^4}{4}\\Big|_1^2 = 4 - \\tfrac14 = 3.75$.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-parts',
+        prompt: 'For $\\int x \\cos x\\,dx$ by parts, the best choice is…',
+        options: [
+          { text: '$u = x$, $dv = \\cos x\\,dx$', correct: true },
+          { text: '$u = \\cos x$, $dv = x\\,dx$', why: 'Then $v = x^2/2$ and things get worse.' },
+          {
+            text: 'Substitution $u = \\cos x$',
+            why: 'There is no $\\sin x$ factor to absorb $du$.',
+          },
+        ],
+        explain:
+          'Differentiating $x$ gives 1, which simplifies: the answer is $x\\sin x + \\cos x + C$.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Engineering formulas',
+        body: 'Centres of mass, moments of inertia and signal energies are all integrals solved with these techniques.',
+      },
+      {
+        title: 'Computer algebra',
+        body: 'Programs like the ones behind symbolic calculators apply substitution and parts systematically.',
+      },
+    ],
+    takeaways: [
+      'Substitution reverses the chain rule: look for an inside function and its derivative.',
+      'Integration by parts reverses the product rule.',
+    ],
+  },
+
+  'infinite-series': {
+    hook: 'Walk halfway to a wall, then half the remaining distance, then half again, forever. Infinitely many steps, yet you cover a **finite** distance: $\\tfrac12 + \\tfrac14 + \\tfrac18 + \\dots = 1$. But not every infinite sum settles down, and telling them apart is the art of series.',
+    explore: {
+      type: 'iterationPlot',
+      props: { mode: 'series', series: 'geometric', r: 0.5 },
+      caption:
+        'Bars are the running totals (partial sums). A dashed line marks the limit, if there is one.',
+      tryThis: [
+        {
+          id: 't-diverge',
+          text: 'Make a geometric series that does *not* settle down.',
+          when: (s) => s.mode === 'series' && s.series === 'geometric' && Math.abs(s.r) >= 1,
+        },
+        {
+          id: 't-harmonic',
+          text: 'Switch to the harmonic series $1 + \\tfrac12 + \\tfrac13 + \\dots$ and push the total above 3.',
+          when: (s) => s.mode === 'series' && s.series === 'harmonic' && s.partial > 3,
+        },
+        {
+          id: 't-basel',
+          text: 'Try $\\sum \\tfrac{1}{k^2}$. Its limit, $\\pi^2/6$, surprised everyone in 1734.',
+          when: (s) => s.mode === 'series' && s.series === 'basel',
+        },
+      ],
+    },
+    explain:
+      'A series $\\sum a_k$ **converges** if its partial sums $S_n = a_1 + \\dots + a_n$ approach a limit. The geometric series $\\sum r^k$ converges to $\\tfrac{1}{1 - r}$ exactly when $|r| < 1$.\n\nThe terms must shrink to 0 for a series to converge, but that is not enough. The harmonic series $\\sum \\tfrac1k$ has shrinking terms yet grows forever, just very slowly (past 10 only after 12 367 terms). $\\sum \\tfrac{1}{k^2}$ shrinks fast enough and converges.',
+    formula: {
+      tex: '\\sum_{k=0}^{\\infty} r^k = \\frac{1}{1 - r} \\quad (|r| < 1)',
+      caption: 'The geometric series: the one sum everyone should know.',
+    },
+    misconception:
+      'Terms going to zero does not make a series converge. $\\sum \\tfrac1k$ diverges.',
+    checks: [
+      {
+        kind: 'numeric',
+        id: 'c-geo',
+        prompt: 'What is $1 + \\tfrac13 + \\tfrac19 + \\tfrac{1}{27} + \\dots$?',
+        answer: 1.5,
+        explain: '$\\dfrac{1}{1 - 1/3} = \\dfrac32$.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-conv',
+        prompt: 'Which series converges?',
+        options: [
+          { text: '$\\sum \\tfrac{1}{2^k}$', correct: true },
+          { text: '$\\sum \\tfrac1k$', why: 'The harmonic series diverges.' },
+          { text: '$\\sum 1$', why: 'Adding 1 forever grows without bound.' },
+        ],
+        explain: 'Geometric with $r = \\tfrac12$.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-decimal',
+        prompt: '$0.999\\ldots = 0.9 + 0.09 + 0.009 + \\dots$. What is its sum?',
+        answer: 1,
+        explain: 'Geometric with first term 0.9 and $r = 0.1$: $\\tfrac{0.9}{0.9} = 1$.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Repeating decimals',
+        body: 'Every repeating decimal is a geometric series, which is why it equals a fraction.',
+      },
+      {
+        title: 'Loans and annuities',
+        body: 'The value of a stream of payments is a geometric series of discounted amounts.',
+      },
+    ],
+    takeaways: [
+      'A series converges when its partial sums approach a limit.',
+      'Geometric series converge exactly when $|r| < 1$.',
+      'Shrinking terms are necessary but not sufficient.',
+    ],
+  },
+
+  'taylor-series': {
+    hook: 'Your calculator has no table of sines. Instead it uses a **polynomial** that hugs $\\sin x$ so closely you cannot tell them apart. Taylor series build such polynomials by matching a function’s value, slope, curvature and more at one point.',
+    explore: {
+      type: 'grapher',
+      props: {
+        expressions: ['sin(x)'],
+        view: { xMin: -8, xMax: 8, yMin: -3, yMax: 3 },
+        taylor: { a: 0, degree: 1 },
+        height: 320,
+      },
+      caption:
+        'Blue is $\\sin x$; orange is its Taylor polynomial. Raise the degree, or drag the centre point.',
+      tryThis: [
+        {
+          id: 't-five',
+          text: 'Raise the degree to 5. Over what range does it match $\\sin x$ well?',
+          when: (s) => s.taylorDegree === 5,
+        },
+        {
+          id: 't-many',
+          text: 'Go to degree 11 or more. How far does the match reach now?',
+          when: (s) => (s.taylorDegree ?? 0) >= 11,
+        },
+        {
+          id: 't-move',
+          text: 'Move the centre away from 0. Where is the polynomial most accurate?',
+          when: (s) => s.taylorCenter !== undefined && Math.abs(s.taylorCenter) > 1,
+        },
+      ],
+    },
+    explain:
+      "The Taylor polynomial of degree $n$ at $a$ matches $f$ and its first $n$ derivatives at $a$:\n\n$$f(x) \\approx f(a) + f'(a)(x - a) + \\frac{f''(a)}{2!}(x - a)^2 + \\dots + \\frac{f^{(n)}(a)}{n!}(x - a)^n.$$\n\nFor $\\sin x$ at 0 this gives $x - \\tfrac{x^3}{3!} + \\tfrac{x^5}{5!} - \\dots$. Degree 1 is the tangent line; each extra term bends the polynomial to follow the curve further out. For $\\sin$, $\\cos$ and $e^x$ the infinite series equals the function everywhere.",
+    formula: {
+      tex: 'e^x = \\sum_{k=0}^{\\infty} \\frac{x^k}{k!}, \\qquad \\sin x = x - \\frac{x^3}{3!} + \\frac{x^5}{5!} - \\dots',
+      caption: 'Two famous Taylor series.',
+    },
+    misconception:
+      'A Taylor polynomial is excellent near its centre and can be wildly wrong far away. Accuracy is local.',
+    checks: [
+      {
+        kind: 'expression',
+        id: 'c-exp',
+        prompt: 'Write the degree-2 Taylor polynomial of $e^x$ at 0.',
+        answer: '1 + x + x^2/2',
+        explain: 'All derivatives of $e^x$ are 1 at 0: $1 + x + \\tfrac{x^2}{2!}$.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-approx',
+        prompt: 'Estimate $\\sin(0.1)$ with $x - x^3/6$. (6 decimal places)',
+        answer: 0.099833,
+        tolerance: 0.000001,
+        explain: '$0.1 - 0.001/6 \\approx 0.0998333$; the true value is $0.0998334\\ldots$',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-line',
+        prompt: 'The degree-1 Taylor polynomial of $f$ at $a$ is…',
+        options: [
+          { text: 'the tangent line at $a$', correct: true },
+          { text: 'a horizontal line', why: 'That is degree 0.' },
+          { text: 'the secant line', why: 'It uses the slope at $a$ itself.' },
+        ],
+        explain: "$f(a) + f'(a)(x - a)$ is the tangent line.",
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Physics approximations',
+        body: 'The pendulum formula uses $\\sin\\theta \\approx \\theta$ for small swings: a degree-1 Taylor polynomial.',
+      },
+      {
+        title: 'Relativity',
+        body: 'Expanding Einstein’s energy formula in a Taylor series gives $mc^2 + \\tfrac12 mv^2 + \\dots$: rest energy plus the familiar kinetic energy.',
+      },
+    ],
+    takeaways: [
+      'Taylor polynomials match derivatives at one point.',
+      'More terms, better fit further from the centre.',
+      'Degree 1 is the tangent line.',
+    ],
+  },
+
+  'multivariable-functions': {
+    hook: 'The height of a landscape depends on two things: how far east and how far north you are. A function of two variables, $z = f(x, y)$, is a **surface**, and the best way to draw it flat is how hikers do: a **contour map**, with lines joining points of equal height.',
+    explore: {
+      type: 'contourPlot',
+      props: { mode: 'surface', fn: 'hill', start: [2, 1.5] },
+      caption:
+        'A hill $z = 4e^{-(x^2 + y^2)/4}$, seen from above. The side view below slices through your point.',
+      tryThis: [
+        {
+          id: 't-top',
+          text: 'Find the summit. How high is it?',
+          when: (s) => s.mode === 'surface' && s.z > 3.95,
+        },
+        {
+          id: 't-slice',
+          text: 'Switch the side view to slice upwards (north–south).',
+          when: (s) => s.mode === 'surface' && s.slice === 'y',
+        },
+        {
+          id: 't-low',
+          text: 'Walk down to where the height is below 0.3.',
+          when: (s) => s.mode === 'surface' && s.z < 0.3,
+        },
+      ],
+    },
+    explain:
+      'A function $f(x, y)$ takes a point of the plane and returns a number, which we can picture as a height. Its graph is a surface in 3D. A **level curve** (contour) is the set of points where $f(x, y) = c$ for a fixed $c$.\n\nWhere contours bunch together, the surface is steep; where they are far apart, it is gentle. Closed rings of contours mark hills or hollows, and crossing patterns mark passes (saddles).',
+    formula: {
+      tex: 'f(x, y) = c \\quad \\text{(a level curve)}',
+      caption: 'Each contour joins points at one height.',
+    },
+    misconception: 'Contour lines never cross: a single point cannot have two different heights.',
+    checks: [
+      {
+        kind: 'numeric',
+        id: 'c-eval',
+        prompt: 'If $f(x, y) = x^2 + 3y$, what is $f(2, -1)$?',
+        answer: 1,
+        explain: '$4 - 3 = 1$.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-level',
+        prompt: 'What are the level curves of $f(x, y) = x^2 + y^2$?',
+        options: [
+          { text: 'Circles around the origin', correct: true },
+          { text: 'Straight lines', why: 'Those come from planes like $x + y$.' },
+          { text: 'Parabolas', why: 'Setting $x^2 + y^2 = c$ gives circles.' },
+        ],
+        explain: '$x^2 + y^2 = c$ is a circle of radius $\\sqrt c$.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-steep',
+        prompt: 'On a contour map, where is the ground steepest?',
+        options: [
+          { text: 'Where the contours are closest together', correct: true },
+          { text: 'Where the contours are furthest apart', why: 'That is the flattest ground.' },
+          { text: 'On the highest contour', why: 'High is not the same as steep.' },
+        ],
+        explain: 'Close contours: big change in height over a short distance.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Weather maps',
+        body: 'Isobars are contours of air pressure; tightly packed isobars mean strong wind.',
+      },
+      {
+        title: 'Machine learning',
+        body: 'A model’s error is a function of its parameters: a landscape that training tries to descend.',
+      },
+    ],
+    takeaways: [
+      '$z = f(x, y)$ is a surface; contours are its level curves.',
+      'Close contours mean steep ground.',
+    ],
+  },
+
+  'partial-derivatives': {
+    hook: 'Standing on a hillside, the slope depends on which way you face. Walk east and you might climb; walk north and you might descend. A **partial derivative** measures the slope in one direction, holding the other variable fixed.',
+    explore: {
+      type: 'contourPlot',
+      props: { mode: 'partials', fn: 'saddle', start: [1, 0.5] },
+      caption:
+        'The saddle $z = x^2 - y^2$. The two side views slice across (y fixed) and up (x fixed) through your point, with their tangent lines.',
+      tryThis: [
+        {
+          id: 't-fx0',
+          text: 'Find a point where the east–west slope $\\partial f/\\partial x$ is zero.',
+          when: (s) => s.mode === 'partials' && Math.abs(s.fx) < 0.05,
+        },
+        {
+          id: 't-both-up',
+          text: 'Find a spot where walking east *and* walking north both go uphill.',
+          when: (s) => s.mode === 'partials' && s.fx > 0.2 && s.fy > 0.2,
+        },
+        {
+          id: 't-flat',
+          text: 'Find the point where both slopes are zero. Is it a top, a bottom or neither?',
+          when: (s) => s.mode === 'partials' && Math.abs(s.fx) < 0.1 && Math.abs(s.fy) < 0.1,
+        },
+      ],
+    },
+    explain:
+      'To find $\\partial f/\\partial x$, treat $y$ as a constant and differentiate with respect to $x$ as usual. For $f = x^2 - y^2$: $\\partial f/\\partial x = 2x$ and $\\partial f/\\partial y = -2y$.\n\nGeometrically, slice the surface with a vertical plane in the $x$ direction; $\\partial f/\\partial x$ is the slope of that slice. At the centre of the saddle both partials are zero, yet it is neither a top nor a bottom: up along one direction, down along the other.',
+    formula: {
+      tex: '\\frac{\\partial f}{\\partial x} = \\lim_{h \\to 0} \\frac{f(x + h, y) - f(x, y)}{h}',
+      caption: 'Nudge one variable, hold the others still.',
+    },
+    misconception:
+      'Both partial derivatives being zero does not mean you are at a maximum or minimum. It might be a saddle.',
+    checks: [
+      {
+        kind: 'expression',
+        id: 'c-px',
+        prompt: 'For $f(x, y) = x^2 y + 3y$, find $\\partial f/\\partial x$.',
+        answer: '2x y',
+        vars: ['x', 'y'],
+        explain: 'Treat $y$ as a constant: $2xy$ (the $3y$ term has no $x$).',
+      },
+      {
+        kind: 'expression',
+        id: 'c-py',
+        prompt: 'For the same $f$, find $\\partial f/\\partial y$.',
+        answer: 'x^2 + 3',
+        vars: ['x', 'y'],
+        explain: 'Treat $x$ as a constant: $x^2 + 3$.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-eval',
+        prompt: 'For $f(x, y) = 3x^2 + xy$, what is $\\partial f/\\partial x$ at $(1, 4)$?',
+        answer: 10,
+        explain: '$6x + y = 6 + 4 = 10$.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Economics',
+        body: 'How much more output from one more worker, keeping machines fixed? That is a partial derivative.',
+      },
+      {
+        title: 'Thermodynamics',
+        body: 'Gas laws relate pressure, volume and temperature; their partial derivatives describe how each responds to the others.',
+      },
+    ],
+    takeaways: [
+      'A partial derivative is the slope in one coordinate direction.',
+      'Differentiate in one variable, treating the others as constants.',
+    ],
+  },
+
+  gradient: {
+    hook: 'Lost in fog on a mountain, you want the quickest way up. Feel the slope in every direction and pick the steepest. That direction, packaged with how steep it is, is the **gradient**: an arrow that always points straight uphill.',
+    explore: {
+      type: 'contourPlot',
+      props: { mode: 'gradient', fn: 'hills', start: [-2.2, -2] },
+      caption:
+        'Two hills of different heights. The black arrow is the gradient at your point. Climb by following it.',
+      tryThis: [
+        {
+          id: 't-climb',
+          text: 'Climb at least 10 steps uphill from where you are.',
+          when: (s) => s.mode === 'gradient' && s.climbed >= 10,
+        },
+        {
+          id: 't-top',
+          text: 'Keep climbing until the gradient is almost zero. Which hill did you reach?',
+          when: (s) => s.mode === 'gradient' && s.climbed > 0 && s.magnitude < 0.05,
+        },
+        {
+          id: 't-tall',
+          text: 'Find a start that climbs to the *taller* hill (on the upper right).',
+          when: (s) => s.mode === 'gradient' && s.climbed > 0 && s.magnitude < 0.05 && s.x > 0.5,
+        },
+      ],
+    },
+    explain:
+      'The gradient collects the partial derivatives into a vector: $\\nabla f = \\left(\\tfrac{\\partial f}{\\partial x}, \\tfrac{\\partial f}{\\partial y}\\right)$. It points in the direction of steepest ascent, its length is that steepest slope, and it is always **perpendicular to the contour** through the point.\n\nFollowing $-\\nabla f$ goes downhill fastest. That is gradient descent, the engine of machine learning. Like a hiker in fog, it finds the nearest peak or valley, not necessarily the highest or lowest.',
+    formula: {
+      tex: '\\nabla f = \\left(\\frac{\\partial f}{\\partial x}, \\frac{\\partial f}{\\partial y}\\right)',
+      caption: 'Points uphill, at right angles to the contours.',
+    },
+    misconception:
+      'Following the gradient finds *a* peak, not *the* highest peak. Where you start decides where you end.',
+    checks: [
+      {
+        kind: 'mcq',
+        id: 'c-grad',
+        prompt: 'What is $\\nabla f$ for $f(x, y) = x^2 + 3y$ at $(2, 5)$?',
+        options: [
+          { text: '$(4, 3)$', correct: true },
+          { text: '$(2, 3)$', why: '$\\partial f/\\partial x = 2x = 4$ at $x = 2$.' },
+          { text: '$(4, 15)$', why: '$\\partial f/\\partial y = 3$, a constant.' },
+        ],
+        explain: '$(2x, 3) = (4, 3)$.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-steep',
+        prompt: 'If $\\nabla f = (3, 4)$ at a point, what is the steepest slope there?',
+        answer: 5,
+        explain: 'The length of the gradient: $\\sqrt{9 + 16} = 5$.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-perp',
+        prompt: 'The gradient at a point is ___ to the contour through that point.',
+        options: [
+          { text: 'perpendicular', correct: true },
+          { text: 'parallel', why: 'Along a contour the height does not change at all.' },
+          { text: 'at 45°', why: 'The steepest direction is straight across the contours.' },
+        ],
+        explain: 'Moving along the contour changes nothing; moving across it changes the most.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Training AI models',
+        body: 'Neural networks learn by repeatedly stepping against the gradient of their error.',
+      },
+      {
+        title: 'Heat flow',
+        body: 'Heat flows down the temperature gradient, from hot to cold, fastest where the gradient is largest.',
+      },
+    ],
+    takeaways: [
+      'The gradient is the vector of partial derivatives.',
+      'It points uphill, perpendicular to contours; its length is the steepness.',
+      'Gradient methods find local peaks and valleys.',
+    ],
+  },
+
+  'double-integrals': {
+    hook: 'How much water is in a lake? The depth changes from place to place, so chop the surface into small squares, multiply each square’s area by the depth there, and add up. Shrink the squares and you get a **double integral**: the volume under a surface.',
+    explore: {
+      type: 'contourPlot',
+      props: { mode: 'riemann2d', fn: 'hill', n: 3 },
+      caption:
+        'The square from $-2$ to $2$ on each side, under the hill $z = 4e^{-(x^2 + y^2)/4}$. Each cell is a column.',
+      tryThis: [
+        {
+          id: 't-fine',
+          text: 'Use at least 16 cells along each side. How close is the sum now?',
+          when: (s) => s.mode === 'riemann2d' && s.n >= 16,
+        },
+        {
+          id: 't-close',
+          text: 'Get within 0.05 of the exact volume with as few cells as possible.',
+          when: (s) => s.mode === 'riemann2d' && Math.abs(s.error) < 0.05 && s.n <= 12,
+        },
+        {
+          id: 't-one',
+          text: 'Use a single column. Why is it a big overestimate?',
+          when: (s) => s.mode === 'riemann2d' && s.n === 1,
+        },
+      ],
+    },
+    explain:
+      'Divide the region into small rectangles of area $\\Delta A$, pick a height $f(x_i, y_j)$ in each, and add the column volumes. The limit as the grid gets finer is the double integral:\n\n$$\\iint_R f(x, y)\\,dA = \\lim \\sum f(x_i, y_j)\\,\\Delta A.$$\n\nIn practice you integrate one variable at a time (**iterated integrals**): $\\int_a^b\\left(\\int_c^d f(x, y)\\,dy\\right)dx$. Integrating $f = 1$ gives the area of the region.',
+    formula: {
+      tex: '\\iint_R f(x, y)\\,dA = \\int_a^b \\int_c^d f(x, y)\\,dy\\,dx',
+      caption: 'Volume under a surface, computed one direction at a time.',
+    },
+    misconception:
+      'The order of integration can be swapped for nice functions (Fubini’s theorem), but the limits must be rewritten to describe the same region.',
+    checks: [
+      {
+        kind: 'numeric',
+        id: 'c-const',
+        prompt: 'Compute $\\int_0^2\\int_0^3 5\\,dy\\,dx$.',
+        answer: 30,
+        explain: 'A 2 × 3 base with height 5: volume 30.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-iter',
+        prompt: 'Compute $\\int_0^1\\int_0^2 xy\\,dy\\,dx$.',
+        answer: 1,
+        explain: 'Inner: $\\int_0^2 xy\\,dy = 2x$. Outer: $\\int_0^1 2x\\,dx = 1$.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-area',
+        prompt: 'What does $\\iint_R 1\\,dA$ measure?',
+        options: [
+          { text: 'The area of $R$', correct: true },
+          { text: 'The perimeter of $R$', why: 'Integrating 1 over a region adds up area.' },
+          { text: 'Zero', why: 'Every bit of area contributes 1 × its size.' },
+        ],
+        explain: 'Columns of height 1 have volume equal to their base area.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Mass and centre of mass',
+        body: 'Integrate density over a plate to get its mass, and $x \\times$ density to find its balance point.',
+      },
+      {
+        title: 'Rainfall',
+        body: 'Total rain over a region is the double integral of rainfall depth over the map.',
+      },
+    ],
+    takeaways: [
+      'A double integral adds up columns: volume under a surface.',
+      'Compute it as two single integrals, one inside the other.',
+    ],
+  },
+
+  'vector-fields': {
+    hook: 'At every point in a river, the water has a speed and a direction. Attach an arrow to every point and you have a **vector field**. Wind maps, magnetic fields and the flow of traffic are all vector fields, and dropping a leaf in shows how things move through them.',
+    explore: {
+      type: 'slopeField',
+      props: { mode: 'vector', field: 'rotation', start: [1.5, 0.5] },
+      caption:
+        'Arrows show the field. The orange path is a particle carried by the flow from the point you drag.',
+      tryThis: [
+        {
+          id: 't-source',
+          text: 'Choose the field where everything flows outward. What is its divergence?',
+          when: (s) => s.mode === 'vector' && s.field === 'source',
+        },
+        {
+          id: 't-whirl',
+          text: 'Find a field that both spins and drains inward.',
+          when: (s) => s.mode === 'vector' && s.field === 'whirlpool',
+        },
+        {
+          id: 't-saddle',
+          text: 'In the saddle field, find a start whose path heads straight into the centre.',
+          when: (s) => s.mode === 'vector' && s.field === 'saddle' && s.x === 0 && s.y !== 0,
+        },
+      ],
+    },
+    explain:
+      'A vector field assigns a vector $\\mathbf F(x, y) = (P, Q)$ to each point. A particle following the field traces a **flow line**.\n\nTwo numbers summarise the local behaviour. **Divergence**, $\\tfrac{\\partial P}{\\partial x} + \\tfrac{\\partial Q}{\\partial y}$, measures how much the flow spreads out (sources are positive, sinks negative). **Curl**, $\\tfrac{\\partial Q}{\\partial x} - \\tfrac{\\partial P}{\\partial y}$, measures how much it spins: put a tiny paddle wheel in the flow and see if it turns.',
+    formula: {
+      tex: '\\operatorname{div}\\mathbf F = \\frac{\\partial P}{\\partial x} + \\frac{\\partial Q}{\\partial y}, \\quad \\operatorname{curl}\\mathbf F = \\frac{\\partial Q}{\\partial x} - \\frac{\\partial P}{\\partial y}',
+      caption: 'Spreading out and spinning.',
+    },
+    misconception:
+      'A field can have curl without paths going in circles. The shear field $(y, 0)$ flows in straight lines, yet a paddle wheel in it would spin.',
+    checks: [
+      {
+        kind: 'numeric',
+        id: 'c-div',
+        prompt: 'What is the divergence of $\\mathbf F = (3x, 2y)$?',
+        answer: 5,
+        explain: '$3 + 2 = 5$: it spreads out everywhere.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-curl',
+        prompt: 'What is the curl of $\\mathbf F = (-y, x)$?',
+        answer: 2,
+        explain:
+          '$\\tfrac{\\partial}{\\partial x}(x) - \\tfrac{\\partial}{\\partial y}(-y) = 1 + 1 = 2$.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-grad',
+        prompt: 'The gradient of a function is an example of…',
+        options: [
+          { text: 'a vector field with zero curl', correct: true },
+          {
+            text: 'a vector field with zero divergence',
+            why: '$\\nabla(x^2 + y^2) = (2x, 2y)$ has divergence 4.',
+          },
+          { text: 'not a vector field', why: 'It gives a vector at every point.' },
+        ],
+        explain: 'Gradient fields never swirl: their curl is always 0.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Weather',
+        body: 'Wind maps are vector fields; the curl picks out cyclones, and divergence shows rising or sinking air.',
+      },
+      {
+        title: 'Electromagnetism',
+        body: 'Maxwell’s equations are statements about the divergence and curl of the electric and magnetic fields.',
+      },
+    ],
+    takeaways: [
+      'A vector field is an arrow at every point.',
+      'Divergence measures spreading; curl measures spinning.',
+    ],
+  },
+
+  'lagrange-multipliers': {
+    hook: 'Find the highest point on a hiking trail. You are not free to go anywhere: you must stay on the path. At the best spot, the trail runs **along** a contour of the landscape, just touching it. That tangency is the idea behind Lagrange multipliers.',
+    explore: {
+      type: 'contourPlot',
+      props: { mode: 'constraint', fn: 'plane', radius: 2, start: 2.4 },
+      caption:
+        'Maximise $f = x + 2y$ while staying on the circle $x^2 + y^2 = 4$. Slide the point around the circle.',
+      tryThis: [
+        {
+          id: 't-max',
+          text: 'Find where $f$ is largest on the circle. How do the two arrows line up?',
+          when: (s) => s.mode === 'constraint' && s.angle < 3 && s.value > 0,
+        },
+        {
+          id: 't-min',
+          text: 'Now find the smallest value of $f$ on the circle.',
+          when: (s) => s.mode === 'constraint' && s.angle > 177,
+        },
+        {
+          id: 't-four',
+          text: 'Find a point on the circle where $f$ is bigger than 4.',
+          when: (s) => s.mode === 'constraint' && s.value > 4,
+        },
+      ],
+    },
+    explain:
+      'To optimise $f(x, y)$ subject to $g(x, y) = c$, look for points where the gradients are parallel:\n\n$$\\nabla f = \\lambda \\nabla g.$$\n\nIf they were not parallel, $\\nabla f$ would have a component along the constraint curve, and sliding that way would still increase $f$. The number $\\lambda$ (the **Lagrange multiplier**) says how much the best value would change if the constraint were loosened slightly.\n\nHere $(1, 2) = \\lambda (2x, 2y)$ forces $y = 2x$; with $x^2 + y^2 = 4$ this gives the maximum $2\\sqrt5 \\approx 4.47$.',
+    formula: {
+      tex: '\\nabla f = \\lambda \\nabla g, \\qquad g(x, y) = c',
+      caption: 'Three equations for three unknowns $x, y, \\lambda$.',
+    },
+    misconception:
+      'Setting $\\nabla f = 0$ ignores the constraint. On a trail, the best point is usually not a summit of the whole landscape.',
+    checks: [
+      {
+        kind: 'numeric',
+        id: 'c-max',
+        prompt: 'Maximise $xy$ subject to $x + y = 10$. What is the maximum?',
+        answer: 25,
+        explain: '$\\nabla(xy) = (y, x) = \\lambda(1, 1)$ gives $x = y = 5$, so $xy = 25$.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-circle',
+        prompt: 'What is the largest value of $x + y$ on the circle $x^2 + y^2 = 2$?',
+        answer: 2,
+        explain: 'Parallel gradients give $x = y = 1$: $x + y = 2$.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-meaning',
+        prompt: 'At a constrained maximum, the constraint curve and the contour of $f$ are…',
+        options: [
+          { text: 'tangent to each other', correct: true },
+          {
+            text: 'perpendicular',
+            why: 'Crossing a contour would mean $f$ still changes along the curve.',
+          },
+          { text: 'unrelated', why: 'Their gradients line up, so the curves touch.' },
+        ],
+        explain: 'Parallel gradients mean the curves share a tangent line.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Economics',
+        body: 'Maximise satisfaction subject to a budget: $\\lambda$ is the extra satisfaction one more euro would buy.',
+      },
+      {
+        title: 'Machine learning',
+        body: 'Support vector machines are trained by solving a constrained optimisation with Lagrange multipliers.',
+      },
+    ],
+    takeaways: [
+      'Constrained optimum: $\\nabla f$ parallel to $\\nabla g$.',
+      'The constraint curve touches a contour of $f$.',
+      '$\\lambda$ measures how much the constraint costs.',
+    ],
+  },
+
+  'intro-differential-equations': {
+    hook: 'Physics rarely tells you where something **is**. It tells you how it **changes**: “the more bacteria there are, the faster they multiply.” An equation that links a quantity to its own rate of change is a **differential equation**, and solving it means finding the quantity itself.',
+    explore: {
+      type: 'slopeField',
+      props: { mode: 'slope', eq: 'growth', k: 0.5, start: [0, 1] },
+      caption:
+        "The equation $y' = ky$ draws a little slope at every point. Drag the starting value; the solution follows the slopes.",
+      tryThis: [
+        {
+          id: 't-decay',
+          text: 'Make $k$ negative. What kind of process is that?',
+          when: (s) => s.mode === 'slope' && s.k < 0,
+        },
+        {
+          id: 't-zero',
+          text: 'Start at $y = 0$. Why does the solution never move?',
+          when: (s) => s.mode === 'slope' && s.y0 === 0,
+        },
+        {
+          id: 't-neg',
+          text: 'Start below zero. What happens with a positive $k$?',
+          when: (s) => s.mode === 'slope' && s.y0 < 0 && s.k > 0,
+        },
+      ],
+    },
+    explain:
+      'A differential equation like $\\dfrac{dy}{dt} = ky$ says the growth rate is proportional to the amount. Its solutions are $y = y_0 e^{kt}$: check by differentiating, $\\tfrac{d}{dt}(y_0 e^{kt}) = k\\,y_0 e^{kt}$.\n\nThe equation alone has infinitely many solutions, one for each starting value. An **initial condition** such as $y(0) = 1$ picks out one. A solution that stays constant, like $y = 0$ here, is an **equilibrium**.',
+    formula: {
+      tex: '\\frac{dy}{dt} = ky \\quad\\Longrightarrow\\quad y = y_0 e^{kt}',
+      caption: 'The simplest and most important differential equation.',
+    },
+    misconception: 'The solution of a differential equation is a function, not a number.',
+    checks: [
+      {
+        kind: 'mcq',
+        id: 'c-check',
+        prompt: "Which function solves $y' = 3y$?",
+        options: [
+          { text: '$y = 5e^{3t}$', correct: true },
+          { text: '$y = 3t$', why: "Then $y' = 3$, not $3y$." },
+          { text: '$y = e^{t/3}$', why: "Then $y' = y/3$." },
+        ],
+        explain: '$\\tfrac{d}{dt}5e^{3t} = 15e^{3t} = 3y$.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-double',
+        prompt:
+          "A population follows $y' = 0.1y$. Roughly how long until it doubles? (to 1 decimal place)",
+        answer: Math.log(2) / 0.1,
+        tolerance: 0.05,
+        explain: '$e^{0.1t} = 2$ gives $t = \\ln 2 / 0.1 \\approx 6.9$.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-eq',
+        prompt: "For $y' = 2(5 - y)$, what is the equilibrium value of $y$?",
+        answer: 5,
+        explain: 'The rate is 0 when $y = 5$.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Radioactive dating',
+        body: 'Carbon-14 decays at a rate proportional to the amount left, so its level reveals the age of ancient remains.',
+      },
+      {
+        title: 'Epidemics',
+        body: 'Early in an outbreak, cases grow at a rate proportional to the number infected: exponential growth.',
+      },
+    ],
+    takeaways: [
+      'A differential equation links a function to its derivatives.',
+      "$y' = ky$ gives exponential growth or decay.",
+      'An initial condition picks one solution.',
+    ],
+  },
+
+  'slope-fields-euler': {
+    hook: 'Most differential equations cannot be solved with a formula. But you can always follow the arrows: start somewhere, take a small step in the direction the equation tells you, look again, step again. That is **Euler’s method**, and with small enough steps it gets as close as you like.',
+    explore: {
+      type: 'slopeField',
+      props: { mode: 'euler', eq: 'growth', k: 0.5, start: [0, 1], h: 1, span: 4 },
+      caption:
+        "For $y' = ky$ from $y(0) = 1$: orange is Euler’s method, blue the exact solution $e^{kx}$. Shrink the step size.",
+      tryThis: [
+        {
+          id: 't-small',
+          text: 'Use a step of 0.2 or less. How big is the error at the end?',
+          when: (s) => s.mode === 'euler' && s.h <= 0.2,
+        },
+        {
+          id: 't-accurate',
+          text: 'Get the final error below 0.5. Is Euler’s answer too big or too small?',
+          when: (s) => s.mode === 'euler' && Math.abs(s.error) < 0.5,
+        },
+        {
+          id: 't-big',
+          text: 'Try a step of 2. What goes wrong?',
+          when: (s) => s.mode === 'euler' && s.h === 2,
+        },
+      ],
+    },
+    explain:
+      "A **slope field** draws the slope $y' = F(x, y)$ as a short line at each point; solutions are curves that follow the lines.\n\n**Euler’s method** follows them in straight steps of width $h$:\n\n$$y_{n+1} = y_n + h\\,F(x_n, y_n), \\qquad x_{n+1} = x_n + h.$$\n\nEach step uses the slope at its start, so it drifts a little whenever the curve bends. Halving $h$ roughly halves the error at the end (but doubles the work). Better methods, like Runge–Kutta, sample the slope several times per step.",
+    formula: {
+      tex: 'y_{n+1} = y_n + h\\,F(x_n, y_n)',
+      caption: 'Step along the tangent, then re-aim.',
+    },
+    misconception:
+      'Euler steps are not on the true solution curve: they slide onto neighbouring solutions, and the error accumulates.',
+    checks: [
+      {
+        kind: 'numeric',
+        id: 'c-step',
+        prompt:
+          "For $y' = y$ with $y(0) = 1$ and $h = 0.5$, what is the first Euler estimate $y(0.5)$?",
+        answer: 1.5,
+        explain: '$1 + 0.5 \\times 1 = 1.5$ (the truth is $e^{0.5} \\approx 1.65$).',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-two',
+        prompt: 'Continue one more step: what is the estimate for $y(1)$?',
+        answer: 2.25,
+        explain: '$1.5 + 0.5 \\times 1.5 = 2.25$ (the truth is $e \\approx 2.72$).',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-error',
+        prompt: 'Halving the step size in Euler’s method roughly…',
+        options: [
+          { text: 'halves the final error', correct: true },
+          { text: 'quarters the final error', why: 'That is a second-order method.' },
+          { text: 'makes no difference', why: 'Smaller steps follow the bends more closely.' },
+        ],
+        explain: 'Euler’s method is first order: error proportional to $h$.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Simulation',
+        body: 'Weather forecasts, spacecraft trajectories and video-game physics all step equations forward in time like this.',
+      },
+      {
+        title: 'Spreadsheets',
+        body: 'You can model a population or a loan in a spreadsheet: each row is one Euler step.',
+      },
+    ],
+    takeaways: [
+      'A slope field shows what every solution must look like.',
+      'Euler’s method follows it in small straight steps.',
+      'Smaller steps, smaller error.',
+    ],
+  },
+
+  'population-models': {
+    hook: 'Rabbits on an island multiply quickly at first, but food and space run out. Growth slows and the population levels off at what the island can support. The **logistic equation** captures both stages in one line.',
+    explore: {
+      type: 'slopeField',
+      props: { mode: 'slope', eq: 'logistic', k: 0.6, c: 8, start: [0, 1] },
+      caption:
+        "The logistic equation $y' = ky(1 - y/c)$: $k$ is the growth rate, $c$ the carrying capacity. Drag the starting population.",
+      tryThis: [
+        {
+          id: 't-over',
+          text: 'Start with more than the island can support. What happens?',
+          when: (s) => s.mode === 'slope' && s.y0 > s.c,
+        },
+        {
+          id: 't-eq',
+          text: 'Start exactly at the carrying capacity.',
+          when: (s) => s.mode === 'slope' && s.y0 === s.c && s.c > 0,
+        },
+        {
+          id: 't-capacity',
+          text: 'Halve the carrying capacity to 4. Where does the population settle now?',
+          when: (s) => s.mode === 'slope' && s.c === 4,
+        },
+      ],
+    },
+    explain:
+      'In $\\dfrac{dP}{dt} = rP\\left(1 - \\dfrac{P}{K}\\right)$, the factor $rP$ is exponential growth and $(1 - P/K)$ is the brake. When $P$ is small the brake is off; as $P$ nears $K$ growth stops; above $K$ the population shrinks.\n\nThere are two equilibria: $P = 0$ (unstable: any rabbits at all start growing) and $P = K$ (stable: populations are pulled towards it). Growth is fastest at $P = K/2$, where the S-shaped curve is steepest.',
+    formula: {
+      tex: '\\frac{dP}{dt} = rP\\left(1 - \\frac{P}{K}\\right)',
+      caption: 'Exponential growth with a brake.',
+    },
+    misconception:
+      'Real populations do not grow forever: exponential growth is only the early part of the story.',
+    checks: [
+      {
+        kind: 'numeric',
+        id: 'c-k',
+        prompt: "For $P' = 0.5P(1 - P/200)$, where does the population level off?",
+        answer: 200,
+        explain: 'The carrying capacity $K = 200$.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-fast',
+        prompt: 'At what population is that growth fastest?',
+        answer: 100,
+        explain: 'At $K/2 = 100$.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-above',
+        prompt: 'If $P$ starts above $K$, the population…',
+        options: [
+          { text: 'decreases towards $K$', correct: true },
+          { text: 'keeps growing', why: 'Above $K$ the brake factor is negative.' },
+          { text: 'drops to 0', why: 'It falls only until it reaches $K$.' },
+        ],
+        explain: '$1 - P/K < 0$ makes the rate negative.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Fisheries',
+        body: 'Sustainable fishing keeps fish stocks near $K/2$, where the population replaces itself fastest.',
+      },
+      {
+        title: 'Technology adoption',
+        body: 'Smartphone ownership followed a logistic S-curve: slow start, rapid spread, then saturation.',
+      },
+    ],
+    takeaways: [
+      'Logistic growth: exponential at first, levelling off at $K$.',
+      '$P = K$ is a stable equilibrium; $P = 0$ is unstable.',
+    ],
+  },
+
+  oscillations: {
+    hook: 'Pull a spring and let go: it bounces back and forth. Add friction and the bounces die away. Springs, pendulums, guitar strings and even atoms in a crystal all obey the same equation: acceleration pulls back towards the centre in proportion to the distance.',
+    explore: {
+      type: 'grapher',
+      props: {
+        expressions: ['A e^(-b x) cos(w x)'],
+        params: {
+          A: { value: 2, min: 0.5, max: 3, step: 0.5 },
+          b: { value: 0.2, min: 0, max: 1.5, step: 0.1 },
+          w: { value: 2, min: 0.5, max: 6, step: 0.5 },
+        },
+        view: { xMin: 0, xMax: 15, yMin: -3.2, yMax: 3.2 },
+        height: 300,
+      },
+      caption:
+        'Displacement $x(t) = Ae^{-bt}\\cos(\\omega t)$ (time runs to the right). $A$ is the amplitude, $b$ the damping, $\\omega$ the angular frequency.',
+      tryThis: [
+        {
+          id: 't-free',
+          text: 'Remove all damping. How long does the bouncing last?',
+          when: (s) => s.params.b === 0,
+        },
+        {
+          id: 't-heavy',
+          text: 'Make the damping heavy (at least 1). How many bounces can you see?',
+          when: (s) => s.params.b >= 1,
+        },
+        {
+          id: 't-stiff',
+          text: 'Make the spring stiffer: double $\\omega$ to 4.',
+          when: (s) => s.params.w === 4,
+        },
+      ],
+    },
+    explain:
+      "Newton’s law for a spring is $m x'' = -kx$: the further it is stretched, the harder it pulls back. The solutions are $x = A\\cos(\\omega t + \\varphi)$ with $\\omega = \\sqrt{k/m}$. This is **simple harmonic motion**: a stiffer spring or lighter mass oscillates faster.\n\nWith friction, $m x'' + c x' + kx = 0$, and the oscillation decays like $e^{-bt}$. Light damping still bounces; heavy damping just creeps back to rest (like a door closer).",
+    formula: {
+      tex: "m x'' + c x' + kx = 0, \\qquad \\omega = \\sqrt{k/m}",
+      caption: 'The damped harmonic oscillator.',
+    },
+    misconception:
+      'The period of a spring does not depend on how far you stretch it. Bigger swings move faster and take the same time.',
+    checks: [
+      {
+        kind: 'numeric',
+        id: 'c-omega',
+        prompt: 'A 2 kg mass on a spring with $k = 50$ N/m. What is $\\omega$ (rad/s)?',
+        answer: 5,
+        explain: '$\\sqrt{50 / 2} = 5$.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-mass',
+        prompt: 'If you make the mass 4 times heavier, the oscillation…',
+        options: [
+          { text: 'takes twice as long per cycle', correct: true },
+          {
+            text: 'takes 4 times as long',
+            why: '$\\omega$ depends on the square root of the mass.',
+          },
+          { text: 'is unchanged', why: 'Heavier masses respond more slowly.' },
+        ],
+        explain: '$\\omega = \\sqrt{k/m}$ halves, so the period doubles.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-solve',
+        prompt: "Which function solves $x'' = -9x$?",
+        options: [
+          { text: '$x = \\cos 3t$', correct: true },
+          { text: '$x = \\cos 9t$', why: 'Its second derivative is $-81\\cos 9t$.' },
+          { text: '$x = e^{3t}$', why: 'Its second derivative is $+9e^{3t}$.' },
+        ],
+        explain: "$(\\cos 3t)'' = -9\\cos 3t$.",
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Car suspension',
+        body: 'Shock absorbers add damping so a car settles after a bump instead of bouncing down the road.',
+      },
+      {
+        title: 'Clocks',
+        body: 'Pendulum clocks and quartz watches keep time because oscillation periods are so steady.',
+      },
+    ],
+    takeaways: [
+      'Restoring force proportional to displacement gives sine-wave motion.',
+      'Frequency $\\omega = \\sqrt{k/m}$ does not depend on amplitude.',
+      'Damping makes the oscillation decay.',
+    ],
+  },
+
+  'phase-portraits': {
+    hook: 'Foxes eat rabbits; more rabbits feed more foxes; more foxes mean fewer rabbits. When two quantities drive each other, plot one against the other and every possible future becomes a path in a **phase portrait**. Its shape tells you, at a glance, whether things settle down, spiral, or blow up.',
+    explore: {
+      type: 'slopeField',
+      props: { mode: 'phase', a: 0, b: 1, c: -1, d: -0.5 },
+      caption:
+        "The system $x' = ax + by$, $y' = cx + dy$. Orange paths start around the edge. Change the four numbers.",
+      tryThis: [
+        {
+          id: 't-center',
+          text: 'Make the paths into closed loops (a centre).',
+          when: (s) => s.mode === 'phase' && s.kind === 'center',
+        },
+        {
+          id: 't-saddle',
+          text: 'Make a saddle: paths come in one way and leave another.',
+          when: (s) => s.mode === 'phase' && s.kind === 'saddle',
+        },
+        {
+          id: 't-unstable',
+          text: 'Make everything flow *away* from the origin.',
+          when: (s) =>
+            s.mode === 'phase' && (s.kind === 'node' || s.kind === 'spiral') && !s.stable,
+        },
+      ],
+    },
+    explain:
+      "For a linear system $\\mathbf x' = A\\mathbf x$, everything depends on the eigenvalues of $A$. Real eigenvalues of the same sign give a **node** (straight in or out along the eigenvectors), opposite signs give a **saddle**, and complex eigenvalues give **spirals**. Purely imaginary eigenvalues give a **centre**: closed loops.\n\nTwo numbers sort them quickly: the determinant (negative means saddle) and the trace (negative means stable, flowing in). The same picture, zoomed in, describes the equilibria of nonlinear systems like predators and prey.",
+    formula: {
+      tex: "\\mathbf x' = A\\mathbf x, \\quad \\mathbf x(t) = c_1 e^{\\lambda_1 t}\\mathbf v_1 + c_2 e^{\\lambda_2 t}\\mathbf v_2",
+      caption: 'Eigenvalues decide the shape; eigenvectors give the straight-line paths.',
+    },
+    misconception:
+      'Paths in a phase portrait never cross. If they did, one state would have two different futures.',
+    checks: [
+      {
+        kind: 'mcq',
+        id: 'c-saddle',
+        prompt: "For $x' = 2x$, $y' = -y$, the origin is a…",
+        options: [
+          { text: 'saddle', correct: true },
+          { text: 'stable node', why: '$x$ grows like $e^{2t}$.' },
+          { text: 'centre', why: 'The eigenvalues 2 and $-1$ are real.' },
+        ],
+        explain: 'Eigenvalues of opposite sign.',
+      },
+      {
+        kind: 'mcq',
+        id: 'c-spiral',
+        prompt: 'Eigenvalues $-1 \\pm 3i$ give…',
+        options: [
+          { text: 'a stable spiral', correct: true },
+          { text: 'an unstable spiral', why: 'The real part $-1$ is negative.' },
+          { text: 'a centre', why: 'A centre needs a real part of 0.' },
+        ],
+        explain: 'Complex means spiralling; negative real part means inward.',
+      },
+      {
+        kind: 'numeric',
+        id: 'c-det',
+        prompt:
+          'What is the determinant of $A = \\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix}$? (Negative means saddle.)',
+        answer: -2,
+        explain: '$4 - 6 = -2$: a saddle.',
+      },
+    ],
+    realWorld: [
+      {
+        title: 'Ecology',
+        body: 'Predator–prey models (Lotka–Volterra) produce closed loops: booms and busts that repeat.',
+      },
+      {
+        title: 'Engineering stability',
+        body: 'Control engineers check that every eigenvalue has a negative real part so that a plane or robot returns to balance.',
+      },
+    ],
+    takeaways: [
+      'A phase portrait shows every possible future of a system.',
+      'Eigenvalues classify it: node, saddle, spiral or centre.',
+      'Negative trace and positive determinant mean stable.',
+    ],
+  },
+}
 
 export default content

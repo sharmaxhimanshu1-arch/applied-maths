@@ -112,6 +112,8 @@ export function Grapher({ preset, mode = 'embed', onStateChange, onShare, ariaLa
     : undefined
 
   const slope = f && fPrime ? fPrime(tangentX) : undefined
+  const trace = !!preset.tangent?.trace
+  const tangentFx = overlays.tangent && f ? f(tangentX) : undefined
   const [a, b] = bounds
   const areaValue = f && (overlays.area || overlays.riemann) ? integrate(f, a, b, 600) : undefined
   const riemannResult =
@@ -125,7 +127,8 @@ export function Grapher({ preset, mode = 'embed', onStateChange, onShare, ariaLa
       params: scope,
       view,
       tangentX: overlays.tangent ? tangentX : undefined,
-      slope: overlays.tangent ? slope : undefined,
+      fx: tangentFx,
+      slope: overlays.tangent && !trace ? slope : undefined,
       secantH,
       area: areaValue,
       areaBounds: overlays.area || overlays.riemann ? bounds : undefined,
@@ -141,6 +144,8 @@ export function Grapher({ preset, mode = 'embed', onStateChange, onShare, ariaLa
     view,
     overlays,
     tangentX,
+    tangentFx,
+    trace,
     slope,
     secantH,
     areaValue,
@@ -285,6 +290,7 @@ export function Grapher({ preset, mode = 'embed', onStateChange, onShare, ariaLa
           h={secantH}
           onMove={setTangentX}
           color={main!.row.color}
+          trace={trace}
         />
       )}
     </Plot>
@@ -293,6 +299,7 @@ export function Grapher({ preset, mode = 'embed', onStateChange, onShare, ariaLa
   const readouts = (
     <OverlayReadouts
       slope={overlays.tangent ? slope : undefined}
+      trace={trace}
       tangentX={tangentX}
       secantH={secantH}
       fx={fx}
@@ -386,6 +393,7 @@ function TangentLayer({
   h,
   onMove,
   color,
+  trace,
 }: {
   f: (x: number) => number
   x0: number
@@ -393,8 +401,23 @@ function TangentLayer({
   h?: number
   onMove: (x: number) => void
   color: string
+  /** Just a point riding on the curve: no tangent line, no slope. */
+  trace?: boolean
 }) {
   const y0 = f(x0)
+  if (trace)
+    return (
+      <MovablePoint
+        x={x0}
+        y={Number.isFinite(y0) ? y0 : 0}
+        // Step around holes (e.g. sin x / x at 0) so the point always sits on the curve.
+        onMove={(x) => onMove(+(Number.isFinite(f(+x.toFixed(3))) ? x : x + 0.001).toFixed(3))}
+        constrain={constraints.onGraph(f)}
+        color={color}
+        label="Point on the curve"
+        showCoords
+      />
+    )
   const secant = h !== undefined && Math.abs(h) > 1e-9
   const x1 = x0 + (h ?? 0)
   const y1 = f(x1)
@@ -485,7 +508,9 @@ function OverlayReadouts({
   area,
   riemann: rs,
   derivativeTex,
+  trace,
 }: {
+  trace?: boolean
   slope?: number
   tangentX: number
   secantH?: number
@@ -499,7 +524,7 @@ function OverlayReadouts({
     items.push({ label: 'at x', value: formatNumber(tangentX, 2) })
     items.push({ label: 'f(x)', value: formatNumber(fx(tangentX), 3) })
     if (secantH !== undefined) items.push({ label: 'h', value: formatNumber(secantH, 3) })
-    items.push({ label: 'f′(x)', value: formatNumber(slope, 3) })
+    if (!trace) items.push({ label: 'f′(x)', value: formatNumber(slope, 3) })
   }
   if (area !== undefined) items.push({ label: 'signed area', value: formatNumber(area, 4) })
   if (rs) {
