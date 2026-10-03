@@ -1,0 +1,143 @@
+/*
+ * Design tokens. Every colour in the app is one of these variables, so light/dark switch in one
+ * place. Dark mode follows the OS unless the viewer picks a theme (data-theme on <html>):
+ * the media query is guarded by :not([data-theme='light']) and repeated for [data-theme='dark'].
+ *
+ * The eight categorical hues are the validated data-viz palette (light and dark steps chosen
+ * per surface). The first three are safe together in any arrangement, so plots use them for
+ * their main series. Areas of the curriculum take hues 1–7 in order.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --page: #f6f5f2;
+  --surface: #fcfcfb;
+  --surface-2: #f2f1ed;
+  --surface-3: #e9e8e2;
+  --line: rgba(11, 11, 11, 0.1);
+  --line-strong: rgba(11, 11, 11, 0.18);
+
+  /* Ink (text) */
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --ink-3: #6f6e69;
+  --faint: #898781; /* decorative only (axis ticks): below 4.5:1 */
+
+  /* Plot chrome */
+  --grid: #e1e0d9;
+  --grid-strong: #d2d1c9;
+  --axis: #a8a79f;
+
+  /* Interactive accent */
+  --accent: #4338ca;
+  --accent-hover: #3730a3;
+  --accent-ink: #ffffff;
+  --accent-soft: #eceefe;
+  --focus-ring: #4338ca;
+
+  /* Categorical hues (validated) */
+  --c-blue: #2a78d6;
+  --c-orange: #eb6834;
+  --c-aqua: #1baf7a;
+  --c-yellow: #eda100;
+  --c-magenta: #e87ba4;
+  --c-green: #008300;
+  --c-violet: #4a3aa7;
+  --c-red: #e34948;
+
+  /* Status (fixed meaning; always shown with an icon + label) */
+  --good: #0ca30c;
+  --warn: #fab219;
+  --serious: #ec835a;
+  --bad: #d03b3b;
+  --good-ink: #006300;
+  --bad-ink: #b42323;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgba(11, 11, 11, 0.05);
+  --shadow-md: 0 1px 2px rgba(11, 11, 11, 0.04), 0 8px 24px rgba(11, 11, 11, 0.07);
+  --shadow-lg: 0 2px 6px rgba(11, 11, 11, 0.06), 0 24px 56px rgba(11, 11, 11, 0.14);
+
+  /* Curriculum areas → hues 1..7 */
+  --area-foundations: var(--c-blue);
+  --area-algebra: var(--c-orange);
+  --area-geometry: var(--c-aqua);
+  --area-calculus: var(--c-yellow);
+  --area-linear-algebra: var(--c-magenta);
+  --area-probability: var(--c-green);
+  --area-applied: var(--c-violet);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --surface-2: #222220;
+    --surface-3: #2c2c2a;
+    --line: rgba(255, 255, 255, 0.1);
+    --line-strong: rgba(255, 255, 255, 0.18);
+    --ink: #f5f4f0;
+    --ink-2: #c3c2b7;
+    --ink-3: #a3a29a;
+    --faint: #898781;
+    --grid: #2c2c2a;
+    --grid-strong: #383835;
+    --axis: #5d5c56;
+    --accent: #8b93ff;
+    --accent-hover: #a5acff;
+    --accent-ink: #0b0b1a;
+    --accent-soft: #23243d;
+    --focus-ring: #a5acff;
+    --c-blue: #3987e5;
+    --c-orange: #d95926;
+    --c-aqua: #199e70;
+    --c-yellow: #c98500;
+    --c-magenta: #d55181;
+    --c-green: #008300;
+    --c-violet: #9085e9;
+    --c-red: #e66767;
+    --good-ink: #0ca30c;
+    --bad-ink: #f07c7c;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.4), 0 24px 56px rgba(0, 0, 0, 0.6);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --surface-2: #222220;
+  --surface-3: #2c2c2a;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --ink: #f5f4f0;
+  --ink-2: #c3c2b7;
+  --ink-3: #a3a29a;
+  --faint: #898781;
+  --grid: #2c2c2a;
+  --grid-strong: #383835;
+  --axis: #5d5c56;
+  --accent: #8b93ff;
+  --accent-hover: #a5acff;
+  --accent-ink: #0b0b1a;
+  --accent-soft: #23243d;
+  --focus-ring: #a5acff;
+  --c-blue: #3987e5;
+  --c-orange: #d95926;
+  --c-aqua: #199e70;
+  --c-yellow: #c98500;
+  --c-magenta: #d55181;
+  --c-green: #008300;
+  --c-violet: #9085e9;
+  --c-red: #e66767;
+  --good-ink: #0ca30c;
+  --bad-ink: #f07c7c;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.4), 0 24px 56px rgba(0, 0, 0, 0.6);
+}
