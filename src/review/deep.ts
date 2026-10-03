@@ -1496,6 +1496,94 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: '$1 - 2 \\times 0.36 = 0.28$.',
     },
   ],
+  'law-of-sines-cosines': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Two sides of 5 and 8 meet at $60^\\circ$. How long is the third side?',
+      answer: 7,
+      explain: '$c^2 = 25 + 64 - 2 \\cdot 5 \\cdot 8 \\cdot \\tfrac12 = 49$, so $c = 7$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'In a triangle, $A = 45^\\circ$, $B = 30^\\circ$ and $b = 6$. How long is side $a$? (decimal)',
+      answer: 6 * Math.SQRT2,
+      tolerance: 0.01,
+      explain:
+        '$a = b \\cdot \\tfrac{\\sin A}{\\sin B} = 6 \\cdot \\tfrac{0.7071}{0.5} \\approx 8.485$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt:
+        'In the law of cosines, $c^2 = a^2 + b^2 - 2ab\\cos C$, what happens when $C = 90^\\circ$?',
+      options: [
+        { text: 'It becomes Pythagoras’ theorem', correct: true },
+        { text: '$c$ becomes 0', why: 'Only the correction term vanishes.' },
+        { text: 'It no longer works', why: 'It works for every angle, right angles included.' },
+      ],
+      explain: '$\\cos 90^\\circ = 0$, so the correction disappears and $c^2 = a^2 + b^2$.',
+    },
+  ],
+  'polar-coordinates': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'How far from the origin is the point $(5, -12)$?',
+      answer: 13,
+      explain: '$r = \\sqrt{25 + 144} = 13$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'The polar point $(4, 30^\\circ)$ has what $y$-coordinate?',
+      answer: 2,
+      tolerance: 0.001,
+      explain: '$y = 4\\sin 30^\\circ = 2$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which polar point is the same place as $(3, 45^\\circ)$?',
+      options: [
+        { text: '$(3, 405^\\circ)$', correct: true },
+        { text: '$(3, 225^\\circ)$', why: 'That is the opposite direction.' },
+        { text: '$(-3, 45^\\circ)$', why: 'A negative $r$ walks backwards, to the opposite side.' },
+      ],
+      explain: 'Adding a full turn ($360^\\circ$) changes nothing.',
+    },
+  ],
+  'eulers-formula': [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'What is $e^{i\\pi}$?',
+      options: [
+        { text: '$-1$', correct: true },
+        { text: '$1$', why: 'That is a full turn, $e^{2\\pi i}$.' },
+        { text: '$i$', why: 'That is a quarter turn, $e^{i\\pi/2}$.' },
+      ],
+      explain: '$\\pi$ radians is half way round the unit circle, at $-1$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is $|3e^{i \\cdot 1.2}|$?',
+      answer: 3,
+      explain: '$|e^{i\\theta}| = 1$, so the length is just 3.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'Multiply $2e^{i\\,20^\\circ}$ by $3e^{i\\,70^\\circ}$. What is the angle of the product, in degrees?',
+      answer: 90,
+      unit: '°',
+      explain: 'Angles add: $20^\\circ + 70^\\circ = 90^\\circ$ (and lengths multiply, to 6).',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
