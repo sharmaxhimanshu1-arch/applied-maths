@@ -35,6 +35,10 @@ export const router = createHashRouter([
         lazy: async () => ({ Component: (await import('./routes/ToolPage')).ToolPage }),
       },
       {
+        path: 'review',
+        lazy: async () => ({ Component: (await import('./routes/ReviewPage')).ReviewPage }),
+      },
+      {
         path: 'progress',
         lazy: async () => ({ Component: (await import('./routes/ProgressPage')).ProgressPage }),
       },

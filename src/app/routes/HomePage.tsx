@@ -1,4 +1,12 @@
-import { ArrowRight, Compass, Flame, Map as MapIcon, Sparkles, Wrench } from 'lucide-react'
+import {
+  ArrowRight,
+  BrainCircuit,
+  Compass,
+  Flame,
+  Map as MapIcon,
+  Sparkles,
+  Wrench,
+} from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { AREAS, CONCEPTS, DOMAINS, TRACKS, conceptById } from '@/curriculum'
@@ -9,6 +17,7 @@ import {
   recommendations,
   streak,
   trackConcepts,
+  useReviewSummary,
 } from '@/progress/selectors'
 import { useProgress } from '@/progress/store'
 import { Button, ButtonLink } from '@/ui/Button'
@@ -30,6 +39,7 @@ export function HomePage() {
   const activity = useProgress((s) => s.activity)
   const setTrack = useProgress((s) => s.setTrack)
   const [onboarding, setOnboarding] = useState(false)
+  const { due } = useReviewSummary()
   const next = recommendations({ concepts, goal, track }, 4).filter((id) => id !== lastVisited)
   const overall = countDone(
     concepts,
@@ -90,6 +100,29 @@ export function HomePage() {
           </p>
         </div>
       </section>
+
+      {due.length > 0 && (
+        <section
+          aria-labelledby="review-heading"
+          className="mt-14 flex flex-wrap items-center gap-4 rounded-3xl border border-line bg-surface p-5 shadow-sm sm:p-6"
+        >
+          <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-accent-soft">
+            <BrainCircuit className="size-6 text-accent" aria-hidden />
+          </span>
+          <div className="min-w-0 flex-1">
+            <h2 id="review-heading" className="text-lg font-semibold">
+              Review today
+            </h2>
+            <p className="text-ink-2">
+              {due.length} {due.length === 1 ? 'concept is' : 'concepts are'} due: one quick
+              question each, about {Math.max(1, Math.round(due.length * 0.5))} min.
+            </p>
+          </div>
+          <ButtonLink to="/review" variant="primary" icon={<ArrowRight className="size-4" />}>
+            Start review
+          </ButtonLink>
+        </section>
+      )}
 
       {(onboarded || overall.done > 0) && (
         <section aria-labelledby="next-heading" className="mt-16">

@@ -133,6 +133,11 @@ Follow the arc of the existing labs:
 6. real world;
 7. takeaways.
 
+Add **three review questions** for the concept to `src/review/deep.ts` (the same `QuickCheck`
+shapes as lite-lab checks). Spaced review asks one of them each time the concept comes back, so
+make them variants of the lab's practice rather than copies. A unit test fails if a deep lab has
+fewer than three. Lite labs need nothing extra: they are reviewed with their quick checks.
+
 `e2e/labs.spec.ts` renders every lab folder automatically.
 
 ## Quality checklist

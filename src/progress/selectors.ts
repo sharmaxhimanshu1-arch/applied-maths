@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react'
 import { CONCEPTS, graph, trackById } from '@/curriculum'
 import type { ConceptId, DomainId } from '@/curriculum/types'
 import {
@@ -7,6 +8,7 @@ import {
   type ConceptProgress,
   type ProgressData,
 } from './store'
+import { dueReviews, nextReviewDay } from './review'
 
 /** How a concept appears on the map. */
 export type NodeState = 'mastered' | 'known' | 'in-progress' | 'ready' | 'locked'
@@ -89,4 +91,35 @@ export function streak(activity: string[], now = new Date()): number {
 /** React hook: the map state of one concept. */
 export function useNodeState(id: ConceptId): NodeState {
   return useProgress((s) => nodeState(s.concepts, id))
+}
+
+/** Today's local date, refreshed when the tab regains focus and once a minute (for midnight). */
+export function useToday(): string {
+  const [today, setToday] = useState(localDay)
+  useEffect(() => {
+    const refresh = () => setToday(localDay())
+    const timer = setInterval(refresh, 60_000)
+    document.addEventListener('visibilitychange', refresh)
+    return () => {
+      clearInterval(timer)
+      document.removeEventListener('visibilitychange', refresh)
+    }
+  }, [])
+  return today
+}
+
+/** React hook: which concepts are due for review today, and when the next one is. */
+export function useReviewSummary() {
+  const reviews = useProgress((s) => s.reviews)
+  const today = useToday()
+  return useMemo(
+    () => ({
+      today,
+      reviews,
+      due: dueReviews(reviews, today),
+      next: nextReviewDay(reviews, today),
+      total: Object.keys(reviews).length,
+    }),
+    [reviews, today],
+  )
 }
