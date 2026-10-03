@@ -215,7 +215,7 @@ export function GaltonBoard({
   }, [counts, flying, rows, p, balls])
 
   return (
-    <div className="grid gap-4 p-3 sm:p-4 md:grid-cols-[minmax(0,1fr)_16rem]">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-4 p-3 sm:p-4 md:grid-cols-[minmax(0,1fr)_16rem]">
       <canvas
         ref={canvas}
         className="mx-auto block aspect-[520/440] w-full max-w-[520px]"

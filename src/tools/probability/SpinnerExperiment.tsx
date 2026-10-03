@@ -78,7 +78,7 @@ export function SpinnerExperiment({
   }))
 
   return (
-    <div className="grid gap-4 p-3 sm:p-4 md:grid-cols-[14rem_minmax(0,1fr)]">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-4 p-3 sm:p-4 md:grid-cols-[14rem_minmax(0,1fr)]">
       <div className="flex flex-col items-center gap-3">
         <svg
           viewBox="-110 -110 220 220"

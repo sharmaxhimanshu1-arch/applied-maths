@@ -120,7 +120,7 @@ export function DiceExperiment({
     data.push({ label: String(s), value: rolls ? counts[s] / rolls : 0, expected: theory[s] })
 
   return (
-    <div className="grid gap-4 p-3 sm:p-4">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-4 p-3 sm:p-4">
       <div className="flex flex-wrap items-center gap-3">
         <RunButtons counts={[1, 10, 100, 1000]} onRun={run} label="Roll" />
         {(preset.adjustable ?? true) && (

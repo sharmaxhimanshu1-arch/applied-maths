@@ -75,7 +75,7 @@ export function CoinExperiment({
   const decades = Array.from({ length: Math.floor(xMax) + 1 }, (_, k) => k)
 
   return (
-    <div className="grid gap-4 p-3 sm:p-4">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-4 p-3 sm:p-4">
       <div className="flex flex-wrap items-center gap-3">
         <RunButtons counts={[1, 10, 100, 1000]} onRun={run} label="Flip" />
         <Button size="sm" variant="ghost" icon={<RotateCcw className="size-4" />} onClick={reset}>
