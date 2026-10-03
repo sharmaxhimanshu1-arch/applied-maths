@@ -1404,6 +1404,98 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: 'A cone is a third of its cylinder: $30 / 3 = 10$ litres.',
     },
   ],
+  'right-triangle-trig': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        'You stand 30 m from a building and look up $45^\\circ$ to its roof. How tall is it above eye level, in m?',
+      answer: 30,
+      explain: '$\\tan 45^\\circ = 1$, so the height is $30 \\times 1 = 30$ m.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'A right triangle has hypotenuse 13 and the side opposite $\\theta$ is 5. What is $\\sin\\theta$? (decimal)',
+      answer: 5 / 13,
+      tolerance: 0.001,
+      explain:
+        '$\\sin\\theta = \\tfrac{\\text{opp}}{\\text{hyp}} = \\tfrac{5}{13} \\approx 0.385$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt:
+        'Two right triangles both have a $40^\\circ$ angle, but one is three times bigger. Their values of $\\tan 40^\\circ$ are…',
+      options: [
+        { text: 'Equal', correct: true },
+        { text: 'Three times bigger for the big one', why: 'Both sides of the ratio grow by 3.' },
+        { text: 'Nine times bigger for the big one', why: 'That is how areas scale, not ratios.' },
+      ],
+      explain:
+        'The triangles are similar, so every ratio of sides, including opp/adj, is the same.',
+    },
+  ],
+  radians: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Convert $45^\\circ$ to radians, as a decimal.',
+      answer: Math.PI / 4,
+      tolerance: 0.01,
+      explain: '$45 \\times \\tfrac{\\pi}{180} = \\tfrac{\\pi}{4} \\approx 0.785$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Convert $\\tfrac{3\\pi}{2}$ radians to degrees.',
+      answer: 270,
+      unit: '°',
+      explain: '$\\tfrac{3\\pi}{2} \\times \\tfrac{180}{\\pi} = 270^\\circ$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'A clock’s minute hand is 12 cm long. How far does its tip travel in 15 minutes, in cm? (decimal)',
+      answer: 6 * Math.PI,
+      tolerance: 0.05,
+      explain:
+        'A quarter turn is $\\tfrac{\\pi}{2}$ rad, so $s = r\\theta = 12 \\times \\tfrac{\\pi}{2} = 6\\pi \\approx 18.85$ cm.',
+    },
+  ],
+  'trig-identities': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: '$\\cos\\theta = 0.28$ and $\\theta$ is acute. What is $\\sin\\theta$?',
+      answer: 0.96,
+      tolerance: 0.001,
+      explain: '$\\sin\\theta = \\sqrt{1 - 0.28^2} = \\sqrt{0.9216} = 0.96$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: '$\\cos(-\\theta)$ equals…',
+      options: [
+        { text: '$\\cos\\theta$', correct: true },
+        { text: '$-\\cos\\theta$', why: 'Mirroring in the x-axis keeps the x-coordinate.' },
+        { text: '$\\sin\\theta$', why: 'That would be $\\cos(90^\\circ - \\theta)$.' },
+      ],
+      explain:
+        'The point for $-\\theta$ is the mirror image in the x-axis: same x, so the same cosine.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        '$\\sin\\theta = 0.6$. What is $\\cos 2\\theta$? (Use $\\cos 2\\theta = 1 - 2\\sin^2\\theta$.)',
+      answer: 0.28,
+      tolerance: 0.001,
+      explain: '$1 - 2 \\times 0.36 = 0.28$.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
