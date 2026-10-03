@@ -1318,6 +1318,92 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: 'Enlargement changes size, not shape: angles are preserved.',
     },
   ],
+  'distance-midpoint': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'How far apart are $(-1, 3)$ and $(5, -5)$?',
+      answer: 10,
+      explain: '$\\sqrt{6^2 + 8^2} = 10$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is the $y$-coordinate of the midpoint of $(4, -3)$ and $(0, 9)$?',
+      answer: 3,
+      explain: '$\\tfrac{-3 + 9}{2} = 3$. (The midpoint is $(2, 3)$.)',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which point lies on the circle $x^2 + y^2 = 25$?',
+      options: [
+        { text: '$(-3, 4)$', correct: true },
+        { text: '$(2, 3)$', why: '$4 + 9 = 13$.' },
+        { text: '$(5, 5)$', why: '$25 + 25 = 50$.' },
+        { text: '$(1, 4)$', why: '$1 + 16 = 17$.' },
+      ],
+      explain: '$9 + 16 = 25$: it is exactly 5 from the origin.',
+    },
+  ],
+  'geometric-transformations': [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'Rotate $(3, 1)$ by $180^\\circ$ about the origin.',
+      options: [
+        { text: '$(-3, -1)$', correct: true },
+        { text: '$(-1, 3)$', why: 'That is a quarter turn.' },
+        { text: '$(3, -1)$', why: 'That is a reflection in the $x$-axis.' },
+        { text: '$(1, 3)$', why: 'That is a reflection in $y = x$.' },
+      ],
+      explain: 'A half turn negates both coordinates.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Reflect $(2, 5)$ in the $y$-axis. What is the new $x$-coordinate?',
+      answer: -2,
+      explain: 'The $y$-axis mirror maps $(x, y) \\mapsto (-x, y)$: $(-2, 5)$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which property can a rigid transformation change?',
+      options: [
+        { text: 'Position', correct: true },
+        { text: 'Side lengths', why: 'Rigid moves preserve lengths.' },
+        { text: 'Angles', why: 'Rigid moves preserve angles.' },
+        { text: 'Area', why: 'The image is congruent, so area is unchanged.' },
+      ],
+      explain:
+        'Rigid transformations move shapes without stretching them: only position (and, for reflections, orientation) changes.',
+    },
+  ],
+  'volume-surface-area': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Find the volume of a $4 \\times 3 \\times 5$ box.',
+      answer: 60,
+      explain: '$4 \\times 3 \\times 5 = 60$ cubic units.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Find the surface area of a $4 \\times 3 \\times 5$ box.',
+      answer: 94,
+      explain: '$2(12 + 20 + 15) = 94$ square units.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'A cone and a cylinder share a base and height. The cylinder holds 30 litres. How much does the cone hold?',
+      answer: 10,
+      explain: 'A cone is a third of its cylinder: $30 / 3 = 10$ litres.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
