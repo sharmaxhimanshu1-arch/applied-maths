@@ -7,7 +7,7 @@ import { contentLoaders } from './index'
 import type { ContentModule } from './types'
 
 /** Areas whose lite content is complete. Every concept in them must have a lab of some kind. */
-const COMPLETE: AreaId[] = ['foundations', 'algebra']
+const COMPLETE: AreaId[] = ['foundations', 'algebra', 'geometry']
 
 const modules = Object.fromEntries(
   await Promise.all(

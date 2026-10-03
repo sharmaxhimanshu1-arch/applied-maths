@@ -201,17 +201,17 @@ const content: ContentModule = {
         {
           id: 't-targets',
           text: 'Visit all three orange rings. Say each address before you go.',
-          when: (s) => s.hits >= 3,
+          when: (s) => s.mode === 'coordinates' && s.hits >= 3,
         },
         {
           id: 't-q3',
           text: 'Put the point where both numbers are negative. Which quadrant is that?',
-          when: (s) => s.quadrant === 3,
+          when: (s) => s.mode === 'coordinates' && s.quadrant === 3,
         },
         {
           id: 't-axis',
           text: 'Put the point on the vertical axis, but not at the origin. What is its $x$?',
-          when: (s) => s.x === 0 && s.y !== 0,
+          when: (s) => s.mode === 'coordinates' && s.x === 0 && s.y !== 0,
         },
       ],
     },
