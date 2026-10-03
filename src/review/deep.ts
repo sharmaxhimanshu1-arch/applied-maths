@@ -1228,6 +1228,96 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: 'Three equal angles sharing $180^\\circ$: $60^\\circ$ each.',
     },
   ],
+  'circles-pi': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Find the area of a circle with diameter 10. (Decimals are fine.)',
+      answer: 25 * Math.PI,
+      tolerance: 0.05,
+      explain: 'Radius 5: $\\pi \\cdot 5^2 = 25\\pi \\approx 78.54$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'A bike wheel has radius 0.35 m. How far does it roll in one turn, in m?',
+      answer: 0.7 * Math.PI,
+      tolerance: 0.01,
+      explain: 'One circumference: $2\\pi \\times 0.35 \\approx 2.20$ m.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Why is $C \\div d$ the same for every circle?',
+      options: [
+        { text: 'All circles are scaled copies of each other', correct: true },
+        { text: 'Because $\\pi = 3$', why: '$\\pi$ is about 3.14159, and the reason is scaling.' },
+        { text: 'It is only true for the unit circle', why: 'It holds for circles of every size.' },
+        { text: 'Because circles have no corners', why: 'Scaling is what keeps the ratio fixed.' },
+      ],
+      explain:
+        'Scaling multiplies both the circumference and the diameter by the same factor, so their ratio is unchanged.',
+    },
+  ],
+  'pythagorean-theorem': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'A right triangle has legs 9 and 12. How long is the hypotenuse?',
+      answer: 15,
+      explain: '$\\sqrt{81 + 144} = \\sqrt{225} = 15$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'A TV screen is 48 inches wide and 36 inches tall. How long is its diagonal, in inches?',
+      answer: 60,
+      explain: '$\\sqrt{48^2 + 36^2} = \\sqrt{3600} = 60$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'A triangle has sides 7, 8 and 12. The angle opposite the 12 is…',
+      options: [
+        { text: 'Obtuse', correct: true },
+        { text: 'Right', why: '$49 + 64 = 113 \\ne 144$.' },
+        { text: 'Acute', why: '$a^2 + b^2 = 113$ is less than $c^2 = 144$.' },
+        { text: 'Impossible to tell', why: 'Compare $a^2 + b^2$ with $c^2$.' },
+      ],
+      explain: '$7^2 + 8^2 = 113 < 144 = 12^2$, so the angle opposite 12 is obtuse.',
+    },
+  ],
+  similarity: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'On a 1 : 100 scale drawing, a wall is 4.5 cm long. How long is the real wall, in m?',
+      answer: 4.5,
+      tolerance: 0.001,
+      explain: '$4.5 \\times 100 = 450$ cm $= 4.5$ m.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'Two similar rectangles have widths 3 and 12. The small one has area 5. What is the area of the big one?',
+      answer: 80,
+      explain: 'Scale factor 4, so area $\\times 16$: $5 \\times 16 = 80$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which stays the same when a shape is enlarged?',
+      options: [
+        { text: 'Its angles', correct: true },
+        { text: 'Its perimeter', why: 'It scales by $k$.' },
+        { text: 'Its area', why: 'It scales by $k^2$.' },
+        { text: 'Its side lengths', why: 'They scale by $k$.' },
+      ],
+      explain: 'Enlargement changes size, not shape: angles are preserved.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
