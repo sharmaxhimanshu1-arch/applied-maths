@@ -943,6 +943,74 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: '$\\tfrac{9}{9 + 1} = 0.9$: one dimension keeps 90% of the spread.',
     },
   ],
+  continuity: [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'Which condition fails for a jump at $x = a$?',
+      options: [
+        { text: 'The limit at $a$ does not exist', correct: true },
+        { text: '$f(a)$ is undefined', why: 'A jump can have a perfectly good value at $a$.' },
+        {
+          text: 'The function is not smooth',
+          why: 'Smoothness is a different, stronger property.',
+        },
+        { text: 'Nothing fails', why: 'You have to lift the pen at a jump.' },
+      ],
+      explain: 'The left and right sides head to different heights, so there is no single limit.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What value of $f(1)$ makes $f(x) = \\dfrac{x^2 - 1}{x - 1}$ continuous at 1?',
+      answer: 2,
+      explain: 'For $x \\ne 1$ it equals $x + 1$, which heads to 2.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'A continuous $f$ has $f(2) = -1$ and $f(6) = 3$. Which must be true?',
+      options: [
+        { text: '$f(x) = 1$ for some $x$ between 2 and 6', correct: true },
+        { text: '$f(4) = 1$', why: 'It hits 1 somewhere, not necessarily at the midpoint.' },
+        { text: '$f$ never goes above 3', why: 'It can overshoot and come back.' },
+        { text: '$f$ has exactly one root', why: 'It has at least one; it could have more.' },
+      ],
+      explain: '1 lies between $-1$ and 3, so the intermediate value theorem guarantees it is hit.',
+    },
+  ],
+  'derivative-rules': [
+    {
+      kind: 'expression',
+      id: 'r1',
+      prompt: 'Differentiate $x^4 - 3x^2 + 7$.',
+      answer: '4x^3 - 6x',
+      explain: 'Term by term: $4x^3 - 6x$; the constant vanishes.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: "$f(x) = x^3(x - 2)$. Find $f'(2)$.",
+      answer: 8,
+      hint: 'Product rule, or expand to $x^4 - 2x^3$ first.',
+      explain: "$f' = 3x^2(x - 2) + x^3$. At 2: $0 + 8 = 8$.",
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'What is the derivative of $\\sqrt{x} = x^{1/2}$?',
+      options: [
+        { text: '$\\dfrac{1}{2\\sqrt x}$', correct: true },
+        {
+          text: '$\\dfrac{\\sqrt x}{2}$',
+          why: 'The power drops by one: $\\tfrac12 - 1 = -\\tfrac12$.',
+        },
+        { text: '$2\\sqrt x$', why: 'That is closer to an antiderivative.' },
+        { text: '$\\dfrac{1}{\\sqrt x}$', why: 'Do not forget the $\\tfrac12$ that comes down.' },
+      ],
+      explain: 'Power rule with $n = \\tfrac12$: $\\tfrac12 x^{-1/2} = \\dfrac{1}{2\\sqrt x}$.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
