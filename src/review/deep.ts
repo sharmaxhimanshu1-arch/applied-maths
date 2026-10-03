@@ -1141,6 +1141,93 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: '$10 + 2 \\cdot \\dfrac{5}{1 - 1/2} = 10 + 20 = 30$ m.',
     },
   ],
+  angles: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Two angles on a straight line: one is $47^\\circ$. What is the other?',
+      answer: 133,
+      explain: '$180 - 47 = 133$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Which angle is reflex?',
+      options: [
+        { text: '$250^\\circ$', correct: true },
+        { text: '$90^\\circ$', why: 'That is a right angle.' },
+        { text: '$150^\\circ$', why: 'Between 90° and 180° is obtuse.' },
+        { text: '$180^\\circ$', why: 'That is a straight angle.' },
+      ],
+      explain: 'Reflex angles are bigger than $180^\\circ$ and less than $360^\\circ$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'Four angles meet at a point. Three of them are $90^\\circ$, $80^\\circ$ and $110^\\circ$. Find the fourth.',
+      answer: 80,
+      explain: 'Around a point: $360 - 90 - 80 - 110 = 80$.',
+    },
+  ],
+  'area-perimeter': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'A rectangle is 9 by 4. What is its area?',
+      answer: 36,
+      explain: '$9 \\times 4 = 36$ square units.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'A parallelogram has base 8 and perpendicular height 5 (its slanted side is 6). What is its area?',
+      answer: 40,
+      explain:
+        'Base times perpendicular height: $8 \\times 5 = 40$. The slanted side is not needed.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which rectangle with perimeter 24 has the largest area?',
+      options: [
+        { text: '$6 \\times 6$', correct: true },
+        { text: '$10 \\times 2$', why: 'Area 20.' },
+        { text: '$8 \\times 4$', why: 'Area 32.' },
+        { text: '$11 \\times 1$', why: 'Area 11.' },
+      ],
+      explain: 'For a fixed perimeter, the square wins: $6 \\times 6 = 36$.',
+    },
+  ],
+  triangles: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'A right-angled triangle has one angle of $35^\\circ$. What is the third angle?',
+      answer: 55,
+      explain: '$180 - 90 - 35 = 55$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Which set of lengths can form a triangle?',
+      options: [
+        { text: '4, 5, 8', correct: true },
+        { text: '1, 2, 5', why: '$1 + 2 < 5$.' },
+        { text: '3, 3, 6', why: '$3 + 3 = 6$ exactly: it would be flat.' },
+        { text: '2, 7, 10', why: '$2 + 7 < 10$.' },
+      ],
+      explain: '$4 + 5 = 9 > 8$, and the other pairs are fine too.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'What is each angle of an equilateral triangle?',
+      answer: 60,
+      explain: 'Three equal angles sharing $180^\\circ$: $60^\\circ$ each.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
