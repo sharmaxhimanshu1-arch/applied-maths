@@ -3,6 +3,14 @@ import type { GrapherPreset, GrapherState } from '@/tools/grapher/model'
 import type { MatrixLabPreset, MatrixLabState } from '@/tools/matrix/MatrixLab'
 import type { ProbabilityPreset, ProbabilityState } from '@/tools/probability/ProbabilityLab'
 import type { UnitCirclePreset, UnitCircleState } from '@/tools/unit-circle/UnitCircle'
+import type { FractionBarsPreset, FractionBarsState } from './FractionBarsWidget'
+import type { NumberLinePreset, NumberLineState } from './NumberLineWidget'
+import type { NumberTheoryPreset, NumberTheoryState } from './NumberTheoryWidget'
+import type { VennPreset, VennState } from './VennWidget'
+import type { TruthTablePreset, TruthTableState } from './TruthTableWidget'
+import type { CountingTreePreset, CountingTreeState } from './CountingTreeWidget'
+import type { NetworkGraphPreset, NetworkGraphState } from './NetworkGraphWidget'
+import type { IterationPlotPreset, IterationPlotState } from './IterationPlotWidget'
 
 /**
  * Every interactive a lite lab can embed: its preset props and the state it reports.
@@ -14,6 +22,14 @@ export interface WidgetDefs {
   unitCircle: { props: UnitCirclePreset; state: UnitCircleState }
   probability: { props: ProbabilityPreset; state: ProbabilityState }
   data: { props: DataLabPreset; state: DataLabState }
+  numberLine: { props: NumberLinePreset; state: NumberLineState }
+  fractionBars: { props: FractionBarsPreset; state: FractionBarsState }
+  numberTheory: { props: NumberTheoryPreset; state: NumberTheoryState }
+  venn: { props: VennPreset; state: VennState }
+  truthTable: { props: TruthTablePreset; state: TruthTableState }
+  countingTree: { props: CountingTreePreset; state: CountingTreeState }
+  networkGraph: { props: NetworkGraphPreset; state: NetworkGraphState }
+  iterationPlot: { props: IterationPlotPreset; state: IterationPlotState }
 }
 
 export type WidgetType = keyof WidgetDefs

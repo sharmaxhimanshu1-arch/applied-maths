@@ -446,7 +446,7 @@ function Markers({
   for (const fn of fns) {
     if (which !== 'extrema')
       for (const r of findRoots(fn, view.xMin, view.xMax, 500))
-        points.push({ x: r, y: 0, kind: 'root' })
+        points.push({ x: Math.abs(r) < 1e-9 ? 0 : r, y: 0, kind: 'root' })
     if (which !== 'roots')
       for (const e of findExtrema(fn, view.xMin, view.xMax, 500))
         if (e.y >= view.yMin && e.y <= view.yMax) points.push({ x: e.x, y: e.y, kind: e.kind })

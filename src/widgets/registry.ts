@@ -12,4 +12,12 @@ export const WIDGETS: Registry = {
   unitCircle: lazy(() => import('./UnitCircleWidget')),
   probability: lazy(() => import('./ProbabilityWidget')),
   data: lazy(() => import('./DataWidget')),
+  numberLine: lazy(() => import('./NumberLineWidget')),
+  fractionBars: lazy(() => import('./FractionBarsWidget')),
+  numberTheory: lazy(() => import('./NumberTheoryWidget')),
+  venn: lazy(() => import('./VennWidget')),
+  truthTable: lazy(() => import('./TruthTableWidget')),
+  countingTree: lazy(() => import('./CountingTreeWidget')),
+  networkGraph: lazy(() => import('./NetworkGraphWidget')),
+  iterationPlot: lazy(() => import('./IterationPlotWidget')),
 }

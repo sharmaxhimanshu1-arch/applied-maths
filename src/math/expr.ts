@@ -114,6 +114,14 @@ function freeSymbols(node: MathNode, exclude: Set<string>): string[] {
   return [...names].sort()
 }
 
+/** math.js typesets one-letter names that are also units (b = bit, g = gram…) upright; keep them italic. */
+const TEX = {
+  handler: (node: MathNode) =>
+    node.type === 'SymbolNode' && /^[a-zA-Z]$/.test((node as MathNode & { name: string }).name)
+      ? ` ${(node as MathNode & { name: string }).name}`
+      : undefined,
+}
+
 const BUILTIN = new Set(['x', 'y', 'theta', 'pi', 'e', 'i', 'PI', 'E'])
 
 export function compileExpression(math: MathJs, raw: string): CompileResult {
@@ -132,7 +140,7 @@ export function compileExpression(math: MathJs, raw: string): CompileResult {
         expr: {
           kind: 'point',
           params,
-          tex: `\\left(${nx.toTex()},\\ ${ny.toTex()}\\right)`,
+          tex: `\\left(${nx.toTex(TEX)},\\ ${ny.toTex(TEX)}\\right)`,
           evaluate: () => NaN,
           point: (scope) => [Number(cx.evaluate(scope)), Number(cy.evaluate(scope))],
           node: nx,
@@ -172,7 +180,7 @@ export function compileExpression(math: MathJs, raw: string): CompileResult {
         const dc = d.compile()
         derivative = {
           evaluate: (x, scope) => Number(dc.evaluate({ ...scope, x })),
-          tex: math.simplify(d).toTex(),
+          tex: math.simplify(d).toTex(TEX),
         }
       } catch {
         derivative = undefined
@@ -183,7 +191,7 @@ export function compileExpression(math: MathJs, raw: string): CompileResult {
       kind === 'polar' ? 'r=' : kind === 'vertical' ? 'x=' : lhs === 'f(x)' ? 'f(x)=' : 'y='
     return {
       ok: true,
-      expr: { kind, params, tex: prefix + node.toTex(), evaluate, derivative, node },
+      expr: { kind, params, tex: prefix + node.toTex(TEX), evaluate, derivative, node },
     }
   } catch (e) {
     return {
