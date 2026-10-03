@@ -22,6 +22,13 @@ export type NumberLineState =
   | { mode: 'inequality'; test: number; op: Ineq; bound: number; inSet: boolean }
   | { mode: 'approximate'; p: number; q: number; value: number; target: number; error: number }
 
+const INEQ_WORDS: Record<Ineq, string> = {
+  '<': 'less than',
+  '<=': 'at most',
+  '>': 'greater than',
+  '>=': 'at least',
+}
+
 const MAIN = 'var(--c-blue)'
 const ALT = 'var(--c-orange)'
 const fmt = (v: number, d = 2) => formatNumber(v, d)
@@ -267,6 +274,7 @@ function InequalityMode({
           options={(['<', '<=', '>', '>='] as Ineq[]).map((o) => ({
             value: o,
             label: <Tex>{`x ${INEQ_TEX[o]}`}</Tex>,
+            ariaLabel: `x ${INEQ_WORDS[o]}`,
           }))}
         />
         <Slider

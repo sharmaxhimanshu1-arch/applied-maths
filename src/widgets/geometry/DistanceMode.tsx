@@ -95,7 +95,7 @@ export function DistanceMode({
         </Label>
       </Plot>
       <div className="grid gap-2 border-t border-line p-3 sm:p-4">
-        <p className="overflow-x-auto text-[1.05rem]" aria-live="polite">
+        <p className="overflow-x-auto overflow-y-hidden text-[1.05rem]" aria-live="polite">
           <Tex>{`d = \\sqrt{${dx}^2 + ${dy}^2} = \\sqrt{${dx * dx + dy * dy}} ${whole ? '=' : '\\approx'} ${fmt(distance, 3)}`}</Tex>
         </p>
         <Readouts

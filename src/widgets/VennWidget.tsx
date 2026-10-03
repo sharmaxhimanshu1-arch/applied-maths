@@ -234,6 +234,7 @@ export default function VennWidget({ preset, onStateChange }: WidgetComponentPro
               key={o.name}
               size="sm"
               variant={match?.name === o.name ? 'soft' : 'ghost'}
+              aria-label={`Shade ${o.name}`}
               onClick={() => setShaded(regions.filter(o.test))}
             >
               <Tex>{o.tex}</Tex>

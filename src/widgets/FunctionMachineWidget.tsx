@@ -193,6 +193,7 @@ function MachineMode({
               options={rules.map((r, i) => ({
                 value: r.id,
                 label: mystery ? `Rule ${i + 1}` : <Tex>{r.tex}</Tex>,
+                ariaLabel: r.exprs.join(' or '),
               }))}
             />
           )}
@@ -263,7 +264,7 @@ function ComposeMode({
       size="sm"
       value={value}
       onChange={set}
-      options={fns.map((d) => ({ value: d.id, label: <Tex>{d.tex}</Tex> }))}
+      options={fns.map((d) => ({ value: d.id, label: <Tex>{d.tex}</Tex>, ariaLabel: d.expr }))}
     />
   )
   const chain = (first: 'f' | 'g') => {

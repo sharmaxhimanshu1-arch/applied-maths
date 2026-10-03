@@ -242,7 +242,10 @@ export default function MarkovWidget({ preset, onStateChange }: WidgetComponentP
             key={name}
             className="grid grid-cols-[4.5rem_minmax(0,1fr)_7rem] items-center gap-2 text-sm"
           >
-            <span className="font-semibold" style={{ color: COLORS[i] }}>
+            <span
+              className="font-semibold"
+              style={{ color: `color-mix(in oklab, ${COLORS[i]} 60%, var(--ink))` }}
+            >
               {name}
             </span>
             <div className="relative h-4 overflow-hidden rounded-full bg-surface-2">

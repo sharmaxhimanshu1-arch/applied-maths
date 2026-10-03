@@ -3,6 +3,7 @@ import { useCallback, useEffect, useId, useState, type FormEvent, type ReactNode
 import { expressionsMatch, numbersMatch, parseNumber } from '@/math/miniExpr'
 import { Button } from '@/ui/Button'
 import { Inline, RichText } from '@/ui/RichText'
+import { texToPlain } from '@/ui/tex'
 import { cn } from '@/ui/cn'
 import { useOptionalLab } from './lab-context'
 
@@ -194,6 +195,7 @@ export function McqChallenge({
                 <input
                   type="radio"
                   name={name}
+                  aria-label={o.text.includes('$') ? texToPlain(o.text) : undefined}
                   className="size-4 accent-[var(--accent)]"
                   checked={isPicked || (solved && !!o.correct && picked === null)}
                   disabled={solved}

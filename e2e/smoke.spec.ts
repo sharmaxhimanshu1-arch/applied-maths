@@ -9,7 +9,17 @@ function trackErrors(page: Page) {
   return errors
 }
 
-const PAGES = ['/', '/map', '/map?view=list', '/tools', '/progress', '/about', '/does-not-exist']
+const TOOLS = ['grapher', 'matrix-lab', 'probability-lab', 'unit-circle', 'data-lab', 'calculator']
+const PAGES = [
+  '/',
+  '/map',
+  '/map?view=list',
+  '/tools',
+  ...TOOLS.map((t) => `/tools/${t}`),
+  '/progress',
+  '/about',
+  '/does-not-exist',
+]
 
 for (const path of PAGES) {
   test(`${path} renders without errors`, async ({ page }) => {

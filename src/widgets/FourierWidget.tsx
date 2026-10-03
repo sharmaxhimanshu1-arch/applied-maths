@@ -183,7 +183,7 @@ export default function FourierWidget({ preset, onStateChange }: WidgetComponent
             { value: 'triangle', label: 'Triangle' },
           ]}
         />
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto overflow-y-hidden">
           <Tex>{TEX[wave]}</Tex>
         </div>
         <Readouts

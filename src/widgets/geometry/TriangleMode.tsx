@@ -151,7 +151,9 @@ export function TriangleMode({
         <p className="text-[1.05rem]" aria-live="polite">
           {angles.map((a, i) => (
             <span key={i}>
-              <strong style={{ color: ANGLE_COLORS[i] }}>{a}°</strong>
+              <strong style={{ color: `color-mix(in oklab, ${ANGLE_COLORS[i]} 60%, var(--ink))` }}>
+                {a}°
+              </strong>
               {i < 2 ? ' + ' : ''}
             </span>
           ))}{' '}

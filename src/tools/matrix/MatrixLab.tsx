@@ -435,9 +435,10 @@ function EntryInput({
         if (e.target.value.trim() !== '' && Number.isFinite(v)) onChange?.(v)
       }}
       className={cn(
-        'h-9 w-14 rounded-lg border bg-surface text-center font-mono text-[0.9375rem] font-semibold outline-none focus:border-accent',
+        'h-9 w-14 rounded-lg border bg-surface text-center font-mono text-ink text-[0.9375rem] font-semibold outline-none focus:border-accent',
       )}
-      style={{ color, borderColor: `color-mix(in oklab, ${color} 40%, transparent)` }}
+      // The entry's colour lives in its border; the digits stay in high-contrast ink.
+      style={{ borderColor: `color-mix(in oklab, ${color} 75%, transparent)`, borderWidth: 2 }}
     />
   )
 }

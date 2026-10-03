@@ -26,7 +26,7 @@ import { Label, Plot, Point, Polyline } from '@/viz'
 import { num } from '../_shared/tex'
 
 const BASE_MAX: Record<string, number> = { '2': 10, '3': 6, '10': 3 }
-const CHIP = 'var(--c-blue)'
+const CHIP = 'color-mix(in oklab, var(--c-blue) 75%, black)'
 
 function prettyNumber(x: number): string {
   if (x >= 1000) return Math.round(x).toLocaleString('en-US')

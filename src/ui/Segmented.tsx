@@ -1,7 +1,13 @@
 import { useId, type ReactNode } from 'react'
 import { cn } from './cn'
 
-type Option<T extends string> = { value: T; label: ReactNode; title?: string }
+type Option<T extends string> = {
+  value: T
+  label: ReactNode
+  title?: string
+  /** Spoken name when `label` is not plain text (e.g. typeset math). Defaults to the value. */
+  ariaLabel?: string
+}
 
 type SegmentedProps<T extends string> = {
   options: Option<T>[]
@@ -49,6 +55,9 @@ export function Segmented<T extends string>({
               value={o.value}
               checked={selected}
               onChange={() => onChange(o.value)}
+              aria-label={
+                typeof o.label === 'string' ? undefined : (o.ariaLabel ?? o.title ?? o.value)
+              }
               className="sr-only"
             />
             {o.label}

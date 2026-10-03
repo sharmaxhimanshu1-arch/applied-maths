@@ -43,7 +43,7 @@ function Bar({
   const h = 46
   const part = W / d
   return (
-    <g aria-label={label}>
+    <g role="img" aria-label={label}>
       {Array.from({ length: d }, (_, i) => (
         <rect
           key={i}

@@ -416,7 +416,10 @@ function CoinExplorer() {
           </div>
           <div className="grid gap-1.5">
             <div className="flex justify-between text-sm">
-              <span className="font-medium" style={{ color: 'var(--c-magenta)' }}>
+              <span
+                className="font-medium"
+                style={{ color: 'color-mix(in oklab, var(--c-magenta) 60%, var(--ink))' }}
+              >
                 Trick coin {beliefText(belief)}
               </span>
               <span className="font-medium text-ink-2">Fair coin {beliefText(1 - belief)}</span>

@@ -120,7 +120,7 @@ function Forms({ q }: { q: Quad }) {
   const tone = Math.abs(disc) < 1e-9 ? 'one' : disc > 0 ? 'two' : 'none'
   return (
     <div className="grid gap-3">
-      <dl className="grid gap-2 text-[0.95rem] sm:grid-cols-3">
+      <dl className="grid gap-2 text-[0.95rem]">
         {[
           ['Vertex form', vertexTex(q)],
           ['Standard form', standardTex(q.a, b, c)],
@@ -128,7 +128,7 @@ function Forms({ q }: { q: Quad }) {
         ].map(([label, tex]) => (
           <div key={label} className="min-w-0 rounded-xl border border-line bg-surface px-3 py-2">
             <dt className="text-xs font-medium text-ink-2">{label}</dt>
-            <dd className="overflow-x-auto">
+            <dd className="overflow-x-auto overflow-y-hidden">
               <Tex>{tex}</Tex>
             </dd>
           </div>

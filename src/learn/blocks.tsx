@@ -10,6 +10,7 @@ import { useEffect, useId, useState, type ReactNode } from 'react'
 import { Button } from '@/ui/Button'
 import { Inline, RichText } from '@/ui/RichText'
 import { Tex } from '@/ui/Tex'
+import { texToPlain } from '@/ui/tex'
 import { cn } from '@/ui/cn'
 import { useOptionalLab } from './lab-context'
 
@@ -254,6 +255,7 @@ export function PredictReveal({
                 <input
                   type="radio"
                   name={name}
+                  aria-label={o.includes('$') ? texToPlain(o) : undefined}
                   className="sr-only"
                   disabled={revealed}
                   checked={picked === i}

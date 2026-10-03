@@ -37,7 +37,7 @@ export function Slider({
   const fill = max === min ? 0 : ((value - min) / (max - min)) * 100
   const text = format(value)
   return (
-    <div className={cn('grid gap-1.5', disabled && 'opacity-50', className)}>
+    <div className={cn('grid gap-1.5', className)}>
       <div className="flex items-baseline justify-between gap-3 text-sm">
         <label htmlFor={id} className="font-medium text-ink-2">
           {label}
@@ -49,7 +49,8 @@ export function Slider({
       <input
         id={id}
         type="range"
-        className="range"
+        // Only the track fades when disabled; the label stays readable.
+        className={cn('range', disabled && 'opacity-50')}
         min={min}
         max={max}
         step={step}

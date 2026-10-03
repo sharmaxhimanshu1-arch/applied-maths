@@ -448,6 +448,7 @@ function BalanceExplorer() {
               size="sm"
               variant={puzzleId === p.id ? 'soft' : 'ghost'}
               aria-pressed={puzzleId === p.id}
+              aria-label={`Puzzle ${p.name}${solvedIds.includes(p.id) ? ', solved' : ''}`}
               onClick={() => setPuzzleId(p.id)}
             >
               <Tex>{p.name}</Tex>
@@ -511,6 +512,7 @@ function MachineExplorer() {
               size="sm"
               variant={id === x.id ? 'soft' : 'ghost'}
               aria-pressed={id === x.id}
+              aria-label={`${x.mul}x + ${x.add} = ${x.out}`}
               onClick={() => {
                 setId(x.id)
                 setGuess(0)
