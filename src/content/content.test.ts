@@ -7,16 +7,6 @@ import { WIDGETS } from '@/widgets/registry'
 import { contentLoaders } from './index'
 import type { ContentModule } from './types'
 
-/** Areas whose lite content is complete. Every concept in them must have a lab of some kind. */
-const COMPLETE: AreaId[] = [
-  'foundations',
-  'algebra',
-  'geometry',
-  'calculus',
-  'linear-algebra',
-  'probability',
-]
-
 const modules = Object.fromEntries(
   await Promise.all(
     Object.entries(contentLoaders).map(async ([area, load]) => [area, (await load()).default]),
@@ -37,9 +27,9 @@ describe('lite content', () => {
     }
   })
 
-  it('covers every concept in the completed areas', () => {
+  it('gives every concept a lab: a deep lab or lite content', () => {
     for (const c of CONCEPTS) {
-      if (!COMPLETE.includes(areaOf(c.domain).id) || DEEP_LAB_IDS.has(c.id)) continue
+      if (DEEP_LAB_IDS.has(c.id)) continue
       expect(modules[areaOf(c.domain).id][c.id], c.id).toBeDefined()
     }
   })

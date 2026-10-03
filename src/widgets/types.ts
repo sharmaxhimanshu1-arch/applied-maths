@@ -17,6 +17,10 @@ import type { GeometryBoardPreset, GeometryBoardState } from './GeometryBoardWid
 import type { ContourPlotPreset, ContourPlotState } from './ContourPlotWidget'
 import type { SlopeFieldPreset, SlopeFieldState } from './SlopeFieldWidget'
 import type { SimulationPreset, SimulationState } from './SimulationWidget'
+import type { NeuronPreset, NeuronState } from './NeuronWidget'
+import type { MarkovPreset, MarkovState } from './MarkovWidget'
+import type { EntropyPreset, EntropyState } from './EntropyWidget'
+import type { FourierPreset, FourierState } from './FourierWidget'
 
 /**
  * Every interactive a lite lab can embed: its preset props and the state it reports.
@@ -42,6 +46,10 @@ export interface WidgetDefs {
   contourPlot: { props: ContourPlotPreset; state: ContourPlotState }
   slopeField: { props: SlopeFieldPreset; state: SlopeFieldState }
   simulation: { props: SimulationPreset; state: SimulationState }
+  neuron: { props: NeuronPreset; state: NeuronState }
+  markov: { props: MarkovPreset; state: MarkovState }
+  entropy: { props: EntropyPreset; state: EntropyState }
+  fourier: { props: FourierPreset; state: FourierState }
 }
 
 export type WidgetType = keyof WidgetDefs

@@ -26,4 +26,8 @@ export const WIDGETS: Registry = {
   contourPlot: lazy(() => import('./ContourPlotWidget')),
   slopeField: lazy(() => import('./SlopeFieldWidget')),
   simulation: lazy(() => import('./SimulationWidget')),
+  neuron: lazy(() => import('./NeuronWidget')),
+  markov: lazy(() => import('./MarkovWidget')),
+  entropy: lazy(() => import('./EntropyWidget')),
+  fourier: lazy(() => import('./FourierWidget')),
 }
