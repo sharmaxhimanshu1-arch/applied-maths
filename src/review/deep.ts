@@ -943,6 +943,204 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: '$\\tfrac{9}{9 + 1} = 0.9$: one dimension keeps 90% of the spread.',
     },
   ],
+  continuity: [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'Which condition fails for a jump at $x = a$?',
+      options: [
+        { text: 'The limit at $a$ does not exist', correct: true },
+        { text: '$f(a)$ is undefined', why: 'A jump can have a perfectly good value at $a$.' },
+        {
+          text: 'The function is not smooth',
+          why: 'Smoothness is a different, stronger property.',
+        },
+        { text: 'Nothing fails', why: 'You have to lift the pen at a jump.' },
+      ],
+      explain: 'The left and right sides head to different heights, so there is no single limit.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What value of $f(1)$ makes $f(x) = \\dfrac{x^2 - 1}{x - 1}$ continuous at 1?',
+      answer: 2,
+      explain: 'For $x \\ne 1$ it equals $x + 1$, which heads to 2.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'A continuous $f$ has $f(2) = -1$ and $f(6) = 3$. Which must be true?',
+      options: [
+        { text: '$f(x) = 1$ for some $x$ between 2 and 6', correct: true },
+        { text: '$f(4) = 1$', why: 'It hits 1 somewhere, not necessarily at the midpoint.' },
+        { text: '$f$ never goes above 3', why: 'It can overshoot and come back.' },
+        { text: '$f$ has exactly one root', why: 'It has at least one; it could have more.' },
+      ],
+      explain: '1 lies between $-1$ and 3, so the intermediate value theorem guarantees it is hit.',
+    },
+  ],
+  'derivative-rules': [
+    {
+      kind: 'expression',
+      id: 'r1',
+      prompt: 'Differentiate $x^4 - 3x^2 + 7$.',
+      answer: '4x^3 - 6x',
+      explain: 'Term by term: $4x^3 - 6x$; the constant vanishes.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: "$f(x) = x^3(x - 2)$. Find $f'(2)$.",
+      answer: 8,
+      hint: 'Product rule, or expand to $x^4 - 2x^3$ first.',
+      explain: "$f' = 3x^2(x - 2) + x^3$. At 2: $0 + 8 = 8$.",
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'What is the derivative of $\\sqrt{x} = x^{1/2}$?',
+      options: [
+        { text: '$\\dfrac{1}{2\\sqrt x}$', correct: true },
+        {
+          text: '$\\dfrac{\\sqrt x}{2}$',
+          why: 'The power drops by one: $\\tfrac12 - 1 = -\\tfrac12$.',
+        },
+        { text: '$2\\sqrt x$', why: 'That is closer to an antiderivative.' },
+        { text: '$\\dfrac{1}{\\sqrt x}$', why: 'Do not forget the $\\tfrac12$ that comes down.' },
+      ],
+      explain: 'Power rule with $n = \\tfrac12$: $\\tfrac12 x^{-1/2} = \\dfrac{1}{2\\sqrt x}$.',
+    },
+  ],
+  optimization: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Where does $f(x) = -x^2 + 8x - 3$ reach its maximum?',
+      answer: 4,
+      explain: "$f'(x) = -2x + 8 = 0$ at $x = 4$.",
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'A rectangle has perimeter 40. What is the largest area it can have?',
+      answer: 100,
+      hint: 'Sides $x$ and $20 - x$; maximise $x(20 - x)$.',
+      explain: "$A'(x) = 20 - 2x = 0$ at $x = 10$: a $10 \\times 10$ square with area 100.",
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: "At a critical point $c$, $f'$ is positive on both sides. What is $c$?",
+      options: [
+        { text: 'Neither a maximum nor a minimum', correct: true },
+        { text: 'A maximum', why: 'For a peak the slope must turn negative afterwards.' },
+        { text: 'A minimum', why: 'For a valley the slope must be negative before.' },
+        { text: 'Impossible', why: '$x^3$ at 0 is exactly this.' },
+      ],
+      explain: 'The curve climbs, pauses flat, and keeps climbing, like $x^3$ at 0.',
+    },
+  ],
+  'newtons-method': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'One Newton step for $f(x) = x^2 - 9$ from $x_0 = 2$.',
+      answer: 3.25,
+      tolerance: 0.001,
+      explain: '$2 - \\dfrac{4 - 9}{4} = 2 + 1.25 = 3.25$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Geometrically, a Newton step from $x_n$ goes to…',
+      options: [
+        { text: 'Where the tangent at $x_n$ crosses the $x$-axis', correct: true },
+        { text: 'The midpoint of an interval containing the root', why: 'That is bisection.' },
+        {
+          text: 'Where the curve crosses the axis',
+          why: 'That is the root itself, which we do not know yet.',
+        },
+        { text: 'The lowest point of the curve', why: 'Newton finds roots, not minima (here).' },
+      ],
+      explain: 'Replace the curve by its tangent, solve the line, and repeat.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'Using $x_{n+1} = \\tfrac12\\big(x_n + \\tfrac{a}{x_n}\\big)$ with $a = 10$ and $x_0 = 3$, find $x_1$. (Decimals are fine.)',
+      answer: 19 / 6,
+      tolerance: 0.001,
+      explain:
+        '$\\tfrac12(3 + \\tfrac{10}{3}) = \\tfrac{19}{6} \\approx 3.1667$, close to $\\sqrt{10} \\approx 3.1623$.',
+    },
+  ],
+  'integration-techniques': [
+    {
+      kind: 'expression',
+      id: 'r1',
+      prompt:
+        'Find an antiderivative of $3x^2 e^{x^3}$ (leave out the $+ C$). Type $e^{\\ldots}$ as exp(…).',
+      answer: 'exp(x^3)',
+      hint: 'Let $u = x^3$.',
+      explain: 'With $u = x^3$, $du = 3x^2\\,dx$, so it is $\\int e^u\\,du = e^{x^3}$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt:
+        'For $\\displaystyle\\int x\\cos x\\,dx$ by parts, which choice of $u$ makes it easier?',
+      options: [
+        { text: '$u = x$, $dv = \\cos x\\,dx$', correct: true },
+        {
+          text: '$u = \\cos x$, $dv = x\\,dx$',
+          why: 'Then $\\int v\\,du$ contains $x^2 \\sin x$: harder.',
+        },
+        { text: 'Substitution with $u = \\cos x$', why: 'There is no $\\sin x$ factor to absorb.' },
+        { text: 'It cannot be integrated', why: 'Parts gives $x\\sin x + \\cos x + C$.' },
+      ],
+      explain: 'Pick $u$ to be the part that simplifies when differentiated: $x \\to 1$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'Find $\\displaystyle\\int_0^{\\sqrt{\\pi/2}} 2x\\cos(x^2)\\,dx$.',
+      answer: 1,
+      tolerance: 0.001,
+      explain:
+        'With $u = x^2$ the limits become 0 and $\\tfrac\\pi2$: $\\sin\\tfrac\\pi2 - \\sin 0 = 1$.',
+    },
+  ],
+  'infinite-series': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Find $\\tfrac12 + \\tfrac14 + \\tfrac18 + \\cdots$.',
+      answer: 1,
+      explain: 'Geometric with $a = \\tfrac12$, $r = \\tfrac12$: $\\dfrac{1/2}{1 - 1/2} = 1$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Which series converges?',
+      options: [
+        { text: '$\\sum 1/n^2$', correct: true },
+        { text: '$\\sum 1/n$', why: 'The harmonic series diverges, slowly.' },
+        { text: '$\\sum 2^n$', why: 'Its terms grow, so the sum blows up.' },
+        { text: '$\\sum 1$', why: 'Adding 1 forever grows without bound.' },
+      ],
+      explain: '$\\sum 1/n^p$ converges for $p > 1$; $\\sum 1/n^2 = \\pi^2/6$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'A ball dropped from 10 m bounces back to half its height each time. How far does it travel in total (down and up)?',
+      answer: 30,
+      hint: 'First drop 10, then each bounce goes up and down: $2(5 + 2.5 + \\cdots)$.',
+      explain: '$10 + 2 \\cdot \\dfrac{5}{1 - 1/2} = 10 + 20 = 30$ m.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
