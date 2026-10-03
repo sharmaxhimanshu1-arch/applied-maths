@@ -25,4 +25,5 @@ export const WIDGETS: Registry = {
   geometryBoard: lazy(() => import('./GeometryBoardWidget')),
   contourPlot: lazy(() => import('./ContourPlotWidget')),
   slopeField: lazy(() => import('./SlopeFieldWidget')),
+  simulation: lazy(() => import('./SimulationWidget')),
 }

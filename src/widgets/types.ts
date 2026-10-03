@@ -16,6 +16,7 @@ import type { ComplexPlanePreset, ComplexPlaneState } from './ComplexPlaneWidget
 import type { GeometryBoardPreset, GeometryBoardState } from './GeometryBoardWidget'
 import type { ContourPlotPreset, ContourPlotState } from './ContourPlotWidget'
 import type { SlopeFieldPreset, SlopeFieldState } from './SlopeFieldWidget'
+import type { SimulationPreset, SimulationState } from './SimulationWidget'
 
 /**
  * Every interactive a lite lab can embed: its preset props and the state it reports.
@@ -40,6 +41,7 @@ export interface WidgetDefs {
   geometryBoard: { props: GeometryBoardPreset; state: GeometryBoardState }
   contourPlot: { props: ContourPlotPreset; state: ContourPlotState }
   slopeField: { props: SlopeFieldPreset; state: SlopeFieldState }
+  simulation: { props: SimulationPreset; state: SimulationState }
 }
 
 export type WidgetType = keyof WidgetDefs
