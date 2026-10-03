@@ -108,7 +108,7 @@ export default function LinearTransformationsLab() {
 }
 
 function WarpExplorer() {
-  const [m, setM] = useState<Mat2>([1, 0.5, 0, 1])
+  const [m, setM] = useState<Mat2>([1.5, 0.5, 0, 1])
   const [c1, c2] = columns(m)
   return (
     <LabSection id="explore" eyebrow="Explore" title="Drag the basis, warp the plane">

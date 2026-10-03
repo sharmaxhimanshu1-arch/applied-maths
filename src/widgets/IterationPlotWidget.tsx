@@ -90,7 +90,6 @@ function SequenceMode(p: {
         view={{ xMin: 0, xMax: 12.8, yMin: lo - pad, yMax: hi + pad }}
         height={260}
         xIntegers
-        xLabel="term number n"
         ariaLabel={`First terms: ${terms
           .slice(0, 6)
           .map((t) => fmt(t, 2))

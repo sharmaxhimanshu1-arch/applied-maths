@@ -255,7 +255,7 @@ function CoinExplorer() {
 }
 
 function DiceExplorer() {
-  const [selected, setSelected] = useState<boolean[]>(SEVEN)
+  const [selected, setSelected] = useState<boolean[]>(() => selectionOf(EVENTS[1].test))
   const [counts, setCounts] = useState<number[]>(() => PAIRS.map(() => 0))
   const [last, setLast] = useState<number | null>(null)
   const [rng] = useState(() => createRng(2024))

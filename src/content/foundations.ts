@@ -489,6 +489,7 @@ const content: ContentModule = {
         params: { c: { value: 5, min: 0, max: 16, step: 1 } },
         view: { xMin: -1, xMax: 5, yMin: -1, yMax: 17 },
         height: 320,
+        markers: 'intersections',
       },
       caption:
         'The parabola is $y = x^2$; the flat line is $y = c$. Where they cross, $x = \\sqrt c$.',

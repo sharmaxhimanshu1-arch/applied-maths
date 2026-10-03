@@ -29,7 +29,8 @@ export interface GrapherPreset {
   /** Shaded area under a curve between draggable bounds. */
   area?: { expr?: number; a: number; b: number }
   riemann?: { expr?: number; a: number; b: number; n: number; method?: RiemannMethod }
-  markers?: 'roots' | 'extrema' | 'both'
+  /** Mark roots and/or peaks of every curve, or where the first two curves cross. */
+  markers?: 'roots' | 'extrema' | 'both' | 'intersections'
   taylor?: { expr?: number; a: number; degree: number }
   /** θ range for polar curves (default 2π). */
   thetaMax?: number

@@ -20,4 +20,7 @@ export const WIDGETS: Registry = {
   countingTree: lazy(() => import('./CountingTreeWidget')),
   networkGraph: lazy(() => import('./NetworkGraphWidget')),
   iterationPlot: lazy(() => import('./IterationPlotWidget')),
+  functionMachine: lazy(() => import('./FunctionMachineWidget')),
+  complexPlane: lazy(() => import('./ComplexPlaneWidget')),
+  geometryBoard: lazy(() => import('./GeometryBoardWidget')),
 }

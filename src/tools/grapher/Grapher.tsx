@@ -119,6 +119,8 @@ export function Grapher({ preset, mode = 'embed', onStateChange, onShare, ariaLa
   const scopeKey = JSON.stringify(scope)
 
   useEffect(() => {
+    // Wait for math.js: until the expressions compile, the free parameters are not known yet.
+    if (!math) return
     onStateChange?.({
       params: scope,
       view,
@@ -133,6 +135,7 @@ export function Grapher({ preset, mode = 'embed', onStateChange, onShare, ariaLa
       taylorCenter: overlays.taylor ? taylorA : undefined,
     })
   }, [
+    math,
     onStateChange,
     scope,
     view,
@@ -440,17 +443,26 @@ function Markers({
 }: {
   fns: ((x: number) => number)[]
   view: View
-  which: 'roots' | 'extrema' | 'both'
+  which: 'roots' | 'extrema' | 'both' | 'intersections'
 }) {
   const points: { x: number; y: number; kind: string }[] = []
-  for (const fn of fns) {
-    if (which !== 'extrema')
-      for (const r of findRoots(fn, view.xMin, view.xMax, 500))
-        points.push({ x: Math.abs(r) < 1e-9 ? 0 : r, y: 0, kind: 'root' })
-    if (which !== 'roots')
-      for (const e of findExtrema(fn, view.xMin, view.xMax, 500))
-        if (e.y >= view.yMin && e.y <= view.yMax) points.push({ x: e.x, y: e.y, kind: e.kind })
+  if (which === 'intersections' && fns.length >= 2) {
+    const [f, g] = fns
+    for (const x of findRoots((t) => f(t) - g(t), view.xMin, view.xMax, 500)) {
+      const y = f(x)
+      if (y >= view.yMin && y <= view.yMax)
+        points.push({ x: Math.abs(x) < 1e-9 ? 0 : x, y: Math.abs(y) < 1e-9 ? 0 : y, kind: 'cross' })
+    }
   }
+  if (which !== 'intersections')
+    for (const fn of fns) {
+      if (which !== 'extrema')
+        for (const r of findRoots(fn, view.xMin, view.xMax, 500))
+          points.push({ x: Math.abs(r) < 1e-9 ? 0 : r, y: 0, kind: 'root' })
+      if (which !== 'roots')
+        for (const e of findExtrema(fn, view.xMin, view.xMax, 500))
+          if (e.y >= view.yMin && e.y <= view.yMax) points.push({ x: e.x, y: e.y, kind: e.kind })
+    }
   return (
     <>
       {points.slice(0, 24).map((p, i) => (

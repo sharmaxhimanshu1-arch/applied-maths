@@ -220,7 +220,7 @@ function PathExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-pascal" when={n === 4}>
+        <TryThis id="t-pascal" when={n === 6}>
           With 4 flips the columns hold 1, 4, 6, 4, 1 paths. Try 5 and 6 flips: do you recognise the
           pattern? (It's Pascal's triangle.)
         </TryThis>

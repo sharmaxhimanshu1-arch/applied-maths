@@ -278,8 +278,8 @@ function OrderExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-differ" when={!equal}>
-          Find a pair where the order changes the result.
+        <TryThis id="t-differ" when={!equal && !(a === 'rot90' && b === 'reflect-x')}>
+          Find another pair where the order changes the result.
         </TryThis>
         <TryThis id="t-commute" when={equal && nonTrivial && a !== b}>
           Find two <em>different</em> transformations (neither “do nothing”) whose order doesn't

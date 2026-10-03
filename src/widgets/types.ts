@@ -11,6 +11,9 @@ import type { TruthTablePreset, TruthTableState } from './TruthTableWidget'
 import type { CountingTreePreset, CountingTreeState } from './CountingTreeWidget'
 import type { NetworkGraphPreset, NetworkGraphState } from './NetworkGraphWidget'
 import type { IterationPlotPreset, IterationPlotState } from './IterationPlotWidget'
+import type { FunctionMachinePreset, FunctionMachineState } from './FunctionMachineWidget'
+import type { ComplexPlanePreset, ComplexPlaneState } from './ComplexPlaneWidget'
+import type { GeometryBoardPreset, GeometryBoardState } from './GeometryBoardWidget'
 
 /**
  * Every interactive a lite lab can embed: its preset props and the state it reports.
@@ -30,6 +33,9 @@ export interface WidgetDefs {
   countingTree: { props: CountingTreePreset; state: CountingTreeState }
   networkGraph: { props: NetworkGraphPreset; state: NetworkGraphState }
   iterationPlot: { props: IterationPlotPreset; state: IterationPlotState }
+  functionMachine: { props: FunctionMachinePreset; state: FunctionMachineState }
+  complexPlane: { props: ComplexPlanePreset; state: ComplexPlaneState }
+  geometryBoard: { props: GeometryBoardPreset; state: GeometryBoardState }
 }
 
 export type WidgetType = keyof WidgetDefs
