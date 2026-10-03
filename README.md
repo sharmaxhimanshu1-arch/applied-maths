@@ -29,6 +29,9 @@ things, quick checks confirm you got it, and the map remembers where you are.
   - two tracks, the _Full Journey_ and _Math for ML & Data Science_;
   - a two-question onboarding that marks what you already know;
   - streaks and per-domain progress;
+  - **spaced review**: every mastered concept comes back for a one-question check after 1 day,
+    then 3, 7, 14, 30, 60 and 120 days as you keep getting it right (a miss restarts it). The
+    nav shows how many are due, and the Review page has a seven-day forecast;
   - export/import of your progress as a file.
 
   Everything is stored in your browser; there are no accounts and no tracking.
@@ -67,7 +70,7 @@ from any host or sub-path.
 
 ```
 src/
-  app/          shell, router, home/map/progress/tools pages, command palette
+  app/          shell, router, home/map/review/progress/tools pages, command palette
   curriculum/   the 110 concepts, prerequisite edges, domains, tracks, graph algorithms
   map/          knowledge-map layout (pure) and the React Flow canvas, list view, panels
   labs/<id>/    one folder per deep lab (auto-discovered)
@@ -77,7 +80,8 @@ src/
   learn/        concept page, lab building blocks, challenge engine
   viz/          plotting kit: Plot, MovablePoint, function graphs, vectors, canvas layers
   math/         numerics, linear algebra, statistics, seeded RNG, expression parsing
-  progress/     persisted progress store, selectors, export/import
+  progress/     persisted progress store, selectors, export/import, review scheduling
+  review/       spaced-review question pool (quick checks, plus a set for each deep lab)
   ui/           buttons, sliders, dialogs, KaTeX wrapper
 e2e/            Playwright tests
 docs/           CONTENT_GUIDE.md: how to add concepts, widgets and labs

@@ -1,0 +1,1127 @@
+import type { QuickCheck } from '@/content/types'
+import type { ConceptId } from '@/curriculum/types'
+
+/**
+ * Review questions for concepts with a hand-built deep lab (whose own challenges live in JSX).
+ * Lite labs review with their quick checks instead. Variants of the lab's practice, not copies,
+ * so a review tests the idea rather than a remembered answer.
+ */
+const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
+  'linear-equations': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Solve $4x - 7 = 13$.',
+      answer: 5,
+      explain: 'Add 7 to both sides: $4x = 20$. Divide both sides by 4: $x = 5$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Solve $3(x + 2) = 2x + 11$.',
+      answer: 5,
+      hint: 'Expand the bracket first.',
+      explain: '$3x + 6 = 2x + 11$, so $x = 5$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which step keeps $5x + 2 = 17$ balanced?',
+      options: [
+        { text: 'Subtract 2 from both sides', correct: true },
+        { text: 'Subtract 2 from the left only', why: 'Changing one side tips the balance.' },
+        { text: 'Divide only $5x$ by 5', why: 'Every term on both sides must be divided.' },
+        {
+          text: 'Add 2 to the left and subtract 2 on the right',
+          why: 'Both sides need the same operation.',
+        },
+      ],
+      explain: 'Whatever you do to one side you must do to the other: $5x = 15$.',
+    },
+  ],
+  'slope-linear-functions': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is the slope of the line through $(-1, 4)$ and $(3, -4)$?',
+      answer: -2,
+      explain: '$\\dfrac{-4 - 4}{3 - (-1)} = \\dfrac{-8}{4} = -2$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'The line $y = 3x + b$ passes through $(2, 1)$. What is $b$?',
+      answer: -5,
+      explain: '$1 = 3 \\cdot 2 + b$, so $b = -5$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which line is parallel to $y = -\\tfrac12 x + 4$?',
+      options: [
+        { text: '$y = -\\tfrac12 x - 3$', correct: true },
+        { text: '$y = 2x + 4$', why: 'Slope 2 is perpendicular, not parallel.' },
+        { text: '$y = -\\tfrac12$', why: 'That is a flat line, slope 0.' },
+        { text: '$y = \\tfrac12 x + 4$', why: 'Same steepness but opposite direction.' },
+      ],
+      explain: 'Parallel lines have equal slopes; only the intercept changes.',
+    },
+  ],
+  quadratics: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is the $x$-coordinate of the vertex of $y = x^2 - 6x + 5$?',
+      answer: 3,
+      hint: 'The vertex is at $x = -\\dfrac{b}{2a}$.',
+      explain: '$x = \\dfrac{6}{2} = 3$. (Then $y = 9 - 18 + 5 = -4$.)',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'How many real roots does $x^2 + 2x + 5 = 0$ have?',
+      answer: 0,
+      hint: 'Work out the discriminant $b^2 - 4ac$.',
+      explain: '$b^2 - 4ac = 4 - 20 = -16 < 0$, so the parabola never meets the $x$-axis.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'What are the roots of $y = (x - 1)(x + 4)$?',
+      options: [
+        { text: '$x = 1$ and $x = -4$', correct: true },
+        {
+          text: '$x = -1$ and $x = 4$',
+          why: 'Set each bracket to zero: $x - 1 = 0$ gives $x = 1$.',
+        },
+        { text: '$x = 1$ and $x = 4$', why: 'Check the sign in $x + 4 = 0$.' },
+        { text: 'There are none', why: 'A product is zero when either factor is zero.' },
+      ],
+      explain: 'Factored form shows the roots directly: each bracket is zero at one root.',
+    },
+  ],
+  'function-transformations': [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'How does the graph of $y = (x - 3)^2$ compare with $y = x^2$?',
+      options: [
+        { text: 'Shifted 3 to the right', correct: true },
+        { text: 'Shifted 3 to the left', why: 'Inside the bracket, $-3$ moves the graph right.' },
+        { text: 'Shifted 3 down', why: 'A vertical shift would be outside: $x^2 - 3$.' },
+        { text: 'Stretched by 3', why: 'Nothing multiplies the function.' },
+      ],
+      explain: 'The new graph reaches each height 3 units later, so it sits 3 to the right.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Which transformation turns $y = f(x)$ into $y = -f(x)$?',
+      options: [
+        { text: 'Reflection in the $x$-axis', correct: true },
+        { text: 'Reflection in the $y$-axis', why: 'That would be $f(-x)$.' },
+        { text: 'A shift down', why: 'Shifts add a constant; this multiplies by $-1$.' },
+        { text: 'A half turn about the origin', why: 'That needs both: $-f(-x)$.' },
+      ],
+      explain: 'Every output changes sign, so the graph flips upside down across the $x$-axis.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: '$y = 2f(x) + 1$. If $f(4) = 3$, what is $y$ at $x = 4$?',
+      answer: 7,
+      explain: '$2 \\cdot 3 + 1 = 7$: stretch first, then shift up.',
+    },
+  ],
+  'exponential-growth': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'A colony of 50 bacteria doubles every hour. How many are there after 4 hours?',
+      answer: 800,
+      explain: '$50 \\cdot 2^4 = 800$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'A drug has a half-life of 6 hours. What fraction is left after 18 hours? (Decimals are fine.)',
+      answer: 0.125,
+      tolerance: 0.001,
+      explain: '18 hours is 3 half-lives: $(\\tfrac12)^3 = \\tfrac18 = 0.125$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which grows faster in the long run?',
+      options: [
+        { text: '$1.01^x$', correct: true },
+        {
+          text: '$1000x$',
+          why: 'Linear growth adds a fixed amount; exponential growth eventually overtakes any line.',
+        },
+        { text: 'They end up equal', why: 'Their ratio grows without bound.' },
+        { text: 'It depends on the units', why: 'The long-run winner does not depend on units.' },
+      ],
+      explain:
+        'Repeated multiplication beats repeated addition eventually, however small the growth rate.',
+    },
+  ],
+  logarithms: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Find $\\log_3 81$.',
+      answer: 4,
+      explain: '$3^4 = 81$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Given $\\log 2 \\approx 0.301$, estimate $\\log 8$.',
+      answer: 0.903,
+      tolerance: 0.002,
+      explain: '$\\log 8 = \\log 2^3 = 3 \\log 2 \\approx 0.903$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: '$\\log(ab)$ equals…',
+      options: [
+        { text: '$\\log a + \\log b$', correct: true },
+        {
+          text: '$\\log a \\cdot \\log b$',
+          why: 'Logs turn multiplication into addition, not into multiplication.',
+        },
+        { text: '$\\log(a + b)$', why: 'There is no rule for the log of a sum.' },
+        { text: '$b \\log a$', why: 'That is $\\log(a^b)$.' },
+      ],
+      explain: 'Multiplying numbers adds their exponents, and a log is an exponent.',
+    },
+  ],
+  'unit-circle': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is $\\cos 180°$?',
+      answer: -1,
+      explain: 'At 180° the point on the unit circle is $(-1, 0)$; cos is the $x$-coordinate.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'In which quadrant are $\\sin\\theta > 0$ and $\\cos\\theta < 0$?',
+      options: [
+        { text: 'The second (90° to 180°)', correct: true },
+        { text: 'The first', why: 'There both are positive.' },
+        { text: 'The third', why: 'There both are negative.' },
+        { text: 'The fourth', why: 'There sin is negative and cos positive.' },
+      ],
+      explain: 'Up (sin > 0) and left (cos < 0) is the top-left quadrant.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'If $\\sin\\theta = 0.6$, what is $\\cos^2\\theta$?',
+      answer: 0.64,
+      tolerance: 0.001,
+      explain: '$\\sin^2\\theta + \\cos^2\\theta = 1$, so $\\cos^2\\theta = 1 - 0.36 = 0.64$.',
+    },
+  ],
+  'trig-graphs': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is the amplitude of $y = 4\\sin(2x)$?',
+      answer: 4,
+      explain: 'The wave swings between $-4$ and $4$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is the period of $y = \\sin(3x)$, in radians? (Decimals are fine.)',
+      answer: (2 * Math.PI) / 3,
+      tolerance: 0.01,
+      explain: 'The period is $\\dfrac{2\\pi}{3} \\approx 2.094$: the wave runs 3 times as fast.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'How is $y = \\cos x$ related to $y = \\sin x$?',
+      options: [
+        { text: 'It is $\\sin x$ shifted left by $\\tfrac{\\pi}{2}$', correct: true },
+        { text: 'It is $\\sin x$ upside down', why: 'That is $-\\sin x$.' },
+        { text: 'It has twice the period', why: 'Both have period $2\\pi$.' },
+        {
+          text: 'They are unrelated',
+          why: 'Cosine is the same wave, just started a quarter turn earlier.',
+        },
+      ],
+      explain: '$\\cos x = \\sin(x + \\tfrac{\\pi}{2})$: same wave, a quarter period ahead.',
+    },
+  ],
+  vectors: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Find the length of $\\vec v = (5, 12)$.',
+      answer: 13,
+      explain: '$\\sqrt{5^2 + 12^2} = \\sqrt{169} = 13$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'What is $(2, -1) + (3, 4)$?',
+      options: [
+        { text: '$(5, 3)$', correct: true },
+        { text: '$(6, -4)$', why: 'That multiplies the parts; vectors add part by part.' },
+        { text: '$(-1, -5)$', why: 'That subtracts.' },
+        { text: '$(5, 5)$', why: 'Check the second parts: $-1 + 4 = 3$.' },
+      ],
+      explain: 'Add matching parts: $(2 + 3, -1 + 4)$. Tip to tail.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'Scaling $\\vec v$ by $-3$ multiplies its length by what?',
+      answer: 3,
+      explain: 'Length scales by $|-3| = 3$; the minus sign only reverses the direction.',
+    },
+  ],
+  'linear-combinations-span': [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'What is the span of $(1, 2)$ and $(2, 4)$?',
+      options: [
+        { text: 'A line through the origin', correct: true },
+        {
+          text: 'The whole plane',
+          why: '$(2, 4)$ is just $2 \\cdot (1, 2)$: they point the same way.',
+        },
+        {
+          text: 'Just the two points',
+          why: 'A span includes every combination $a\\vec u + b\\vec v$.',
+        },
+        { text: 'Only the origin', why: 'Any nonzero vector spans at least a line.' },
+      ],
+      explain: 'Parallel vectors add nothing new: their combinations stay on one line.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Find $a$ so that $a(1, 0) + 2(0, 1) = (7, 2)$.',
+      answer: 7,
+      explain: 'The first part gives $a = 7$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Two vectors in the plane span the whole plane exactly when…',
+      options: [
+        { text: 'They are not parallel (and neither is zero)', correct: true },
+        { text: 'They have the same length', why: 'Length does not matter, direction does.' },
+        { text: 'They are perpendicular', why: 'Perpendicular is enough but not required.' },
+        { text: 'Always', why: 'Parallel vectors only span a line.' },
+      ],
+      explain: 'Two independent directions reach every point in the plane.',
+    },
+  ],
+  'dot-product': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Compute $(3, -2) \\cdot (4, 5)$.',
+      answer: 2,
+      explain: '$3 \\cdot 4 + (-2) \\cdot 5 = 12 - 10 = 2$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: '$\\vec u \\cdot \\vec v = 0$ for two nonzero vectors. What does that mean?',
+      options: [
+        { text: 'They are perpendicular', correct: true },
+        {
+          text: 'They are parallel',
+          why: 'Parallel vectors have the largest dot product in size.',
+        },
+        { text: 'One of them is zero', why: 'The question says both are nonzero.' },
+        {
+          text: 'They have equal length',
+          why: 'Length and angle both matter; zero means a right angle.',
+        },
+      ],
+      explain:
+        '$\\vec u \\cdot \\vec v = |\\vec u||\\vec v|\\cos\\theta$, which is 0 when $\\theta = 90°$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'A negative dot product means the angle between the vectors is…',
+      options: [
+        { text: 'More than 90°', correct: true },
+        { text: 'Less than 90°', why: 'Acute angles give a positive dot product.' },
+        { text: 'Exactly 90°', why: 'That gives 0.' },
+        { text: 'Impossible to tell', why: 'The sign of $\\cos\\theta$ tells you.' },
+      ],
+      explain: '$\\cos\\theta < 0$ for obtuse angles: the shadow points backwards.',
+    },
+  ],
+  'linear-transformations': [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'The columns of a $2 \\times 2$ matrix tell you…',
+      options: [
+        { text: 'Where $\\hat\\imath$ and $\\hat\\jmath$ land', correct: true },
+        { text: 'The eigenvalues', why: 'Eigenvalues usually need a calculation.' },
+        { text: 'The area of the unit square', why: 'That is the determinant.' },
+        { text: 'Nothing on their own', why: 'Each column is the image of a basis vector.' },
+      ],
+      explain:
+        'Column 1 is $A\\hat\\imath$ and column 2 is $A\\hat\\jmath$; they determine the whole transformation.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Which matrix rotates the plane 90° anticlockwise?',
+      options: [
+        { text: '$\\begin{bmatrix} 0 & -1 \\\\ 1 & 0 \\end{bmatrix}$', correct: true },
+        {
+          text: '$\\begin{bmatrix} 0 & 1 \\\\ -1 & 0 \\end{bmatrix}$',
+          why: 'That rotates clockwise.',
+        },
+        {
+          text: '$\\begin{bmatrix} -1 & 0 \\\\ 0 & -1 \\end{bmatrix}$',
+          why: 'That is a half turn.',
+        },
+        {
+          text: '$\\begin{bmatrix} 1 & 0 \\\\ 0 & -1 \\end{bmatrix}$',
+          why: 'That flips across the $x$-axis.',
+        },
+      ],
+      explain:
+        '$\\hat\\imath = (1, 0)$ goes to $(0, 1)$ and $\\hat\\jmath = (0, 1)$ goes to $(-1, 0)$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'Let $A = \\begin{bmatrix} 2 & 1 \\\\ 0 & 3 \\end{bmatrix}$. What is the second entry of $A\\begin{bmatrix} 1 \\\\ 1 \\end{bmatrix}$?',
+      answer: 3,
+      explain: '$A(1, 1) = 1 \\cdot (2, 0) + 1 \\cdot (1, 3) = (3, 3)$.',
+    },
+  ],
+  'matrix-multiplication': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        'Find the top-left entry of $\\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix}\\begin{bmatrix} 5 & 0 \\\\ 6 & 1 \\end{bmatrix}$.',
+      answer: 17,
+      explain: 'Row 1 · column 1 $= 1 \\cdot 5 + 2 \\cdot 6 = 17$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'In general, is $AB = BA$?',
+      options: [
+        { text: 'No: the order of transformations matters', correct: true },
+        { text: 'Yes, always', why: 'Rotate-then-shear and shear-then-rotate usually differ.' },
+        {
+          text: 'Only for $2 \\times 2$ matrices',
+          why: 'Even $2 \\times 2$ matrices usually do not commute.',
+        },
+        { text: 'Only when both are invertible', why: 'Invertibility does not make them commute.' },
+      ],
+      explain: '$AB$ means "do $B$, then $A$". Swapping the order usually changes the result.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: '$AB$ applied to a vector $\\vec v$ means…',
+      options: [
+        { text: 'Apply $B$ first, then $A$', correct: true },
+        {
+          text: 'Apply $A$ first, then $B$',
+          why: 'The matrix nearest the vector acts first: $A(B\\vec v)$.',
+        },
+        { text: 'Apply them at the same time', why: 'Composition is one after the other.' },
+        { text: 'Add the two results', why: 'That would be $A\\vec v + B\\vec v$.' },
+      ],
+      explain: '$(AB)\\vec v = A(B\\vec v)$: read right to left, like function composition.',
+    },
+  ],
+  determinant: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Find $\\det \\begin{bmatrix} 3 & 1 \\\\ 2 & 4 \\end{bmatrix}$.',
+      answer: 10,
+      explain: '$3 \\cdot 4 - 1 \\cdot 2 = 10$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'A transformation has determinant $-2$. What does it do to areas?',
+      options: [
+        { text: 'Doubles them and flips orientation', correct: true },
+        { text: 'Halves them', why: 'The size of the determinant is the area factor: 2.' },
+        { text: 'Makes them negative', why: 'Areas stay positive; the sign means a flip.' },
+        { text: 'Squashes them to zero', why: 'That is determinant 0.' },
+      ],
+      explain: '$|\\det| = 2$ scales area; the minus sign means the plane is flipped over.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'For which $k$ is $\\begin{bmatrix} 2 & 4 \\\\ 1 & k \\end{bmatrix}$ not invertible?',
+      answer: 2,
+      explain: '$\\det = 2k - 4 = 0$ when $k = 2$: the columns become parallel.',
+    },
+  ],
+  'inverse-matrix': [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'Which matrix has no inverse?',
+      options: [
+        { text: '$\\begin{bmatrix} 1 & 2 \\\\ 2 & 4 \\end{bmatrix}$', correct: true },
+        {
+          text: '$\\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\end{bmatrix}$',
+          why: 'The identity is its own inverse.',
+        },
+        {
+          text: '$\\begin{bmatrix} 2 & 0 \\\\ 0 & 3 \\end{bmatrix}$',
+          why: 'Its inverse scales by $\\tfrac12$ and $\\tfrac13$.',
+        },
+        {
+          text: '$\\begin{bmatrix} 0 & -1 \\\\ 1 & 0 \\end{bmatrix}$',
+          why: 'A rotation can be undone.',
+        },
+      ],
+      explain:
+        'Its determinant is $4 - 4 = 0$: it squashes the plane onto a line, and that cannot be undone.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        '$A = \\begin{bmatrix} 2 & 0 \\\\ 0 & 5 \\end{bmatrix}$. What is the bottom-right entry of $A^{-1}$? (Decimals are fine.)',
+      answer: 0.2,
+      tolerance: 0.001,
+      explain:
+        'Undo each stretch: $A^{-1} = \\begin{bmatrix} \\tfrac12 & 0 \\\\ 0 & \\tfrac15 \\end{bmatrix}$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'Solve $\\begin{bmatrix} 2 & 0 \\\\ 0 & 4 \\end{bmatrix}\\vec x = \\begin{bmatrix} 6 \\\\ 8 \\end{bmatrix}$. What is the second part of $\\vec x$?',
+      answer: 2,
+      explain: '$\\vec x = A^{-1}\\vec b = (3, 2)$.',
+    },
+  ],
+  eigenvectors: [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'An eigenvector of $A$ is a nonzero vector that $A$…',
+      options: [
+        { text: 'Only stretches (or flips), keeping it on its own line', correct: true },
+        { text: 'Rotates by 90°', why: 'Rotated vectors leave their line.' },
+        { text: 'Sends to zero', why: 'That is the null space; eigenvalue 0 is a special case.' },
+        { text: 'Leaves exactly unchanged', why: 'That is only eigenvalue 1.' },
+      ],
+      explain: '$A\\vec v = \\lambda\\vec v$: same line, scaled by $\\lambda$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'What are the eigenvalues of $\\begin{bmatrix} 3 & 0 \\\\ 0 & -1 \\end{bmatrix}$? Give the larger one.',
+      answer: 3,
+      explain: 'A diagonal matrix stretches the axes by its diagonal entries: 3 and $-1$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: '$A\\vec v = 2\\vec v$. What is $A^3\\vec v$ as a multiple of $\\vec v$?',
+      answer: 8,
+      explain: 'Each application doubles it: $2^3 = 8$.',
+    },
+  ],
+  'probability-basics': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        'A fair die is rolled. What is the probability of a number greater than 4? (Decimals are fine.)',
+      answer: 1 / 3,
+      tolerance: 0.005,
+      explain: '5 or 6: $\\tfrac{2}{6} = \\tfrac13$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'The chance of rain tomorrow is 0.3. What is the chance it stays dry?',
+      answer: 0.7,
+      tolerance: 0.001,
+      explain: 'Complement: $1 - 0.3 = 0.7$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'A coin lands heads 5 times in a row. The chance of heads next time is…',
+      options: [
+        { text: 'Still $\\tfrac12$', correct: true },
+        {
+          text: 'Less than $\\tfrac12$: tails is "due"',
+          why: 'The coin has no memory: that is the gambler’s fallacy.',
+        },
+        {
+          text: 'More than $\\tfrac12$: it is on a streak',
+          why: 'Independent flips do not build streaks.',
+        },
+        {
+          text: '$\\tfrac{1}{64}$',
+          why: 'That is the chance of six heads in a row, before any are flipped.',
+        },
+      ],
+      explain:
+        'Each flip is independent. Long-run frequencies settle, but no single flip is "owed".',
+    },
+  ],
+  'conditional-probability': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        'Of 40 students, 25 play a sport and 10 of those also play music. Pick a sporty student at random: what is the probability they play music?',
+      answer: 0.4,
+      tolerance: 0.001,
+      explain: 'Restrict to the 25 sporty students: $\\tfrac{10}{25} = 0.4$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Is $P(A \\mid B)$ the same as $P(B \\mid A)$?',
+      options: [
+        { text: 'Not in general', correct: true },
+        {
+          text: 'Always',
+          why: '$P(\\text{wet} \\mid \\text{rain})$ is near 1, $P(\\text{rain} \\mid \\text{wet})$ is not.',
+        },
+        {
+          text: 'Only for independent events',
+          why: 'Even then they are $P(A)$ and $P(B)$, which can differ.',
+        },
+        { text: 'Never', why: 'They can coincide when $P(A) = P(B)$.' },
+      ],
+      explain: 'They divide by different groups: $P(A \\cap B)/P(B)$ versus $P(A \\cap B)/P(A)$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: '$P(A \\cap B) = 0.12$ and $P(B) = 0.3$. Find $P(A \\mid B)$.',
+      answer: 0.4,
+      tolerance: 0.001,
+      explain: '$\\dfrac{0.12}{0.3} = 0.4$.',
+    },
+  ],
+  'bayes-theorem': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        '1% of people have a condition. A test catches 90% of cases and wrongly flags 9% of healthy people. Out of 1,000 people, about how many positive results are there?',
+      answer: 98.1,
+      tolerance: 1,
+      explain: '9 true positives (90% of 10) plus about 89 false positives (9% of 990): about 98.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'Same test: if you test positive, what is the chance you have the condition? (Decimals are fine.)',
+      answer: 9 / 98.1,
+      tolerance: 0.01,
+      explain:
+        'About $\\tfrac{9}{98} \\approx 0.09$. Most positives come from the much larger healthy group.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt:
+        'Why can a positive result from an accurate test still mean you are probably healthy?',
+      options: [
+        {
+          text: 'When the condition is rare, false positives can outnumber true ones',
+          correct: true,
+        },
+        { text: 'Because the test is broken', why: 'Even a good test meets the base-rate effect.' },
+        {
+          text: 'Because probabilities do not apply to individuals',
+          why: 'They do; this is about the base rate.',
+        },
+        { text: 'It cannot', why: 'It can, and often does, for rare conditions.' },
+      ],
+      explain:
+        'The prior (base rate) matters: a small error rate on a huge healthy group makes many false alarms.',
+    },
+  ],
+  'binomial-distribution': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        'Flip a fair coin 3 times. What is the probability of exactly 2 heads? (Decimals are fine.)',
+      answer: 0.375,
+      tolerance: 0.001,
+      explain: '$\\binom32 \\cdot \\tfrac18 = \\tfrac38 = 0.375$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'A basketball player makes 80% of free throws. Expected number of makes in 20 shots?',
+      answer: 16,
+      explain: '$np = 20 \\cdot 0.8 = 16$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Why is the middle of a Galton board the most likely place to land?',
+      options: [
+        { text: 'The most left/right paths lead there', correct: true },
+        { text: 'The pegs are tilted towards it', why: 'Each bounce is still 50/50.' },
+        {
+          text: 'The edges are blocked',
+          why: 'Edge bins can be reached, just by only one path each.',
+        },
+        {
+          text: 'It is random luck',
+          why: 'It is counting: $\\binom{n}{k}$ is biggest in the middle.',
+        },
+      ],
+      explain:
+        'Landing in bin $k$ needs $k$ rights out of $n$; there are $\\binom nk$ ways, most for $k$ near $n/2$.',
+    },
+  ],
+  'normal-distribution': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        'Heights have mean 170 cm and standard deviation 8 cm. About what percent are between 162 and 178 cm?',
+      answer: 68,
+      tolerance: 1.5,
+      unit: '%',
+      explain: 'That is within one standard deviation of the mean: about 68%.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Same heights: what is the $z$-score of 186 cm?',
+      answer: 2,
+      explain: '$z = \\dfrac{186 - 170}{8} = 2$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Increasing $\\sigma$ makes the bell curve…',
+      options: [
+        { text: 'Wider and lower', correct: true },
+        { text: 'Taller and narrower', why: 'That is a smaller $\\sigma$.' },
+        { text: 'Shift right', why: 'Shifting is $\\mu$’s job.' },
+        { text: 'Lopsided', why: 'A normal curve always stays symmetric.' },
+      ],
+      explain: 'The total area stays 1, so spreading it out lowers the peak.',
+    },
+  ],
+  'central-limit-theorem': [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'Averages of large samples from a skewed population are distributed…',
+      options: [
+        { text: 'Approximately normally', correct: true },
+        { text: 'With the same skew', why: 'Averaging washes out the skew as $n$ grows.' },
+        { text: 'Uniformly', why: 'They cluster around the mean.' },
+        {
+          text: 'It depends only on the population',
+          why: 'The sample size is what makes it normal.',
+        },
+      ],
+      explain:
+        'That is the central limit theorem: sample means tend to a normal shape whatever the population.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'A population has $\\sigma = 12$. What is the standard deviation of means of samples of size 36?',
+      answer: 2,
+      explain: '$\\sigma/\\sqrt n = 12/6 = 2$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'To halve the spread of sample means, multiply the sample size by…',
+      answer: 4,
+      explain:
+        'Spread is $\\sigma/\\sqrt n$; halving it needs $\\sqrt n$ doubled, so $n \\times 4$.',
+    },
+  ],
+  'describing-data': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Find the median of 3, 9, 4, 1, 8.',
+      answer: 4,
+      explain: 'Sorted: 1, 3, 4, 8, 9. The middle value is 4.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'The mean of 4 numbers is 6. Three of them are 2, 5 and 9. What is the fourth?',
+      answer: 8,
+      explain: 'The total is $4 \\times 6 = 24$; $24 - 16 = 8$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'One billionaire moves into a small town. Which changes more?',
+      options: [
+        { text: 'The mean income', correct: true },
+        { text: 'The median income', why: 'The median only moves one place in the sorted list.' },
+        {
+          text: 'They change equally',
+          why: 'The mean feels the size of every value; the median does not.',
+        },
+        { text: 'Neither', why: 'The mean jumps.' },
+      ],
+      explain:
+        'The mean is the balance point, so one huge value drags it far; the median resists outliers.',
+    },
+  ],
+  'variance-std': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Find the (population) variance of 1, 3, 5.',
+      answer: 8 / 3,
+      tolerance: 0.01,
+      explain: 'Mean 3; squared deviations 4, 0, 4; average $\\tfrac83 \\approx 2.67$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'Every value in a data set is multiplied by 3. The standard deviation is multiplied by…',
+      answer: 3,
+      explain:
+        'Every deviation triples, so the standard deviation triples (and the variance becomes 9 times as big).',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Adding 10 to every value changes the standard deviation by…',
+      options: [
+        { text: 'Nothing', correct: true },
+        { text: '+10', why: 'Shifting moves the mean too, so deviations are unchanged.' },
+        { text: '×10', why: 'That would be multiplying, not adding.' },
+        { text: '+100', why: 'Variance does not change either.' },
+      ],
+      explain: 'Spread measures distances from the mean; a shift moves everything together.',
+    },
+  ],
+  'linear-regression': [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'The least-squares line minimises…',
+      options: [
+        { text: 'The sum of squared vertical residuals', correct: true },
+        {
+          text: 'The sum of residuals',
+          why: 'That is always 0 for the best line, but so it is for many lines.',
+        },
+        { text: 'The distance to the farthest point', why: 'That ignores most of the data.' },
+        { text: 'The slope', why: 'The slope is whatever fits best.' },
+      ],
+      explain: 'Squaring keeps residuals positive and punishes big misses most.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'The fitted line is $\\hat y = 2x + 1$. What is the residual for the point $(3, 9)$?',
+      answer: 2,
+      explain: 'Predicted $\\hat y = 7$; residual $= 9 - 7 = 2$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'The least-squares line always passes through…',
+      options: [
+        { text: '$(\\bar x, \\bar y)$, the point of means', correct: true },
+        { text: 'The origin', why: 'Only if the means are both 0.' },
+        { text: 'The first data point', why: 'It need not pass through any data point.' },
+        { text: 'The highest point', why: 'Outliers pull it, but it does not pass through them.' },
+      ],
+      explain: 'The best line balances the data around its centre of mass.',
+    },
+  ],
+  'gradient-descent': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        '$L(w) = w^2$. From $w = 4$ take one gradient step with learning rate 0.25. Where do you land?',
+      answer: 2,
+      explain: "$L'(4) = 8$; $w \\leftarrow 4 - 0.25 \\cdot 8 = 2$.",
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'The loss jumps around and grows each step. The most likely fix is…',
+      options: [
+        { text: 'Make the learning rate smaller', correct: true },
+        {
+          text: 'Make the learning rate bigger',
+          why: 'Overshooting gets worse with bigger steps.',
+        },
+        { text: 'Take more steps', why: 'More diverging steps only diverge further.' },
+        { text: 'Start at the minimum', why: 'You do not know where it is; that is the point.' },
+      ],
+      explain: 'Too large a step overshoots the valley and bounces ever higher.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Gradient descent moves in the direction of…',
+      options: [
+        { text: 'Minus the gradient (steepest downhill)', correct: true },
+        { text: 'The gradient', why: 'That is steepest uphill: gradient ascent.' },
+        { text: 'A random direction', why: 'That is random search.' },
+        { text: 'Along the contour lines', why: 'Contours keep the loss constant.' },
+      ],
+      explain: 'The gradient points uphill, so step the opposite way.',
+    },
+  ],
+  pca: [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'The first principal component is the direction that…',
+      options: [
+        { text: 'Captures the most variance', correct: true },
+        { text: 'Captures the least variance', why: 'That is the last component.' },
+        { text: 'Points along the $x$-axis', why: 'It follows the data, not the axes.' },
+        { text: 'Passes through the most points', why: 'PCA measures spread, not hits.' },
+      ],
+      explain: 'Project the data onto it and the shadow is as spread out as possible.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Principal components are eigenvectors of…',
+      options: [
+        { text: 'The covariance matrix', correct: true },
+        { text: 'The data matrix itself', why: 'Not square in general; the covariance matrix is.' },
+        { text: 'The identity', why: 'Every vector is an eigenvector of the identity.' },
+        { text: 'The mean vector', why: 'A vector has no eigenvectors.' },
+      ],
+      explain: 'Its eigenvalues are the variances along each component.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'Component variances are 9 and 1. What fraction of the total variance does the first keep? (Decimals are fine.)',
+      answer: 0.9,
+      tolerance: 0.001,
+      explain: '$\\tfrac{9}{9 + 1} = 0.9$: one dimension keeps 90% of the spread.',
+    },
+  ],
+  limits: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Find $\\displaystyle\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2}$.',
+      answer: 4,
+      explain: 'For $x \\ne 2$ it is $x + 2$, which heads to 4.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Find $\\displaystyle\\lim_{x \\to 0} \\frac{\\sin 5x}{x}$.',
+      answer: 5,
+      hint: 'Write it as $5 \\cdot \\dfrac{\\sin 5x}{5x}$.',
+      explain: '$5 \\cdot 1 = 5$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt:
+        'The limits from the left and right of $a$ are 2 and 3. Then $\\lim_{x \\to a} f(x)$…',
+      options: [
+        { text: 'Does not exist', correct: true },
+        { text: 'Is 2.5', why: 'A limit is not an average of the sides.' },
+        { text: 'Is $f(a)$', why: 'The value at $a$ never decides the limit.' },
+        { text: 'Is 3', why: 'Both sides must agree.' },
+      ],
+      explain: 'A two-sided limit needs both one-sided limits to agree.',
+    },
+  ],
+  derivatives: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is the slope of $f(x) = x^2$ at $x = -2$?',
+      answer: -4,
+      explain: "$f'(x) = 2x$, so $f'(-2) = -4$.",
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Secant slope of $f(x) = x^2$ from $x = 2$ to $x = 2.1$?',
+      answer: 4.1,
+      tolerance: 0.001,
+      explain: '$\\dfrac{4.41 - 4}{0.1} = 4.1$, close to the true slope 4.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'At the top of a smooth hill on a graph, the derivative is…',
+      options: [
+        { text: '0', correct: true },
+        { text: 'At its largest', why: 'The height is largest; the slope is flat.' },
+        { text: 'Undefined', why: 'A smooth peak has a horizontal tangent.' },
+        { text: 'Negative', why: 'It is negative just after the peak, not at it.' },
+      ],
+      explain: 'The tangent at a smooth peak is horizontal: slope 0.',
+    },
+  ],
+  integrals: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Find $\\displaystyle\\int_1^4 3\\,dx$.',
+      answer: 9,
+      explain: 'A rectangle of height 3 and width 3.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Find $\\displaystyle\\int_{-2}^{2} x\\,dx$.',
+      answer: 0,
+      explain: 'The triangle below the axis on the left cancels the one above on the right.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Doubling the number of strips in a Riemann sum usually…',
+      options: [
+        { text: 'Brings the sum closer to the true area', correct: true },
+        { text: 'Doubles the sum', why: 'Each strip halves in width, so the total stays similar.' },
+        { text: 'Makes no difference', why: 'Thinner strips hug the curve better.' },
+        {
+          text: 'Always overshoots',
+          why: 'Whether it over- or undershoots depends on the curve and method.',
+        },
+      ],
+      explain: 'Thinner strips leave smaller gaps between rectangles and the curve.',
+    },
+  ],
+  'fundamental-theorem': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Find $\\displaystyle\\int_0^2 3x^2\\,dx$.',
+      answer: 8,
+      explain: '$F(x) = x^3$, so $8 - 0 = 8$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Find $\\displaystyle\\int_0^{\\pi/2} \\cos x\\,dx$.',
+      answer: 1,
+      explain: '$F(x) = \\sin x$: $\\sin\\tfrac{\\pi}{2} - \\sin 0 = 1$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: "$A(x) = \\displaystyle\\int_1^x t^3\\,dt$. What is $A'(2)$?",
+      options: [
+        { text: '8', correct: true },
+        {
+          text: '12',
+          why: 'That is the derivative of $t^3$ at 2; Part 1 gives back $t^3$ itself.',
+        },
+        { text: '3.75', why: 'That is $A(2)$, the area, not its slope.' },
+        { text: '0', why: 'The area is still growing at $x = 2$.' },
+      ],
+      explain: 'The slope of the area function is the height of $f$: $2^3 = 8$.',
+    },
+  ],
+  'chain-rule': [
+    {
+      kind: 'expression',
+      id: 'r1',
+      prompt: 'Differentiate $y = (2x + 1)^3$.',
+      answer: '6(2x+1)^2',
+      explain: 'Outer $3u^2$, inner derivative 2: $3(2x + 1)^2 \\cdot 2 = 6(2x + 1)^2$.',
+    },
+    {
+      kind: 'expression',
+      id: 'r2',
+      prompt: 'Differentiate $y = e^{x^2}$.',
+      answer: '2x exp(x^2)',
+      hint: 'You can type $e^{x^2}$ as exp(x^2).',
+      explain: '$e^{x^2} \\cdot 2x$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'Altitude rises 50 m per minute, and the temperature falls 0.006 °C per metre. How fast does the temperature change, in °C per minute?',
+      answer: -0.3,
+      tolerance: 0.001,
+      explain: 'Rates multiply: $-0.006 \\times 50 = -0.3$ °C per minute.',
+    },
+  ],
+  'taylor-series': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Use $\\sin x \\approx x - \\dfrac{x^3}{6}$ to estimate $\\sin 0.5$.',
+      answer: 0.47917,
+      tolerance: 0.0005,
+      explain: '$0.5 - \\tfrac{0.125}{6} \\approx 0.4792$; the true value is $0.4794$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'What is the coefficient of $x^2$ in the Maclaurin series of $\\cos x$? (Decimals are fine.)',
+      answer: -0.5,
+      tolerance: 0.001,
+      explain: '$\\cos x = 1 - \\dfrac{x^2}{2!} + \\cdots$, so $-\\tfrac12$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Why can the series for $\\ln(1 + x)$ at 0 never work at $x = 3$?',
+      options: [
+        { text: 'Its radius of convergence is 1, set by the break at $x = -1$', correct: true },
+        { text: 'Not enough terms were used', why: 'Beyond the radius, more terms make it worse.' },
+        { text: '$\\ln 4$ does not exist', why: 'It does: about 1.386.' },
+        { text: 'Polynomials cannot be negative', why: 'They can; the issue is convergence.' },
+      ],
+      explain:
+        'A series reaches only as far as the nearest point where the function breaks, here 1 unit away.',
+    },
+  ],
+}
+
+export default deep

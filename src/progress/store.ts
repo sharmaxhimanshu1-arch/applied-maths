@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist, type StateStorage } from 'zustand/middleware'
 import type { ConceptId } from '@/curriculum/types'
+import { gradeReview, newReview, type ReviewItem } from './review'
 
 export type ConceptStatus = 'started' | 'explored' | 'mastered' | 'known'
 export type ThemeSetting = 'system' | 'light' | 'dark'
@@ -28,6 +29,8 @@ export interface ProgressData {
   lastVisited: ConceptId | null
   /** Local dates (YYYY-MM-DD) with any learning activity, oldest first. */
   activity: string[]
+  /** Spaced-review schedule for mastered concepts. */
+  reviews: Record<ConceptId, ReviewItem>
   settings: Settings
 }
 
@@ -36,6 +39,8 @@ interface ProgressActions {
   completeTryThis(id: ConceptId, promptId: string): void
   recordCheck(id: ConceptId, checkId: string, correct: boolean): void
   markMastered(id: ConceptId): void
+  /** Record a spaced review: correct first time moves it up a box, a miss starts it over. */
+  recordReview(id: ConceptId, correct: boolean): void
   /** Mark concepts as already known (skips ones already mastered). */
   markKnown(ids: Iterable<ConceptId>): void
   resetConcept(id: ConceptId): void
@@ -51,7 +56,7 @@ interface ProgressActions {
 export type ProgressState = ProgressData & ProgressActions
 
 export const STORAGE_KEY = 'aml-progress'
-export const STORAGE_VERSION = 1
+export const STORAGE_VERSION = 2
 const MAX_ACTIVITY_DAYS = 400
 
 export const initialProgress: ProgressData = {
@@ -61,6 +66,7 @@ export const initialProgress: ProgressData = {
   onboarded: false,
   lastVisited: null,
   activity: [],
+  reviews: {},
   settings: { theme: 'system', reducedMotion: false },
 }
 
@@ -163,7 +169,17 @@ export const useProgress = create<ProgressState>()(
         set((s) => ({
           concepts: touch(s.concepts, id, (p) => ({ ...p, status: 'mastered' })),
           activity: withActivity(s.activity),
+          reviews: s.reviews[id] ? s.reviews : { ...s.reviews, [id]: newReview(localDay()) },
         })),
+
+      recordReview: (id, correct) =>
+        set((s) => {
+          const item = s.reviews[id] ?? newReview(localDay(), true)
+          return {
+            reviews: { ...s.reviews, [id]: gradeReview(item, correct, localDay()) },
+            activity: withActivity(s.activity),
+          }
+        }),
 
       markKnown: (ids) =>
         set((s) => {
@@ -178,7 +194,8 @@ export const useProgress = create<ProgressState>()(
       resetConcept: (id) =>
         set((s) => {
           const { [id]: _removed, ...rest } = s.concepts
-          return { concepts: rest }
+          const { [id]: _review, ...reviews } = s.reviews
+          return { concepts: rest, reviews }
         }),
 
       setGoal: (goal) => set({ goal }),
@@ -201,13 +218,29 @@ export const useProgress = create<ProgressState>()(
         onboarded: s.onboarded,
         lastVisited: s.lastVisited,
         activity: s.activity,
+        reviews: s.reviews,
         settings: s.settings,
       }),
-      // Future schema changes go here, keyed by the stored version.
-      migrate: (persisted) => ({ ...initialProgress, ...(persisted as Partial<ProgressData>) }),
+      migrate: (persisted, version) => migrateProgress(persisted, version),
     },
   ),
 )
+
+/**
+ * Bring stored progress up to the current schema. Version 2 added spaced review: concepts
+ * mastered before then join the schedule, due straight away.
+ */
+export function migrateProgress(persisted: unknown, version: number): ProgressData {
+  const data = { ...initialProgress, ...(persisted as Partial<ProgressData>) }
+  if (version < 2 || !data.reviews) {
+    const today = localDay()
+    const reviews: Record<ConceptId, ReviewItem> = { ...data.reviews }
+    for (const [id, p] of Object.entries(data.concepts))
+      if (p.status === 'mastered' && !reviews[id]) reviews[id] = newReview(today, true)
+    data.reviews = reviews
+  }
+  return data
+}
 
 export function isDoneStatus(status: ConceptStatus | undefined): boolean {
   return status === 'mastered' || status === 'known'

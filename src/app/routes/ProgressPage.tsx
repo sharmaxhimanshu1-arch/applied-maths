@@ -3,7 +3,8 @@ import { useRef, useState, type ChangeEvent, type ReactNode } from 'react'
 import { Link } from 'react-router'
 import { AREAS, CONCEPTS, DOMAINS, conceptById, graph, trackById } from '@/curriculum'
 import type { ConceptId } from '@/curriculum/types'
-import { countDone, domainCounts, isDone, streak } from '@/progress/selectors'
+import { relativeDay } from '@/progress/review'
+import { countDone, domainCounts, isDone, streak, useReviewSummary } from '@/progress/selectors'
 import { useProgress, type ThemeSetting } from '@/progress/store'
 import { exportProgress, parseProgress } from '@/progress/transfer'
 import { Button, ButtonLink } from '@/ui/Button'
@@ -13,6 +14,7 @@ import { Segmented } from '@/ui/Segmented'
 import { Switch } from '@/ui/Switch'
 import { ConceptCard } from '../home/ConceptCard'
 import { Onboarding } from '../home/Onboarding'
+import { ReviewForecast } from '../review/ReviewForecast'
 import { useDocumentTitle } from '../theme'
 
 function Stat({ value, label }: { value: string; label: string }) {
@@ -41,6 +43,7 @@ export function ProgressPage() {
   const [confirmReset, setConfirmReset] = useState(false)
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
+  const review = useReviewSummary()
 
   const all = countDone(
     concepts,
@@ -153,6 +156,40 @@ export function ProgressPage() {
               <Button size="sm" variant="secondary" onClick={() => setOnboarding(true)}>
                 Redo the starting questions
               </Button>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      <Section title="Spaced review">
+        <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+          <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+            <div className="text-2xl font-semibold tabular-nums">{review.due.length}</div>
+            <div className="text-sm text-ink-2">
+              due today · {review.total} {review.total === 1 ? 'concept' : 'concepts'} in review
+            </div>
+            <p className="mt-3 text-sm text-ink-2">
+              {review.total === 0
+                ? 'Mastered concepts join review a day later, so they stay fresh.'
+                : review.due.length
+                  ? 'A few quick questions keep what you’ve learned from fading.'
+                  : review.next
+                    ? `All caught up. Next review ${relativeDay(review.next, review.today)}.`
+                    : 'All caught up.'}
+            </p>
+            <ButtonLink
+              to="/review"
+              size="sm"
+              variant={review.due.length ? 'primary' : 'secondary'}
+              className="mt-4"
+            >
+              {review.due.length ? 'Start review' : 'Open review'}
+            </ButtonLink>
+          </div>
+          <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+            <div className="text-sm font-semibold">Next 7 days</div>
+            <div className="mt-3">
+              <ReviewForecast reviews={review.reviews} today={review.today} />
             </div>
           </div>
         </div>

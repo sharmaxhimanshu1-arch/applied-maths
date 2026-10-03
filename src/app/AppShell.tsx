@@ -9,6 +9,7 @@ import {
   useMatches,
   useNavigation,
 } from 'react-router'
+import { useReviewSummary } from '@/progress/selectors'
 import { useProgress, type ThemeSetting } from '@/progress/store'
 import { IconButton } from '@/ui/Button'
 import { Kbd } from '@/ui/Card'
@@ -20,9 +21,27 @@ import { useApplySettings } from './theme'
 
 const NAV = [
   { to: '/map', label: 'Map' },
+  { to: '/review', label: 'Review' },
   { to: '/tools', label: 'Tools' },
   { to: '/progress', label: 'Progress' },
 ]
+
+/** Count of reviews due today, shown on the Review link. */
+function DueBadge() {
+  const { due } = useReviewSummary()
+  if (!due.length) return null
+  return (
+    <>
+      <span
+        aria-hidden
+        className="ml-1.5 inline-flex min-w-5 items-center justify-center rounded-full bg-accent px-1.5 text-xs leading-5 font-semibold text-accent-ink tabular-nums"
+      >
+        {due.length}
+      </span>
+      <span className="sr-only">, {due.length} due</span>
+    </>
+  )
+}
 
 export interface RouteHandle {
   /** Page fills the viewport below the header (no footer), e.g. the map. */
@@ -94,6 +113,7 @@ export function AppShell() {
                 }
               >
                 {item.label}
+                {item.to === '/review' && <DueBadge />}
               </NavLink>
             ))}
           </nav>
@@ -145,6 +165,7 @@ export function AppShell() {
               }
             >
               {item.label}
+              {item.to === '/review' && <DueBadge />}
             </NavLink>
           ))}
         </nav>

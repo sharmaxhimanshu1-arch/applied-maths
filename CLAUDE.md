@@ -17,7 +17,10 @@ Static site, Vite + React 19 + TypeScript (strict) + Tailwind 4. No backend; pro
 
 - Concepts and edges: `src/curriculum/concepts/*.ts`. Graph algorithms: `src/curriculum/graph.ts`.
 - Lite-lab content: `src/content/<area>.ts`.
-- Deep labs: `src/labs/<id>/index.tsx` (auto-discovered).
+- Deep labs: `src/labs/<id>/index.tsx` (auto-discovered). Each also needs 3 review questions
+  in `src/review/deep.ts`.
+- Spaced review: scheduling in `src/progress/review.ts` (Leitner boxes on local `YYYY-MM-DD`
+  days), the `reviews` slice of the progress store, and the `/review` page.
 - Widgets: `src/widgets/` (register in `types.ts` and `registry.ts`).
 - Tools: `src/tools/`. The Grapher's expression handling is in `src/math/expr.ts` (math.js, lazy).
 - Plotting kit: `src/viz/`. Lab blocks and challenges: `src/learn/`.
@@ -57,6 +60,8 @@ Static site, Vite + React 19 + TypeScript (strict) + Tailwind 4. No backend; pro
   - a lone variable before `(` multiplies (`x (10 - 2x)`), except `f` and `g`;
   - `ln` is the natural log and `log` is base 10.
 - **Concept ids are permanent** (they are stored in learners' progress).
+- **Progress schema changes** bump `STORAGE_VERSION` and go through `migrateProgress` in
+  `src/progress/store.ts`; `parseProgress` in `transfer.ts` must accept the new field too.
 
 ## Testing
 

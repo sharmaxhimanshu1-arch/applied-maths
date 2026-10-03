@@ -14,6 +14,7 @@ const PAGES = [
   '/',
   '/map?view=list',
   '/tools',
+  '/review',
   '/progress',
   '/about',
   ...TOOLS.map((t) => `/tools/${t}`),

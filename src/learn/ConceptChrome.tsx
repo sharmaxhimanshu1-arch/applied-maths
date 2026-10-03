@@ -18,7 +18,8 @@ import { LEVEL_LABEL } from '@/curriculum/levels'
 import type { Concept, ConceptId } from '@/curriculum/types'
 import { hasDeepLab } from '@/labs/registry'
 import { StatusIcon } from '@/map/StatusIcon'
-import { isDone, NODE_STATE_LABEL, nodeState } from '@/progress/selectors'
+import { relativeDay } from '@/progress/review'
+import { isDone, NODE_STATE_LABEL, nodeState, useToday } from '@/progress/selectors'
 import { useProgress } from '@/progress/store'
 import { Button, ButtonLink, IconButton } from '@/ui/Button'
 import { AreaDot } from '@/ui/Card'
@@ -212,11 +213,26 @@ export function LabToc() {
 export function MasteryMeter({ conceptId }: { conceptId: ConceptId }) {
   const { solved, total } = useMasteryProgress()
   const status = useProgress((s) => s.concepts[conceptId]?.status)
+  const reviewDue = useProgress((s) => s.reviews[conceptId]?.due)
+  const today = useToday()
   if (status === 'mastered')
     return (
-      <div className="flex items-center gap-2 rounded-2xl border border-line bg-surface p-3 text-sm font-medium">
-        <CircleCheck className="size-5" style={{ color: 'var(--good)' }} aria-hidden />
-        Mastered
+      <div className="flex items-center gap-2 rounded-2xl border border-line bg-surface p-3 text-sm">
+        <CircleCheck className="size-5 shrink-0" style={{ color: 'var(--good)' }} aria-hidden />
+        <div>
+          <div className="font-medium">Mastered</div>
+          {reviewDue && (
+            <div className="text-ink-2">
+              {reviewDue <= today ? (
+                <Link to="/review" className="font-medium text-accent hover:underline">
+                  Review due today
+                </Link>
+              ) : (
+                `Next review ${relativeDay(reviewDue, today)}`
+              )}
+            </div>
+          )}
+        </div>
       </div>
     )
   if (!total) return null
@@ -336,6 +352,13 @@ export function MasteryToast({ concept }: { concept: Concept }) {
         ) : (
           <div className="mt-1 text-sm text-ink-2">It's lit up on your map.</div>
         )}
+        <div className="mt-1 text-sm text-ink-2">
+          It joins your{' '}
+          <Link className="font-medium text-accent hover:underline" to="/review">
+            review
+          </Link>{' '}
+          tomorrow, so it sticks.
+        </div>
       </div>
       <IconButton label="Dismiss" size="sm" onClick={dismissMastery}>
         <X className="size-4" />

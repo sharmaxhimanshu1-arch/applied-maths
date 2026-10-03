@@ -1,5 +1,12 @@
 import { conceptById } from '@/curriculum'
-import { initialProgress, STORAGE_VERSION, type ConceptProgress, type ProgressData } from './store'
+import { isDay, LAST_BOX, newReview, type ReviewItem } from './review'
+import {
+  initialProgress,
+  localDay,
+  STORAGE_VERSION,
+  type ConceptProgress,
+  type ProgressData,
+} from './store'
 
 const APP = 'applied-maths-lab'
 
@@ -51,6 +58,21 @@ export function parseProgress(
           : {},
     }
   }
+  const reviews: Record<string, ReviewItem> = {}
+  for (const [id, r] of Object.entries(d.reviews ?? {})) {
+    if (!concepts[id] || !r || !isDay(r.due)) continue
+    const box = Number(r.box)
+    reviews[id] = {
+      box: Number.isInteger(box) ? Math.min(Math.max(box, 0), LAST_BOX) : 0,
+      due: r.due,
+      reps: Math.max(0, Number(r.reps) || 0),
+      lapses: Math.max(0, Number(r.lapses) || 0),
+      last: isDay(r.last) ? r.last : null,
+    }
+  }
+  // Files from before spaced review: mastered concepts join the schedule, due today.
+  for (const [id, p] of Object.entries(concepts))
+    if (p.status === 'mastered' && !reviews[id]) reviews[id] = newReview(localDay(), true)
   const theme = d.settings?.theme
   return {
     ok: true,
@@ -63,6 +85,7 @@ export function parseProgress(
       activity: Array.isArray(d.activity)
         ? d.activity.filter((x) => typeof x === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(x))
         : [],
+      reviews,
       settings: {
         theme: theme === 'light' || theme === 'dark' ? theme : 'system',
         reducedMotion: d.settings?.reducedMotion === true,
