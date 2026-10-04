@@ -401,7 +401,7 @@ function PlaneExplorer() {
         <TryThis id="t-flip" when={accuracy <= 0.2}>
           Swap the handles so the arrow points the wrong way. What happens to the accuracy?
         </TryThis>
-        <TryThis id="t-confident" when={accuracy >= 0.9 && k >= 5}>
+        <TryThis id="t-confident-lab" when={accuracy >= 0.9 && k >= 5}>
           With a good line, turn the steepness up to 5 or more. Does the loss go up or down? Why
           isn't steeper always better?
         </TryThis>
@@ -419,7 +419,7 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <NumericChallenge
-          id="c-zero"
+          id="c-zero-lab"
           index={1}
           prompt="What is $\sigma(0)$?"
           answer={0.5}

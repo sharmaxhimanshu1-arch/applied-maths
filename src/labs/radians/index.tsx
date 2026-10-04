@@ -267,10 +267,10 @@ function WrapExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-one" when={t === 1}>
+        <TryThis id="t-one-lab" when={t === 1}>
           Turn exactly 1 radian, so the arc is one radius long. About how many degrees is that?
         </TryThis>
-        <TryThis id="t-half" when={k === 12}>
+        <TryThis id="t-half-lab" when={k === 12}>
           Turn half a circle. How many radians is it?
         </TryThis>
         <TryThis id="t-six" when={t > 6}>
@@ -418,7 +418,7 @@ function Practice() {
           explanation="$1 \times \tfrac{180}{\pi} \approx 57.3^\circ$, a bit less than a sixth of a turn."
         />
         <NumericChallenge
-          id="c-arc"
+          id="c-arc-lab"
           index={4}
           prompt="An arc on a circle of radius 5 cm subtends 2 radians at the centre. How long is the arc, in cm?"
           answer={10}

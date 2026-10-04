@@ -557,7 +557,7 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <NumericChallenge
-          id="c-cancel"
+          id="c-cancel-lab"
           index={1}
           prompt="Find $\displaystyle\lim_{x \to 3} \frac{x^2 - 9}{x - 3}$."
           answer={6}
@@ -565,7 +565,7 @@ function Practice() {
           explanation="For $x \ne 3$ the fraction is $x + 3$, which heads to $6$. The $\tfrac00$ at $x = 3$ doesn't matter."
         />
         <McqChallenge
-          id="c-sides"
+          id="c-sides-lab"
           index={2}
           prompt="$f(x) = \dfrac{x}{|x|}$ is $-1$ for negative $x$ and $1$ for positive $x$. What is $\displaystyle\lim_{x \to 0} f(x)$?"
           options={[

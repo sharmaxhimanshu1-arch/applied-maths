@@ -339,14 +339,14 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <NumericChallenge
-          id="c-step"
+          id="c-step-lab"
           index={1}
           prompt="Take one Newton step for $f(x) = x^2 - 2$ from $x_0 = 1$."
           answer={1.5}
           explanation="$x_1 = 1 - \dfrac{1 - 2}{2 \cdot 1} = 1 + 0.5 = 1.5$."
         />
         <NumericChallenge
-          id="c-step2"
+          id="c-step2-lab"
           index={2}
           prompt="Now one more step from $x_1 = 1.5$."
           answer={17 / 12}
@@ -354,7 +354,7 @@ function Practice() {
           explanation="$1.5 - \dfrac{0.25}{3} = 1.41\overline{6}$. Already 3 digits of $\sqrt 2 = 1.41421\ldots$"
         />
         <McqChallenge
-          id="c-fail"
+          id="c-fail-lab"
           index={3}
           prompt="When does a Newton step break down completely?"
           options={[

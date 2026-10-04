@@ -1,4 +1,4 @@
-const gcd = (a: number, b: number): number => (b === 0 ? Math.abs(a) : gcd(b, a % b))
+import { gcd } from './fraction'
 
 /** TeX for k·π/den in lowest terms: 0, \pi, \frac{3\pi}{4}, -\frac{\pi}{2}… */
 export function piTex(k: number, den: number): string {

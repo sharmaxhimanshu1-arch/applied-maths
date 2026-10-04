@@ -203,13 +203,13 @@ function TurnExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-right" when={deg === 90}>
+        <TryThis id="t-right-lab" when={deg === 90}>
           Make a right angle. What fraction of a turn is it?
         </TryThis>
-        <TryThis id="t-obtuse" when={deg > 90 && deg < 180}>
+        <TryThis id="t-obtuse-lab" when={deg > 90 && deg < 180}>
           Make an obtuse angle.
         </TryThis>
-        <TryThis id="t-reflex" when={deg > 180}>
+        <TryThis id="t-reflex-lab" when={deg > 180}>
           Go past the straight line to make a reflex angle.
         </TryThis>
       </TryThisList>

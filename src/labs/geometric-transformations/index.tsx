@@ -423,7 +423,7 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <McqChallenge
-          id="c-rotate"
+          id="c-rotate-lab"
           index={1}
           prompt="Rotate the point $(2, 1)$ by $90^\circ$ anticlockwise about the origin. Where does it go?"
           options={[
@@ -435,14 +435,14 @@ function Practice() {
           explanation="$(x, y) \mapsto (-y, x)$: $(2, 1) \mapsto (-1, 2)$."
         />
         <NumericChallenge
-          id="c-translate"
+          id="c-translate-lab"
           index={2}
           prompt="Translate $(3, -2)$ by $(-5, 4)$. What is the new $x$-coordinate?"
           answer={-2}
           explanation="$(3 - 5, -2 + 4) = (-2, 2)$."
         />
         <McqChallenge
-          id="c-reflect"
+          id="c-reflect-lab"
           index={3}
           prompt="What does reflecting in the $x$-axis do to a point $(x, y)$?"
           options={[

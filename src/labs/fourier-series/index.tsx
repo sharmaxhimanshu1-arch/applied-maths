@@ -281,7 +281,7 @@ function BuildExplorer() {
         <TryThis id="t-gibbs" when={wave === 'square' && n >= 20}>
           Use 20 or more terms on the square wave. Is the overshoot at the jumps gone?
         </TryThis>
-        <TryThis id="t-triangle" when={wave === 'triangle' && err < 0.02}>
+        <TryThis id="t-triangle-lab" when={wave === 'triangle' && err < 0.02}>
           Get the triangle wave within 0.02 RMS. How few terms does it need compared with the
           square?
         </TryThis>
@@ -395,7 +395,7 @@ function EpicycleExplorer() {
         <TryThis id="t-one-circle" when={n === 1}>
           Use a single circle. What wave does the tip draw?
         </TryThis>
-        <TryThis id="t-many" when={played && n >= 8}>
+        <TryThis id="t-many-lab" when={played && n >= 8}>
           Play with 8 or more circles. Which circles are tiny, and why do they still matter?
         </TryThis>
       </TryThisList>
@@ -450,7 +450,7 @@ function CoefficientExplorer() {
               { label: 'net area', value: formatNumber(bk * Math.PI, 3) },
               {
                 label: 'b_k = area ÷ π',
-                value: formatNumber(Math.abs(bk) < 1e-9 ? 0 : bk, 4),
+                value: formatNumber(bk, 4),
                 color: SUM,
               },
               {
@@ -480,7 +480,7 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <NumericChallenge
-          id="c-amp"
+          id="c-amp-lab"
           index={1}
           prompt="The square wave's series is $\tfrac{4}{\pi}(\sin x + \tfrac{\sin 3x}{3} + \tfrac{\sin 5x}{5} + \cdots)$. What is the amplitude of the $\sin 5x$ term? (3 decimal places)"
           answer={4 / (5 * Math.PI)}
@@ -488,7 +488,7 @@ function Practice() {
           explanation="$\tfrac{4}{5\pi} \approx 0.255$."
         />
         <McqChallenge
-          id="c-odd"
+          id="c-odd-lab"
           index={2}
           prompt="Which harmonics appear in the square wave?"
           options={[
@@ -532,7 +532,7 @@ function Practice() {
           prompt="Add sine waves until the square wave's RMS error drops below 0.15."
           solved={err < 0.15}
           hint="The square wave's coefficients only fall like 1/k, so it takes a while."
-          explanation="It takes 10 terms (up to $\sin 19x$) to get the RMS error under 0.15. Jumps are expensive."
+          explanation="It takes 9 terms (up to $\sin 17x$) to get the RMS error under 0.15, and the error keeps shrinking only slowly after that. Jumps are expensive."
           onReset={() => setN(1)}
         >
           <div className="overflow-hidden rounded-xl border border-line">

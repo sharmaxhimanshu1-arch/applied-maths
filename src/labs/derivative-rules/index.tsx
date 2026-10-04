@@ -268,7 +268,7 @@ function PowerExplorer() {
           On <Tex>{'x^3'}</Tex>, put the point at <Tex>x = 2</Tex>. Does the slope match{' '}
           <Tex>{'3 \\cdot 2^2 = 12'}</Tex>?
         </TryThis>
-        <TryThis id="t-line" when={n === 1 && visited.some((v) => v.startsWith('1@'))}>
+        <TryThis id="t-line-lab" when={n === 1 && visited.some((v) => v.startsWith('1@'))}>
           Choose <Tex>n = 1</Tex> and move the point. Why does the slope never change?
         </TryThis>
         <TryThis id="t-reveal" when={revealed && n >= 4}>
@@ -413,7 +413,7 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <ExpressionChallenge
-          id="c-power"
+          id="c-power-lab"
           index={1}
           prompt="Differentiate $x^7$."
           answer="7x^6"
@@ -428,7 +428,7 @@ function Practice() {
           explanation="$12x^2 - 5$. The $2$ disappears."
         />
         <McqChallenge
-          id="c-product"
+          id="c-product-lab"
           index={3}
           prompt="What is $(uv)'$?"
           options={[

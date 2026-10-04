@@ -236,7 +236,7 @@ function StripsExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-many" when={n >= 50}>
+        <TryThis id="t-many-lab" when={n >= 50}>
           Push the number of strips to 50 or more. How small does the error get?
         </TryThis>
         <TryThis id="t-over" when={key === 'speed' && method === 'right'}>
@@ -357,7 +357,7 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <NumericChallenge
-          id="c-rect"
+          id="c-rect-lab"
           index={1}
           prompt="Find $\displaystyle\int_0^3 2\,dx$."
           answer={6}

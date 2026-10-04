@@ -1,4 +1,6 @@
-export const gcd = (a: number, b: number): number => (b === 0 ? Math.abs(a) : gcd(b, a % b))
+import { gcd } from './fraction'
+
+export { gcd }
 
 /** base^exp mod m by repeated squaring (safe while m² stays below 2⁵³). */
 export function modPow(base: number, exp: number, mod: number): number {

@@ -63,8 +63,9 @@ export function peak(wave: Wave, n: number) {
 export function sineCoefficient(f: (x: number) => number, k: number): number {
   const g = (x: number) => f(x) * Math.sin(k * x)
   const eps = 1e-9
-  return (
+  const b =
     (integrate(g, eps, Math.PI - eps, 2000) + integrate(g, Math.PI + eps, TAU - eps, 2000)) /
     Math.PI
-  )
+  // Even harmonics cancel exactly; don't let rounding noise show up as 1e-17.
+  return Math.abs(b) < 1e-9 ? 0 : b
 }

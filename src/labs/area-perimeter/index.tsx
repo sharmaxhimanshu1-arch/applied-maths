@@ -332,14 +332,14 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <NumericChallenge
-          id="c-area"
+          id="c-area-lab"
           index={1}
           prompt="What is the area of a $7 \times 5$ rectangle?"
           answer={35}
           explanation="7 squares in each of 5 rows: $7 \times 5 = 35$ square units."
         />
         <NumericChallenge
-          id="c-perimeter"
+          id="c-perimeter-lab"
           index={2}
           prompt="What is the perimeter of a $7 \times 5$ rectangle?"
           answer={24}
@@ -353,7 +353,7 @@ function Practice() {
           explanation="Half the parallelogram: $\tfrac12 \times 10 \times 6 = 30$."
         />
         <McqChallenge
-          id="c-double"
+          id="c-double-lab"
           index={4}
           prompt="You double the side of a square. What happens to its area?"
           options={[

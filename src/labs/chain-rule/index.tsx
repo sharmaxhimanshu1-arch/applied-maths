@@ -318,10 +318,10 @@ function GearsExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-four" when={k1 === 2 && k2 === 2 && turns >= 0.99}>
+        <TryThis id="t-four-lab" when={k1 === 2 && k2 === 2 && turns >= 0.99}>
           Set both ratios to 2 and turn <Tex>x</Tex> once. How many times does <Tex>y</Tex> turn?
         </TryThis>
-        <TryThis id="t-slow" when={rate < 1}>
+        <TryThis id="t-slow-lab" when={rate < 1}>
           Make <Tex>y</Tex> turn more slowly than <Tex>x</Tex>.
         </TryThis>
         <TryThis id="t-match" when={Math.abs(rate - 1) < 1e-9 && k1 !== 1}>
@@ -629,7 +629,7 @@ function Practice() {
           explanation="$\cos(3x) \cdot 3 = 3\cos(3x)$."
         />
         <NumericChallenge
-          id="c-power"
+          id="c-power-lab"
           index={3}
           prompt="$y = (x^2 + 1)^3$. Find $\dfrac{dy}{dx}$ at $x = 1$."
           answer={24}
@@ -637,7 +637,7 @@ function Practice() {
           explanation="$3(x^2 + 1)^2 \cdot 2x$. At $x = 1$: $3 \cdot 4 \cdot 2 = 24$."
         />
         <McqChallenge
-          id="c-exp"
+          id="c-exp-lab"
           index={4}
           prompt="What is the derivative of $e^{5x}$?"
           options={[

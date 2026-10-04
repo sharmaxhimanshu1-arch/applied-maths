@@ -286,13 +286,13 @@ function BoxExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-cube" when={V === 27 && l === w && w === h}>
+        <TryThis id="t-cube-lab" when={V === 27 && l === w && w === h}>
           Build a cube with volume 27. What is its surface area?
         </TryThis>
         <TryThis id="t-least" when={V === 24 && S === 52}>
           Make a box of volume 24 with the least possible surface area.
         </TryThis>
-        <TryThis id="t-net" when={net}>
+        <TryThis id="t-net-lab" when={net}>
           Unfold the box into a net. Which faces come in matching pairs?
         </TryThis>
       </TryThisList>

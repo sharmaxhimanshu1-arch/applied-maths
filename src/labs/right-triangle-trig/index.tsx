@@ -277,10 +277,10 @@ function RatioExplorer() {
         <TryThis id="t-same" when={resized}>
           Lock the angle, then make the triangle much bigger or smaller. Do the ratios move?
         </TryThis>
-        <TryThis id="t-thirty" when={tri.deg === 30}>
+        <TryThis id="t-thirty-lab" when={tri.deg === 30}>
           Find the angle where the opposite side is exactly half the hypotenuse.
         </TryThis>
-        <TryThis id="t-equal" when={tri.deg === 45}>
+        <TryThis id="t-equal-lab" when={tri.deg === 45}>
           Make the two legs equal. What is <Tex>{'\\tan\\theta'}</Tex> there?
         </TryThis>
       </TryThisList>
@@ -437,7 +437,7 @@ function Practice() {
           explanation="The hypotenuse is $\sqrt{6^2 + 8^2} = 10$, so $\cos\theta = \tfrac{\text{adj}}{\text{hyp}} = \tfrac{6}{10} = 0.6$."
         />
         <McqChallenge
-          id="c-cos60"
+          id="c-cos60-lab"
           index={3}
           prompt="What is $\cos 60^\circ$?"
           options={[

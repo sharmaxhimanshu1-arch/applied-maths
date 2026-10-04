@@ -40,7 +40,7 @@ const CLOUD = 'var(--c-violet)'
 const RAIN = 'var(--c-blue)'
 const ARROW = 'var(--ink-2)'
 
-const pct = (x: number) => `${formatNumber(x * 100, 1)}%`
+const pct = (x: number) => `${(Math.round(x * 1000) / 10).toFixed(1).replace(/\.0$/, '')}%`
 const rng = createRng(17)
 
 /** Two circles, the switching arrows between them and the stay-put loops. */
@@ -335,7 +335,10 @@ function WeatherExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-settle" when={pi != null && sim.days >= 500 && Math.abs(share - pi) < 0.03}>
+        <TryThis
+          id="t-settle-lab"
+          when={pi != null && sim.days >= 500 && Math.abs(share - pi) < 0.03}
+        >
           Run at least 500 days. Does the sunny share match the long-run prediction?
         </TryThis>
         <TryThis id="t-even" when={a === b && a > 0}>
@@ -467,7 +470,7 @@ function Practice() {
           explanation="One step: just read the sunny row of the matrix. The chance is 0.3."
         />
         <NumericChallenge
-          id="c-two-step"
+          id="c-two-step-lab"
           index={2}
           prompt="With $P = \begin{bmatrix} 0.7 & 0.3 \\ 0.4 & 0.6 \end{bmatrix}$ (sunny, rainy) and a sunny day today, what is the chance of sun in two days?"
           answer={0.61}
@@ -476,7 +479,7 @@ function Practice() {
           explanation="$0.7 \times 0.7 + 0.3 \times 0.4 = 0.49 + 0.12 = 0.61$."
         />
         <NumericChallenge
-          id="c-stationary"
+          id="c-stationary-lab"
           index={3}
           prompt="A two-state chain switches from A to B with chance 0.1 and from B to A with chance 0.3. What share of the time is it in A in the long run?"
           answer={0.75}
@@ -499,7 +502,7 @@ function Practice() {
           explanation="Given the present, the past adds nothing: tomorrow depends only on today."
         />
         <McqChallenge
-          id="c-rows"
+          id="c-rows-lab"
           index={5}
           prompt="In a transition matrix with rows for “from” and columns for “to”, what must be true?"
           options={[

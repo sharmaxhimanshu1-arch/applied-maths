@@ -275,6 +275,8 @@ function TrainExplorer() {
   const h = Number(hidden)
   const prob = (p: Vec2) => forward(run.net, p).out
   const { loss, accuracy } = score(DATA[data], prob)
+  // Fit the loss chart to the starting loss, which can be well above 1 for a bad random start.
+  const lossTop = Math.min(4, Math.max(0.9, Math.ceil(run.history[0][1] * 11) / 10))
   useAnimationFrame(() => {
     const next = advance(run, data, PER_FRAME)
     setRun(next)
@@ -328,7 +330,7 @@ function TrainExplorer() {
             options={SIZES.map((s) => ({ value: s, label: `${s} hidden` }))}
           />
         </div>
-        <div className="grid gap-3 p-3 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] sm:px-4">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-3 p-3 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] sm:px-4">
           <Plot
             view={VIEW}
             aspect="equal"
@@ -352,7 +354,7 @@ function TrainExplorer() {
             <DataPoints data={DATA[data]} />
           </Plot>
           <Plot
-            view={{ xMin: 0, xMax: MAX_STEPS, yMin: 0, yMax: 0.9 }}
+            view={{ xMin: 0, xMax: MAX_STEPS, yMin: 0, yMax: lossTop }}
             height={200}
             xLabel="steps"
             yLabel="loss"
@@ -598,7 +600,7 @@ function Practice() {
           explanation="$W_2(W_1x) = (W_2W_1)x$: without a squash between them, two layers are one layer, and the boundary stays straight."
         />
         <NumericChallenge
-          id="c-params"
+          id="c-params-lab"
           index={2}
           prompt="How many weights and biases does a 2 → 4 → 1 network have in total?"
           answer={17}

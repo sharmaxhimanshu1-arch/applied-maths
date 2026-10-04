@@ -263,7 +263,7 @@ function QuestionsExplorer() {
         <TryThis id="t-found" when={found}>
           Find the number. How many questions did it take?
         </TryThis>
-        <TryThis id="t-optimal" when={found && size >= 32 && asked <= need}>
+        <TryThis id="t-optimal" when={found && size >= 32 && asked === need}>
           With 32 or 64 numbers, find it in exactly <Tex>{'\\log_2 N'}</Tex> questions.
         </TryThis>
         <TryThis id="t-lopsided" when={game.tiny}>
@@ -351,7 +351,7 @@ function SurpriseExplorer() {
         <TryThis id="t-max" when={ps != null && H >= 1.999}>
           Make the source as unpredictable as possible. What is the entropy?
         </TryThis>
-        <TryThis id="t-certain" when={ps != null && H < 1e-9}>
+        <TryThis id="t-certain-lab" when={ps != null && H < 1e-9}>
           Make the source completely predictable. How surprising is it now?
         </TryThis>
         <TryThis id="t-one-bit" when={ps != null && Math.abs(H - 1) < 0.005}>
@@ -480,7 +480,7 @@ function Practice() {
           explanation="$H = \tfrac12 \cdot 1 + \tfrac12 \cdot 1 = 1$ bit: one fair yes/no answer."
         />
         <NumericChallenge
-          id="c-die"
+          id="c-die-lab"
           index={2}
           prompt="What is the entropy of a fair 8-sided die, in bits?"
           answer={3}
@@ -494,7 +494,7 @@ function Practice() {
           explanation="$-\log_2 \tfrac14 = 2$ bits."
         />
         <NumericChallenge
-          id="c-mixed"
+          id="c-mixed-lab"
           index={4}
           prompt="What is the entropy of a source with probabilities $\tfrac12, \tfrac14, \tfrac14$?"
           answer={1.5}
