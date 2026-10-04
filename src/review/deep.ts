@@ -1649,6 +1649,74 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: 'Multiply along the chain: $-0.4 \\times 0.5 \\times 3 = -0.6$.',
     },
   ],
+  'markov-chains': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        'A chain switches from A to B with chance 0.2 and from B to A with chance 0.6. What share of the time is it in A in the long run?',
+      answer: 0.75,
+      tolerance: 0.001,
+      explain: '$\\tfrac{b}{a + b} = \\tfrac{0.6}{0.8} = 0.75$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'With $P = \\begin{bmatrix} 0.9 & 0.1 \\\\ 0.5 & 0.5 \\end{bmatrix}$ and state 1 today, what is the chance of state 1 in two steps?',
+      answer: 0.86,
+      tolerance: 0.001,
+      explain: '$0.9 \\times 0.9 + 0.1 \\times 0.5 = 0.81 + 0.05 = 0.86$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which chain never settles to a stationary distribution from every start?',
+      options: [
+        { text: 'One that goes A → B → C → A with certainty', correct: true },
+        {
+          text: 'One where every state can reach every other with some randomness',
+          why: 'That kind does settle.',
+        },
+        {
+          text: 'One with a 50% chance of staying put in each state',
+          why: 'Staying put breaks any rigid cycle, so it settles.',
+        },
+      ],
+      explain:
+        'A strict cycle just rotates the distribution forever, so it depends on where it started.',
+    },
+  ],
+  'entropy-information': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'How many yes/no questions does it take to find one of 128 equally likely options?',
+      answer: 7,
+      explain: '$\\log_2 128 = 7$: each perfect question halves the options.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'An event has probability $\\tfrac{1}{16}$. How many bits of surprise does it carry?',
+      answer: 4,
+      explain: '$-\\log_2 \\tfrac{1}{16} = 4$ bits.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'A biased coin lands heads 90% of the time. Its entropy is…',
+      options: [
+        { text: 'Less than 1 bit', correct: true },
+        { text: 'Exactly 1 bit', why: 'Only a fair coin has 1 bit.' },
+        {
+          text: 'More than 1 bit',
+          why: 'Two outcomes can never give more than $\\log_2 2 = 1$ bit.',
+        },
+      ],
+      explain: 'It is predictable, so the average surprise is low: about 0.47 bits.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
