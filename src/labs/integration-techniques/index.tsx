@@ -240,7 +240,7 @@ function SubstitutionExplorer() {
           Find the <Tex>b</Tex> that makes the area as big as possible. What is <Tex>{'b^2'}</Tex>{' '}
           there?
         </TryThis>
-        <TryThis id="t-zero" when={b > 1.5 && Math.abs(rightArea) < 0.02}>
+        <TryThis id="t-zero-lab" when={b > 1.5 && Math.abs(rightArea) < 0.02}>
           Find a <Tex>b</Tex> past 1.5 where the net area is zero. Which <Tex>u</Tex> does it
           correspond to?
         </TryThis>
@@ -394,7 +394,7 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <ExpressionChallenge
-          id="c-sub"
+          id="c-sub-lab"
           index={1}
           prompt="Find an antiderivative of $2x\cos(x^2)$ (leave out the $+ C$)."
           answer="sin(x^2)"
@@ -429,7 +429,7 @@ function Practice() {
           explanation="Differentiating $x$ makes it 1, so $\int x e^x\,dx = xe^x - \int e^x\,dx$."
         />
         <NumericChallenge
-          id="c-parts"
+          id="c-parts-lab"
           index={4}
           prompt="Find $\displaystyle\int_0^1 x e^x\,dx$."
           answer={1}

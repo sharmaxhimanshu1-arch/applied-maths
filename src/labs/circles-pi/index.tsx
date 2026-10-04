@@ -324,7 +324,7 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <NumericChallenge
-          id="c-circ"
+          id="c-circ-lab"
           index={1}
           prompt="Find the circumference of a circle with radius 5. (Decimals are fine.)"
           answer={10 * Math.PI}
@@ -332,7 +332,7 @@ function Practice() {
           explanation="$C = 2\pi r = 10\pi \approx 31.42$."
         />
         <NumericChallenge
-          id="c-area"
+          id="c-area-lab"
           index={2}
           prompt="Find the area of a circle with radius 3."
           answer={9 * Math.PI}

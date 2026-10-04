@@ -223,7 +223,7 @@ function DilationExplorer() {
         <TryThis id="t-two" when={k === 2}>
           Set <Tex>k = 2</Tex>. How many copies of the blue triangle would fit in the orange one?
         </TryThis>
-        <TryThis id="t-shrink" when={k < 1}>
+        <TryThis id="t-shrink-lab" when={k < 1}>
           Make <Tex>k</Tex> less than 1. What kind of “enlargement” is that?
         </TryThis>
         <TryThis id="t-centre" when={dist(o, [-1.5, -1]) > 2}>
@@ -327,14 +327,14 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <NumericChallenge
-          id="c-side"
+          id="c-side-lab"
           index={1}
           prompt="A triangle with sides 3, 4, 5 is enlarged so the shortest side becomes 6. How long does the side of length 4 become?"
           answer={8}
           explanation="The scale factor is $6 / 3 = 2$, so $4 \times 2 = 8$."
         />
         <McqChallenge
-          id="c-area"
+          id="c-area-lab"
           index={2}
           prompt="A shape is enlarged by scale factor 3. Its area is multiplied by…"
           options={[
@@ -346,7 +346,7 @@ function Practice() {
           explanation="Area scales by $k^2 = 9$."
         />
         <NumericChallenge
-          id="c-shadow"
+          id="c-shadow-lab"
           index={3}
           prompt="A 2 m pole casts a 3 m shadow. At the same moment a building casts a 30 m shadow. How tall is the building, in m?"
           answer={20}

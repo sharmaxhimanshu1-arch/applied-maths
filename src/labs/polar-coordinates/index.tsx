@@ -417,7 +417,7 @@ function CurveExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-four" when={kind === 'rose' && k === 2 && full}>
+        <TryThis id="t-four-lab" when={kind === 'rose' && k === 2 && full}>
           Draw a whole rose with 4 petals.
         </TryThis>
         <TryThis id="t-half" when={kind === 'rose' && k === 3 && Math.abs(sweep - Math.PI) < 0.02}>
@@ -440,7 +440,7 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <NumericChallenge
-          id="c-r"
+          id="c-r-lab"
           index={1}
           prompt="What is $r$ for the point $(-6, 8)$?"
           answer={10}
@@ -476,7 +476,7 @@ function Practice() {
           explanation="The point is up and to the left (second quadrant), so $\theta = 180^\circ - 45^\circ = 135^\circ$."
         />
         <NumericChallenge
-          id="c-petals"
+          id="c-petals-lab"
           index={5}
           prompt="How many petals does the rose $r = \cos(4\theta)$ have?"
           answer={8}

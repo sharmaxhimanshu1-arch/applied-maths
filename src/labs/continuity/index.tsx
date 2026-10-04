@@ -475,7 +475,7 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <McqChallenge
-          id="c-which"
+          id="c-which-lab"
           index={1}
           prompt="Which function is continuous at $x = 0$?"
           options={[
@@ -487,7 +487,7 @@ function Practice() {
           explanation="$|x|$ has a corner at 0 but no break: its value and its limit there are both 0."
         />
         <NumericChallenge
-          id="c-fill"
+          id="c-fill-lab"
           index={2}
           prompt="What value of $f(3)$ makes $f(x) = \dfrac{x^2 - 9}{x - 3}$ continuous at 3?"
           answer={6}
@@ -495,7 +495,7 @@ function Practice() {
           explanation="For $x \ne 3$ it is $x + 3$, which heads to 6. Filling the hole with $f(3) = 6$ makes it continuous."
         />
         <McqChallenge
-          id="c-ivt"
+          id="c-ivt-lab"
           index={3}
           prompt="A continuous $f$ has $f(0) = 4$ and $f(5) = -1$. What must be true?"
           options={[

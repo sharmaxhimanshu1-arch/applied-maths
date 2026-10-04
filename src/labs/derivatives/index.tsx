@@ -225,7 +225,7 @@ function SecantExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-shrink" when={Math.abs(h) <= 0.05}>
+        <TryThis id="t-shrink-lab" when={Math.abs(h) <= 0.05}>
           Shrink <Tex>h</Tex> below 0.05. How far apart are the two slopes now?
         </TryThis>
         <TryThis id="t-left" when={h < 0 && h > -0.1}>
@@ -481,7 +481,7 @@ function SlopeMeterExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-flat" when={flat}>
+        <TryThis id="t-flat-lab" when={flat}>
           Find a spot where the tangent is flat. Where is the green dot when it is?
         </TryThis>
         <TryThis id="t-trace" when={covered >= 0.5}>
@@ -509,14 +509,14 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <NumericChallenge
-          id="c-secant"
+          id="c-secant-lab"
           index={1}
           prompt="What is the slope of the secant of $f(x) = x^2$ from $x = 1$ to $x = 3$?"
           answer={4}
           explanation="Rise over run: $\dfrac{9 - 1}{3 - 1} = \dfrac{8}{2} = 4$."
         />
         <NumericChallenge
-          id="c-slope"
+          id="c-slope-lab"
           index={2}
           prompt="What is the slope of $f(x) = x^2$ at $x = 3$?"
           answer={6}
@@ -524,7 +524,7 @@ function Practice() {
           explanation="$f'(x) = 2x$, so $f'(3) = 6$. The tangent at $(3, 9)$ climbs 6 for every 1 across."
         />
         <McqChallenge
-          id="c-meaning"
+          id="c-meaning-lab"
           index={3}
           prompt="On some interval, $f'(x) < 0$. What does the graph of $f$ do there?"
           options={[

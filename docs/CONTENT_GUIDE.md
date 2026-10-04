@@ -119,6 +119,11 @@ automatically and replaces the lite lab (delete the lite entry). Use the buildin
 - `TryThisList`/`TryThis` (with `when={…}`), `PredictReveal`;
 - `Formula`, `Callout`, `Readouts`, `RealWorld`, `Takeaways`.
 
+**Ids.** Progress is saved per concept by each `TryThis` and challenge `id`, so ids must be
+unique within a lab. They must also never reuse an id from the lite lab being replaced:
+learners' old answers would show the new task as already done. Before deleting a lite entry,
+add its ids to `src/labs/retired-lite-ids.json`; `src/labs/ids.test.ts` enforces both rules.
+
 Put the challenges in a `ChallengeSet` built from `@/learn/challenges`: `McqChallenge`,
 `NumericChallenge`, `ExpressionChallenge` and `InteractiveChallenge` (`solved={…}`). Solving
 every challenge marks the concept mastered.

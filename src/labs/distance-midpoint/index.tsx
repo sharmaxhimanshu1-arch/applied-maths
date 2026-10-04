@@ -205,7 +205,7 @@ function DistanceExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-five" when={Math.abs(d - 5) < 1e-9 && dx !== 0 && dy !== 0}>
+        <TryThis id="t-five-lab" when={Math.abs(d - 5) < 1e-9 && dx !== 0 && dy !== 0}>
           Place the points exactly 5 apart, without lining them up horizontally or vertically.
         </TryThis>
         <TryThis id="t-origin" when={M[0] === 0 && M[1] === 0 && d > 0}>
@@ -305,14 +305,14 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <NumericChallenge
-          id="c-dist"
+          id="c-dist-lab"
           index={1}
           prompt="How far apart are $(1, 2)$ and $(4, 6)$?"
           answer={5}
           explanation="$\sqrt{3^2 + 4^2} = 5$."
         />
         <NumericChallenge
-          id="c-mid"
+          id="c-mid-lab"
           index={2}
           prompt="What is the $x$-coordinate of the midpoint of $(2, 8)$ and $(6, -2)$?"
           answer={4}
@@ -331,7 +331,7 @@ function Practice() {
           explanation="Distance from $(2, -1)$ equals 3: $(x - 2)^2 + (y + 1)^2 = 3^2$."
         />
         <NumericChallenge
-          id="c-origin"
+          id="c-origin-lab"
           index={4}
           prompt="How far is $(-5, 12)$ from the origin?"
           answer={13}

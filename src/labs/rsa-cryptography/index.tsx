@@ -500,7 +500,7 @@ function Practice() {
           explanation="$3^4 = 81 = 16 \times 5 + 1$, so the remainder is 1."
         />
         <NumericChallenge
-          id="c-phi"
+          id="c-phi-lab"
           index={2}
           prompt="With primes $p = 5$ and $q = 11$, what is $\varphi = (p - 1)(q - 1)$?"
           answer={40}
@@ -527,7 +527,7 @@ function Practice() {
           explanation="The public key is $(n, e)$. Everything else, $p$, $q$, $\varphi$ and $d$, stays private."
         />
         <NumericChallenge
-          id="c-encrypt"
+          id="c-encrypt-lab"
           index={5}
           prompt="Encrypt $m = 2$ with the public key $n = 33$, $e = 3$."
           answer={8}

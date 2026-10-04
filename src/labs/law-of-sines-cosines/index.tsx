@@ -322,10 +322,10 @@ function CosinesExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-right" when={deg === 90}>
+        <TryThis id="t-right-lab" when={deg === 90}>
           Make angle C a right angle. What happens to the correction?
         </TryThis>
-        <TryThis id="t-obtuse" when={deg > 90}>
+        <TryThis id="t-obtuse-lab" when={deg > 90}>
           Make C obtuse. Which bar is longer now?
         </TryThis>
         <TryThis id="t-equilateral" when={deg === 60 && a === b}>
@@ -435,10 +435,10 @@ function SinesExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-obtuse" when={Math.max(...angles) > 90.5}>
+        <TryThis id="t-sines-obtuse" when={Math.max(...angles) > 90.5}>
           Make one angle obtuse. Do the three ratios still agree?
         </TryThis>
-        <TryThis id="t-right" when={angles.some((t) => Math.abs(t - 90) < 1e-6)}>
+        <TryThis id="t-sines-right" when={angles.some((t) => Math.abs(t - 90) < 1e-6)}>
           Make a right angle. Where does the longest side sit in the circle?
         </TryThis>
         <TryThis id="t-big" when={R != null && 2 * R >= 12}>
@@ -474,7 +474,7 @@ function Practice() {
           explanation="$b = a \cdot \tfrac{\sin B}{\sin A} = 4 \cdot \tfrac{1}{1/2} = 8$."
         />
         <McqChallenge
-          id="c-which"
+          id="c-which-lab"
           index={3}
           prompt="You know all three sides of a triangle and want an angle. Which law do you use?"
           options={[

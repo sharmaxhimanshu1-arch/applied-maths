@@ -20,9 +20,9 @@ things, quick checks confirm you got it, and the map remembers where you are.
   RSA). Each one runs explore → predict → formalise → challenges.
 - **50 lite labs**, one for every other concept. Each has a ready-made interactive with
   self-ticking “Try this” prompts, the key formula, a common misconception, quick checks and
-  real-world uses. They are built from 23 reusable widgets: number line, function machine,
-  complex plane, contour plot, slope field, simulations, number theory, Venn diagrams, truth
-  tables and more.
+  real-world uses. They are built from reusable widgets: number line, function machine, geometry
+  board, complex plane, contour plot, slope field, simulations, number theory, Venn diagrams,
+  truth tables and more.
 - **Six tools** for free play: Grapher (sliders for any parameter, tangents, areas, Riemann sums,
   Taylor polynomials, polar curves), Matrix Lab, Probability Lab, Unit Circle & Waves, Data Lab and
   a Calculator.

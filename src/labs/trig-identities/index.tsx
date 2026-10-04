@@ -244,7 +244,7 @@ function PythagorasExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-equal" when={deg === 45 || deg === 225}>
+        <TryThis id="t-equal-lab" when={deg === 45 || deg === 225}>
           Find an angle where <Tex>{'\\sin\\theta = \\cos\\theta'}</Tex>. (There are two.)
         </TryThis>
         <TryThis id="t-q3" when={deg > 180 && deg < 270}>
@@ -530,7 +530,7 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <NumericChallenge
-          id="c-pyth"
+          id="c-pyth-lab"
           index={1}
           prompt="$\sin\theta = 0.6$ and $\theta$ is acute. What is $\cos\theta$?"
           answer={0.8}
@@ -550,7 +550,7 @@ function Practice() {
           explanation="The point for $180^\circ - \theta$ is the mirror image of $\theta$'s point in the y-axis: same height, so the same sine."
         />
         <NumericChallenge
-          id="c-double"
+          id="c-double-lab"
           index={3}
           prompt="$\sin\theta = 0.6$ and $\cos\theta = 0.8$. What is $\sin 2\theta$?"
           answer={0.96}

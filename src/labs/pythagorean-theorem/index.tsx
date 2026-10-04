@@ -252,10 +252,10 @@ function SquaresExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-345" when={whole && c === 5}>
+        <TryThis id="t-345-lab" when={whole && c === 5}>
           Make the hypotenuse exactly 5.
         </TryThis>
-        <TryThis id="t-equal" when={a === b && a >= 2}>
+        <TryThis id="t-equal-lab" when={a === b && a >= 2}>
           Make the legs equal (2 or more). How does the big square compare with one small one?
         </TryThis>
         <TryThis id="t-whole" when={whole && c !== 5}>
@@ -468,7 +468,7 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <NumericChallenge
-          id="c-hyp"
+          id="c-hyp-lab"
           index={1}
           prompt="The legs of a right triangle are 6 and 8. How long is the hypotenuse?"
           answer={10}
@@ -494,7 +494,7 @@ function Practice() {
           explanation="$25 + 144 = 169 = 13^2$."
         />
         <NumericChallenge
-          id="c-ladder"
+          id="c-ladder-lab"
           index={4}
           prompt="A 5 m ladder leans against a wall with its foot 3 m out. How high up the wall does it reach, in m?"
           answer={4}

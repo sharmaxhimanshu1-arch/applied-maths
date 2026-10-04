@@ -245,13 +245,13 @@ function StepsExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-pi" when={Math.abs(theta - Math.PI) < 0.02}>
+        <TryThis id="t-pi-lab" when={Math.abs(theta - Math.PI) < 0.02}>
           Set <Tex>{'\\theta = \\pi'}</Tex>. Where does <Tex>{'e^{i\\pi}'}</Tex> land?
         </TryThis>
-        <TryThis id="t-steps" when={gap < 0.05}>
+        <TryThis id="t-steps-lab" when={gap < 0.05}>
           Raise <Tex>{'n'}</Tex> until the orange path ends within 0.05 of the blue point.
         </TryThis>
-        <TryThis id="t-i" when={Math.abs(theta - Math.PI / 2) < 0.02}>
+        <TryThis id="t-i-lab" when={Math.abs(theta - Math.PI / 2) < 0.02}>
           Find <Tex>{'\\theta'}</Tex> so that <Tex>{'e^{i\\theta} = i'}</Tex>.
         </TryThis>
       </TryThisList>
@@ -390,14 +390,14 @@ function Practice() {
           explanation="A quarter turn ($\tfrac{\pi}{2}$ radians) from 1 lands on $i$: $\cos\tfrac{\pi}{2} + i\sin\tfrac{\pi}{2} = 0 + i$."
         />
         <NumericChallenge
-          id="c-abs"
+          id="c-abs-lab"
           index={2}
           prompt="What is $|e^{2.7i}|$, the distance from 0?"
           answer={1}
           explanation="$|\cos 2.7 + i\sin 2.7| = \sqrt{\cos^2 2.7 + \sin^2 2.7} = 1$. Every $e^{i\theta}$ is on the unit circle."
         />
         <NumericChallenge
-          id="c-full"
+          id="c-full-lab"
           index={3}
           prompt="What is $e^{2\pi i}$?"
           answer={1}

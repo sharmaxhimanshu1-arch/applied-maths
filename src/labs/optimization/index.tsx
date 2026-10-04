@@ -275,7 +275,7 @@ function BoxExplorer() {
         <TryThis id="t-big" when={V > 73}>
           Find a box with volume over 73.
         </TryThis>
-        <TryThis id="t-flat" when={Math.abs(x - BEST) < 0.04}>
+        <TryThis id="t-flat-lab" when={Math.abs(x - BEST) < 0.04}>
           Put the point where the pink tangent is flat. What is the cut there?
         </TryThis>
         <TryThis id="t-tower" when={x >= 4}>
@@ -496,7 +496,7 @@ function Practice() {
           explanation="The graph falls, then rises: a valley."
         />
         <InteractiveChallenge
-          id="c-fence"
+          id="c-fence-lab"
           index={4}
           prompt="100 m of fence makes three sides of a rectangle against a river (no fence along the river). Drag the width $w$ (the two short sides) to enclose the most area."
           solved={Math.abs(w - 25) < 0.01}

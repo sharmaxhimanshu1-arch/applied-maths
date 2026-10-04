@@ -297,13 +297,13 @@ function AngleSumExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-right" when={!degenerate && angles === 'right'}>
+        <TryThis id="t-right-lab" when={!degenerate && angles === 'right'}>
           Make a right-angled triangle. What do the other two angles add to?
         </TryThis>
-        <TryThis id="t-obtuse" when={!degenerate && angles === 'obtuse'}>
+        <TryThis id="t-obtuse-lab" when={!degenerate && angles === 'obtuse'}>
           Make an obtuse triangle. Can it have two obtuse angles?
         </TryThis>
-        <TryThis id="t-isosceles" when={!degenerate && sides === 'isosceles'}>
+        <TryThis id="t-isosceles-lab" when={!degenerate && sides === 'isosceles'}>
           Make an isosceles triangle. Which two angles match?
         </TryThis>
         <TryThis id="t-proof" when={proof && !degenerate}>
@@ -429,7 +429,7 @@ function Practice() {
     <LabSection id="practice" eyebrow="Practice" title="Check your understanding">
       <ChallengeSet>
         <NumericChallenge
-          id="c-third"
+          id="c-third-lab"
           index={1}
           prompt="Two angles of a triangle are $50^\circ$ and $60^\circ$. What is the third?"
           answer={70}

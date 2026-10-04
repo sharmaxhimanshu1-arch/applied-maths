@@ -477,7 +477,7 @@ function Practice() {
           explanation="$f'''(0) = -\cos 0 = -1$, so $c_3 = -\tfrac{1}{6} \approx -0.1667$."
         />
         <McqChallenge
-          id="c-exp"
+          id="c-exp-lab"
           index={3}
           prompt="Which is the Maclaurin series of $e^x$?"
           options={[

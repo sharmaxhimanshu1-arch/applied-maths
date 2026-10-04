@@ -328,7 +328,7 @@ function SumsExplorer() {
         </div>
       </Figure>
       <TryThisList>
-        <TryThis id="t-diverge" when={key === 'geometric' && Math.abs(r) >= 1 && N >= 20}>
+        <TryThis id="t-diverge-lab" when={key === 'geometric' && Math.abs(r) >= 1 && N >= 20}>
           Set <Tex>{'|r| \\ge 1'}</Tex> and add 20 or more terms. What happens to the total?
         </TryThis>
         <TryThis id="t-five" when={key === 'harmonic' && SN > 5}>
