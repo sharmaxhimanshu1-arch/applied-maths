@@ -1584,6 +1584,200 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: 'Angles add: $20^\\circ + 70^\\circ = 90^\\circ$ (and lengths multiply, to 6).',
     },
   ],
+  'logistic-regression': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'A model predicts $p = \\sigma(0.5x - 2)$. At what $x$ is it exactly 50/50?',
+      answer: 4,
+      explain: 'The score is zero when $0.5x - 2 = 0$, so $x = 4$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'What is the log loss (natural log) of predicting $p = 0.9$ for an example whose label is 0?',
+      answer: -Math.log(0.1),
+      tolerance: 0.01,
+      explain: 'For label 0 the loss is $-\\ln(1 - p) = -\\ln 0.1 \\approx 2.30$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'What shape is the decision boundary of a logistic regression with two inputs?',
+      options: [
+        { text: 'A straight line', correct: true },
+        {
+          text: 'An S-shaped curve',
+          why: 'The S is the probability along one direction, not the boundary.',
+        },
+        { text: 'A circle', why: 'That needs extra features, such as $x^2 + y^2$.' },
+      ],
+      explain: 'The boundary is where $w_1x_1 + w_2x_2 + b = 0$: a straight line.',
+    },
+  ],
+  'neural-networks': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'How many weights and biases does a 3 → 5 → 1 network have?',
+      answer: 26,
+      explain: 'Hidden: $5 \\times (3 + 1) = 20$. Output: $5 + 1 = 6$. Total 26.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Why can’t a single neuron learn XOR?',
+      options: [
+        { text: 'No single straight line separates the two classes', correct: true },
+        {
+          text: 'XOR needs more training data',
+          why: 'More data would not change the shape of a single neuron’s boundary.',
+        },
+        { text: 'The learning rate is too small', why: 'Even the best weights only reach 75%.' },
+      ],
+      explain:
+        'A neuron’s boundary is a line; XOR’s classes sit in opposite corners, so a line gets at most 3 of 4 right.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'Backprop: $\\tfrac{\\partial L}{\\partial y} = -0.4$, $\\tfrac{\\partial y}{\\partial h} = 0.5$, $\\tfrac{\\partial h}{\\partial w} = 3$. What is $\\tfrac{\\partial L}{\\partial w}$?',
+      answer: -0.6,
+      tolerance: 0.001,
+      explain: 'Multiply along the chain: $-0.4 \\times 0.5 \\times 3 = -0.6$.',
+    },
+  ],
+  'markov-chains': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        'A chain switches from A to B with chance 0.2 and from B to A with chance 0.6. What share of the time is it in A in the long run?',
+      answer: 0.75,
+      tolerance: 0.001,
+      explain: '$\\tfrac{b}{a + b} = \\tfrac{0.6}{0.8} = 0.75$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'With $P = \\begin{bmatrix} 0.9 & 0.1 \\\\ 0.5 & 0.5 \\end{bmatrix}$ and state 1 today, what is the chance of state 1 in two steps?',
+      answer: 0.86,
+      tolerance: 0.001,
+      explain: '$0.9 \\times 0.9 + 0.1 \\times 0.5 = 0.81 + 0.05 = 0.86$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which chain never settles to a stationary distribution from every start?',
+      options: [
+        { text: 'One that goes A → B → C → A with certainty', correct: true },
+        {
+          text: 'One where every state can reach every other with some randomness',
+          why: 'That kind does settle.',
+        },
+        {
+          text: 'One with a 50% chance of staying put in each state',
+          why: 'Staying put breaks any rigid cycle, so it settles.',
+        },
+      ],
+      explain:
+        'A strict cycle just rotates the distribution forever, so it depends on where it started.',
+    },
+  ],
+  'entropy-information': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'How many yes/no questions does it take to find one of 128 equally likely options?',
+      answer: 7,
+      explain: '$\\log_2 128 = 7$: each perfect question halves the options.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'An event has probability $\\tfrac{1}{16}$. How many bits of surprise does it carry?',
+      answer: 4,
+      explain: '$-\\log_2 \\tfrac{1}{16} = 4$ bits.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'A biased coin lands heads 90% of the time. Its entropy is…',
+      options: [
+        { text: 'Less than 1 bit', correct: true },
+        { text: 'Exactly 1 bit', why: 'Only a fair coin has 1 bit.' },
+        {
+          text: 'More than 1 bit',
+          why: 'Two outcomes can never give more than $\\log_2 2 = 1$ bit.',
+        },
+      ],
+      explain: 'It is predictable, so the average surprise is low: about 0.47 bits.',
+    },
+  ],
+  'fourier-series': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        'In the square wave’s series $\\tfrac{4}{\\pi}(\\sin x + \\tfrac{\\sin 3x}{3} + \\cdots)$, what is the amplitude of $\\sin 7x$? (3 decimal places)',
+      answer: 4 / (7 * Math.PI),
+      tolerance: 0.002,
+      explain: '$\\tfrac{4}{7\\pi} \\approx 0.182$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt:
+        'Why do the triangle wave’s partial sums converge much faster than the square wave’s?',
+      options: [
+        { text: 'It has corners but no jumps, so its coefficients fall like 1/k²', correct: true },
+        { text: 'It has fewer harmonics', why: 'Both use the odd harmonics.' },
+        { text: 'It has a smaller period', why: 'Both have period 2π.' },
+      ],
+      explain:
+        'Smoother waves have faster-shrinking coefficients: 1/k² for the triangle against 1/k for the square.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'What is the period of $\\sin 4x$? (decimal)',
+      answer: Math.PI / 2,
+      tolerance: 0.01,
+      explain: '$\\tfrac{2\\pi}{4} = \\tfrac{\\pi}{2} \\approx 1.571$.',
+    },
+  ],
+  'rsa-cryptography': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is $2^{10} \\bmod 11$?',
+      answer: 1,
+      explain: '$1024 = 93 \\times 11 + 1$. (Fermat: $a^{p-1} \\equiv 1$ for a prime $p$.)',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'With $p = 3$ and $q = 11$, $\\varphi = 20$ and $e = 3$. What is the private exponent $d$ (between 1 and 19)?',
+      answer: 7,
+      explain: '$3 \\times 7 = 21 = 20 + 1$, so $d = 7$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'What would let an attacker compute an RSA private key from the public key?',
+      options: [
+        { text: 'Factoring n into p and q', correct: true },
+        { text: 'Knowing e', why: 'e is public anyway.' },
+        { text: 'Seeing one encrypted message', why: 'Ciphertexts alone don’t reveal $\\varphi$.' },
+      ],
+      explain:
+        'With $p$ and $q$ you get $\\varphi = (p-1)(q-1)$ and then $d = e^{-1} \\bmod \\varphi$.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
