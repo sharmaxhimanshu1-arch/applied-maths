@@ -1778,6 +1778,84 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
         'With $p$ and $q$ you get $\\varphi = (p-1)(q-1)$ and then $d = e^{-1} \\bmod \\varphi$.',
     },
   ],
+  'number-line': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is $|-15|$?',
+      answer: 15,
+      explain: '−15 is 15 steps from 0.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'How far apart are −8 and −3?',
+      answer: 5,
+      explain: '$|-3 - (-8)| = |5| = 5$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which list is in order from smallest to largest?',
+      options: [
+        { text: '$-6, -1, 0, 4$', correct: true },
+        { text: '$-1, -6, 0, 4$', why: '−6 is to the left of −1, so it is smaller.' },
+        { text: '$0, -1, -6, 4$', why: 'Negative numbers are smaller than 0.' },
+      ],
+      explain: 'Read the number line from left to right: −6, −1, 0, 4.',
+    },
+  ],
+  'arithmetic-operations': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is $-7 + 3$?',
+      answer: -4,
+      explain: 'Start at −7 and jump 3 right, to −4.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is $-2 - (-9)$?',
+      answer: 7,
+      explain: 'Subtracting −9 means adding 9: $-2 + 9 = 7$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'What is $(-4) \\times 6$?',
+      answer: -24,
+      explain: 'One negative factor flips the answer to the negative side: −24.',
+    },
+  ],
+  fractions: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Fill in the gap: $\\tfrac25 = \\tfrac{?}{15}$.',
+      answer: 6,
+      explain: '15 is 5 × 3, so multiply the top by 3 too: $2 \\times 3 = 6$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: '$\\tfrac14 + \\tfrac23 = \\tfrac{?}{12}$. What is the numerator?',
+      answer: 11,
+      explain:
+        '$\\tfrac14 = \\tfrac{3}{12}$ and $\\tfrac23 = \\tfrac{8}{12}$, so the sum is $\\tfrac{11}{12}$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which fraction is equal to $\\tfrac12$?',
+      options: [
+        { text: '$\\tfrac{7}{14}$', correct: true },
+        { text: '$\\tfrac{2}{3}$', why: 'That is more than a half.' },
+        { text: '$\\tfrac{3}{8}$', why: 'A half of 8 is 4, not 3.' },
+      ],
+      explain: '7 is half of 14, so $\\tfrac{7}{14} = \\tfrac12$.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
