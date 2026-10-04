@@ -368,7 +368,8 @@ const matTex = (P: Matrix) =>
 function DistBars({ dist, start }: { dist: number[]; start: number }) {
   return (
     <div className="min-w-0 space-y-1.5">
-      <p className="text-sm font-semibold" style={{ color: COLS[start] }}>
+      <p className="flex items-center gap-1.5 text-sm font-semibold">
+        <span className="size-2.5 rounded-full" style={{ background: COLS[start] }} aria-hidden />
         Start {NAMES[start].toLowerCase()}
       </p>
       {dist.map((p, j) => (

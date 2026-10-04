@@ -451,25 +451,34 @@ function ChainTable({ w1, w2 }: { w1: number; w2: number }) {
     },
     {
       fwd: `L = \\tfrac12(y - 1)^2 = ${formatNumber(c.loss, 4)}`,
-      back: `\\tfrac{\\partial L}{\\partial w_1} = ${f3(c.dLdz2)} \\times w_2 \\times ${f3(c.dhdz1)} \\times x = ${formatNumber(c.dLdw1, 4)}`,
+      back: `\\tfrac{\\partial L}{\\partial w_1} = ${f3(c.dLdz2)} \\cdot w_2 \\cdot ${f3(c.dhdz1)} = ${formatNumber(c.dLdw1, 4)}`,
     },
   ]
-  return (
-    <div className="grid grid-cols-[minmax(0,1fr)] gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
-      <p className="text-ink-2 sm:col-span-2">
-        <span style={{ color: FWD }}>Forward pass</span> (left),{' '}
-        <span style={{ color: BACK }}>backward pass</span> (right). Input x = 1, target t = 1.
-      </p>
-      {rows.map((r, i) => (
-        <div key={i} className="contents">
-          <div className="overflow-x-auto py-0.5" style={{ color: FWD }}>
-            <Tex>{r.fwd}</Tex>
-          </div>
-          <div className="overflow-x-auto py-0.5" style={{ color: BACK }}>
-            <Tex>{r.back}</Tex>
-          </div>
+  const column = (title: string, color: string, cells: string[]) => (
+    <div className="min-w-0 space-y-1 border-l-4 pl-3" style={{ borderColor: color }}>
+      <p className="font-semibold">{title}</p>
+      {cells.map((tex) => (
+        <div key={tex} className="py-0.5">
+          <Tex>{tex}</Tex>
         </div>
       ))}
+    </div>
+  )
+  return (
+    <div className="text-xs sm:text-sm">
+      <p className="mb-2 text-ink-2">Input x = 1, target t = 1.</p>
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-2">
+        {column(
+          'Forward pass',
+          FWD,
+          rows.map((r) => r.fwd),
+        )}
+        {column(
+          'Backward pass',
+          BACK,
+          rows.map((r) => r.back),
+        )}
+      </div>
     </div>
   )
 }
@@ -493,10 +502,10 @@ function ChainExplorer() {
       <Prose>
         <p>
           The smallest possible network: one input, one hidden neuron, one output, two weights. The
-          left column is the forward pass. The right column walks back from the loss, multiplying
-          local slopes: that is all backpropagation is. Compare its answer for{' '}
-          <Tex>{'\\partial L/\\partial w_1'}</Tex> with a brute-force numerical check, then take
-          gradient steps.
+          forward pass (blue bar) computes each value in turn. The backward pass (pink bar) walks
+          back from the loss, multiplying local slopes: that is all backpropagation is. Compare its
+          answer for <Tex>{'\\partial L/\\partial w_1'}</Tex> with a brute-force numerical check,
+          then take gradient steps.
         </p>
       </Prose>
       <Figure>

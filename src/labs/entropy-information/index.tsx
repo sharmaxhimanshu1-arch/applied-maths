@@ -29,7 +29,6 @@ import { Tex } from '@/ui/Tex'
 import { cn } from '@/ui/cn'
 
 const PROB = 'var(--c-blue)'
-const SURPRISE = 'var(--c-orange)'
 const BITS = 'var(--c-violet)'
 const LETTERS = ['A', 'B', 'C', 'D']
 const COLS = ['var(--c-blue)', 'var(--c-orange)', 'var(--c-green)', 'var(--c-violet)']
@@ -220,7 +219,7 @@ function QuestionsExplorer() {
                 )}
                 style={
                   found && k === target
-                    ? { background: BITS, color: 'var(--surface)' }
+                    ? { boxShadow: `inset 0 0 0 2px ${BITS}` }
                     : alive && k <= q
                       ? { boxShadow: `inset 0 -3px 0 ${PROB}` }
                       : undefined
@@ -294,9 +293,7 @@ function OutcomeBars({ ps }: { ps: readonly number[] }) {
           </div>
           <span className="font-semibold">{LETTERS[i]}</span>
           <span className="tabular-nums text-ink-2">p = {formatNumber(p, 3)}</span>
-          <span className="tabular-nums" style={{ color: SURPRISE }}>
-            {p > 0 ? surprisal(p) : 'never'}
-          </span>
+          <span className="tabular-nums font-medium">{p > 0 ? surprisal(p) : 'never'}</span>
         </div>
       ))}
     </div>
@@ -430,14 +427,14 @@ function CodeExplorer() {
         <div className="px-3 pt-3 font-mono text-sm sm:px-4">
           <p className="break-all tracking-wide">
             {msg.map((s, i) => (
-              <span key={i} style={{ color: COLS[s] }}>
+              <span key={i} style={{ boxShadow: `inset 0 -3px 0 ${COLS[s]}` }}>
                 {LETTERS[s]}
               </span>
             ))}
           </p>
           <p className="mt-2 break-all text-xs leading-relaxed">
             {words.map((wd, i) => (
-              <span key={i} style={{ color: COLS[msg[i]] }}>
+              <span key={i} style={{ boxShadow: `inset 0 -2px 0 ${COLS[msg[i]]}` }}>
                 {wd}
                 {i < words.length - 1 ? ' ' : ''}
               </span>

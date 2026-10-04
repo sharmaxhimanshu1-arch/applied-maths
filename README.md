@@ -13,15 +13,16 @@ things, quick checks confirm you got it, and the map remembers where you are.
 - **Knowledge map** of 110 concepts in 13 domains (numbers and discrete math through calculus,
   linear algebra, probability and machine learning). Left to right is prerequisite order. Set any
   concept as a goal and get a step-by-step path to it. A list view is used on phones.
-- **54 deep labs**, hand-built guided lessons for linear algebra, probability and statistics,
+- **60 deep labs**, hand-built guided lessons for linear algebra, probability and statistics,
   algebra and functions, all of geometry and trigonometry, all of single-variable calculus
-  (limits through Taylor series), gradient descent and PCA. Each one runs explore → predict → formalise →
-  challenges.
-- **56 lite labs**, one for every other concept. Each has a ready-made interactive with
+  (limits through Taylor series), and all of applied maths and machine learning (gradient
+  descent, PCA, logistic regression, neural networks, Markov chains, entropy, Fourier series and
+  RSA). Each one runs explore → predict → formalise → challenges.
+- **50 lite labs**, one for every other concept. Each has a ready-made interactive with
   self-ticking “Try this” prompts, the key formula, a common misconception, quick checks and
   real-world uses. They are built from 23 reusable widgets: number line, function machine,
-  complex plane, geometry board, contour plot, slope field, simulations, a neuron playground,
-  Markov chains, Fourier epicycles and more.
+  complex plane, contour plot, slope field, simulations, number theory, Venn diagrams, truth
+  tables and more.
 - **Six tools** for free play: Grapher (sliders for any parameter, tangents, areas, Riemann sums,
   Taylor polynomials, polar curves), Matrix Lab, Probability Lab, Unit Circle & Waves, Data Lab and
   a Calculator.

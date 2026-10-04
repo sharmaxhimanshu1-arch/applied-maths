@@ -1717,6 +1717,67 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: 'It is predictable, so the average surprise is low: about 0.47 bits.',
     },
   ],
+  'fourier-series': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        'In the square wave’s series $\\tfrac{4}{\\pi}(\\sin x + \\tfrac{\\sin 3x}{3} + \\cdots)$, what is the amplitude of $\\sin 7x$? (3 decimal places)',
+      answer: 4 / (7 * Math.PI),
+      tolerance: 0.002,
+      explain: '$\\tfrac{4}{7\\pi} \\approx 0.182$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt:
+        'Why do the triangle wave’s partial sums converge much faster than the square wave’s?',
+      options: [
+        { text: 'It has corners but no jumps, so its coefficients fall like 1/k²', correct: true },
+        { text: 'It has fewer harmonics', why: 'Both use the odd harmonics.' },
+        { text: 'It has a smaller period', why: 'Both have period 2π.' },
+      ],
+      explain:
+        'Smoother waves have faster-shrinking coefficients: 1/k² for the triangle against 1/k for the square.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'What is the period of $\\sin 4x$? (decimal)',
+      answer: Math.PI / 2,
+      tolerance: 0.01,
+      explain: '$\\tfrac{2\\pi}{4} = \\tfrac{\\pi}{2} \\approx 1.571$.',
+    },
+  ],
+  'rsa-cryptography': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is $2^{10} \\bmod 11$?',
+      answer: 1,
+      explain: '$1024 = 93 \\times 11 + 1$. (Fermat: $a^{p-1} \\equiv 1$ for a prime $p$.)',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'With $p = 3$ and $q = 11$, $\\varphi = 20$ and $e = 3$. What is the private exponent $d$ (between 1 and 19)?',
+      answer: 7,
+      explain: '$3 \\times 7 = 21 = 20 + 1$, so $d = 7$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'What would let an attacker compute an RSA private key from the public key?',
+      options: [
+        { text: 'Factoring n into p and q', correct: true },
+        { text: 'Knowing e', why: 'e is public anyway.' },
+        { text: 'Seeing one encrypted message', why: 'Ciphertexts alone don’t reveal $\\varphi$.' },
+      ],
+      explain:
+        'With $p$ and $q$ you get $\\varphi = (p-1)(q-1)$ and then $d = e^{-1} \\bmod \\varphi$.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
