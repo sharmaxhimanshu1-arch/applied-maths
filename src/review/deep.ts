@@ -1584,6 +1584,71 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: 'Angles add: $20^\\circ + 70^\\circ = 90^\\circ$ (and lengths multiply, to 6).',
     },
   ],
+  'logistic-regression': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'A model predicts $p = \\sigma(0.5x - 2)$. At what $x$ is it exactly 50/50?',
+      answer: 4,
+      explain: 'The score is zero when $0.5x - 2 = 0$, so $x = 4$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'What is the log loss (natural log) of predicting $p = 0.9$ for an example whose label is 0?',
+      answer: -Math.log(0.1),
+      tolerance: 0.01,
+      explain: 'For label 0 the loss is $-\\ln(1 - p) = -\\ln 0.1 \\approx 2.30$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'What shape is the decision boundary of a logistic regression with two inputs?',
+      options: [
+        { text: 'A straight line', correct: true },
+        {
+          text: 'An S-shaped curve',
+          why: 'The S is the probability along one direction, not the boundary.',
+        },
+        { text: 'A circle', why: 'That needs extra features, such as $x^2 + y^2$.' },
+      ],
+      explain: 'The boundary is where $w_1x_1 + w_2x_2 + b = 0$: a straight line.',
+    },
+  ],
+  'neural-networks': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'How many weights and biases does a 3 → 5 → 1 network have?',
+      answer: 26,
+      explain: 'Hidden: $5 \\times (3 + 1) = 20$. Output: $5 + 1 = 6$. Total 26.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Why can’t a single neuron learn XOR?',
+      options: [
+        { text: 'No single straight line separates the two classes', correct: true },
+        {
+          text: 'XOR needs more training data',
+          why: 'More data would not change the shape of a single neuron’s boundary.',
+        },
+        { text: 'The learning rate is too small', why: 'Even the best weights only reach 75%.' },
+      ],
+      explain:
+        'A neuron’s boundary is a line; XOR’s classes sit in opposite corners, so a line gets at most 3 of 4 right.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'Backprop: $\\tfrac{\\partial L}{\\partial y} = -0.4$, $\\tfrac{\\partial y}{\\partial h} = 0.5$, $\\tfrac{\\partial h}{\\partial w} = 3$. What is $\\tfrac{\\partial L}{\\partial w}$?',
+      answer: -0.6,
+      tolerance: 0.001,
+      explain: 'Multiply along the chain: $-0.4 \\times 0.5 \\times 3 = -0.6$.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
