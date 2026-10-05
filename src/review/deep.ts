@@ -1937,6 +1937,93 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: 'Three factors cancel, leaving $7 - 3 = 4$: $a^4$.',
     },
   ],
+  'roots-radicals': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is $\\sqrt{144}$?',
+      answer: 12,
+      explain: '$12 \\times 12 = 144$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Simplify $\\sqrt{75}$ to the form $k\\sqrt{m}$. What is $k$?',
+      answer: 5,
+      explain: '$75 = 25 \\times 3$, so $\\sqrt{75} = 5\\sqrt3$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Is $\\sqrt{16 + 9}$ equal to $\\sqrt{16} + \\sqrt9$?',
+      options: [
+        { text: 'No: it is 5, not 7', correct: true },
+        { text: 'Yes: both are 7', why: '$\\sqrt{16 + 9} = \\sqrt{25} = 5$.' },
+        { text: 'Yes: both are 5', why: '$\\sqrt{16} + \\sqrt9 = 4 + 3 = 7$.' },
+      ],
+      explain: 'Roots split over products, not sums: $\\sqrt{25} = 5$ but $4 + 3 = 7$.',
+    },
+  ],
+  'primes-factorization': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is the smallest prime factor of 221?',
+      answer: 13,
+      explain: '$221 = 13 \\times 17$; 2, 3, 5, 7 and 11 don’t divide it.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is the greatest common divisor of 18 and 30?',
+      answer: 6,
+      explain: '$18 = 2 \\times 3^2$, $30 = 2 \\times 3 \\times 5$; they share $2 \\times 3 = 6$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'Two lights flash every 8 and every 12 seconds. After how many seconds do they next flash together?',
+      answer: 24,
+      unit: 's',
+      explain: 'lcm(8, 12): $8 = 2^3$, $12 = 2^2 \\times 3$, so $2^3 \\times 3 = 24$.',
+    },
+  ],
+  'real-numbers': [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'Which number is rational?',
+      options: [
+        { text: '$0.\\overline{27}$', correct: true },
+        { text: '$\\sqrt3$', why: '3 is not a perfect square.' },
+        { text: '$\\pi$', why: 'π is irrational.' },
+      ],
+      explain:
+        'A repeating decimal is a fraction: $0.\\overline{27} = \\tfrac{27}{99} = \\tfrac{3}{11}$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Write $0.\\overline{3}$ as a fraction $\\tfrac{1}{?}$.',
+      answer: 3,
+      explain: 'If $x = 0.\\overline{3}$ then $10x - x = 3$, so $x = \\tfrac13$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Does $\\tfrac{7}{40}$ give a decimal that ends?',
+      options: [
+        { text: 'Yes: 40 has only 2s and 5s as prime factors', correct: true },
+        { text: 'No: 7 is prime', why: 'Only the denominator matters.' },
+        {
+          text: 'No: 40 is not a power of 10',
+          why: '$\\tfrac{7}{40} = \\tfrac{175}{1000} = 0.175$.',
+        },
+      ],
+      explain: '$40 = 2^3 \\times 5$, so the decimal ends: $0.175$.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
