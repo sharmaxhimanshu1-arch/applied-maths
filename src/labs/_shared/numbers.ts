@@ -72,3 +72,46 @@ export function nearestFraction(x: number, q: number): { p: number; q: number; e
   const p = Math.round(x * q)
   return { p, q, error: Math.abs(p / q - x) }
 }
+
+const DIGITS = '0123456789ABCDEF'
+
+/** The digits of n in base b (most significant first), padded with zeros to `width`. */
+export function toDigits(n: number, b: number, width = 1): number[] {
+  const out: number[] = []
+  let x = Math.floor(Math.abs(n))
+  do {
+    out.unshift(x % b)
+    x = Math.floor(x / b)
+  } while (x > 0)
+  while (out.length < width) out.unshift(0)
+  return out
+}
+
+/** A digit written as 0–9 or A–F. */
+export const digitChar = (d: number) => DIGITS[d]
+
+/** n written in base b, e.g. toBase(255, 16) = 'FF'. */
+export const toBase = (n: number, b: number, width = 1) =>
+  toDigits(n, b, width).map(digitChar).join('')
+
+/** The steps of converting n to base b by repeated division: n = q·b + r, then carry on with q. */
+export function divisionLadder(n: number, b: number): { n: number; q: number; r: number }[] {
+  const steps: { n: number; q: number; r: number }[] = []
+  let x = Math.floor(n)
+  do {
+    steps.push({ n: x, q: Math.floor(x / b), r: x % b })
+    x = Math.floor(x / b)
+  } while (x > 0)
+  return steps
+}
+
+/** How many digits roll over to 0 when 1 is added to n in base b (the trailing b − 1 digits). */
+export function rollovers(n: number, b: number): number {
+  let count = 0
+  let x = n
+  while (x % b === b - 1) {
+    count++
+    x = Math.floor(x / b)
+  }
+  return count
+}

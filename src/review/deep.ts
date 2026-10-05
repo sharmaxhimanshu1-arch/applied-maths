@@ -2202,6 +2202,64 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: '$\\gcd(8, 12) = 4 \\ne 1$, so no multiple of 8 is 1 mod 12.',
     },
   ],
+  'number-bases': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is $1101_2$ in base 10?',
+      answer: 13,
+      explain: '$8 + 4 + 1 = 13$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is the hexadecimal number $1\\text{F}_{16}$ in base 10?',
+      answer: 31,
+      explain: '$1 \\times 16 + 15 = 31$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'In base 5, what comes right after $44_5$?',
+      options: [
+        { text: '$100_5$', correct: true },
+        { text: '$45_5$', why: 'Base 5 has no digit 5.' },
+        { text: '$50_5$', why: 'Both places roll over, like 99 + 1 in base 10.' },
+        { text: '$40_5$', why: 'Adding 1 makes it bigger; both digits roll over and carry.' },
+      ],
+      explain: '$44_5 = 24$, and $24 + 1 = 25 = 5^2 = 100_5$.',
+    },
+  ],
+  'graphs-networks': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'A graph has degrees 1, 2, 2, 3 and 4. How many edges does it have?',
+      answer: 6,
+      explain: 'The degrees add to 12, and that is twice the number of edges: $12 \\div 2 = 6$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'How many edges does the complete graph on 7 nodes have?',
+      answer: 21,
+      explain: '$\\binom{7}{2} = \\tfrac{7 \\times 6}{2} = 21$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'A connected graph has 4 nodes of odd degree. Can it be drawn in one stroke?',
+      options: [
+        { text: 'No', correct: true },
+        {
+          text: 'Yes, starting at an odd node',
+          why: 'A stroke has only two ends, so at most 2 odd nodes.',
+        },
+        { text: 'Yes, from anywhere', why: 'Every odd node must be an end of the stroke.' },
+      ],
+      explain: 'An Euler trail needs 0 or 2 odd-degree nodes; 4 is too many (like Königsberg).',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
