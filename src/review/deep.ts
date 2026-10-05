@@ -1856,6 +1856,87 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: '7 is half of 14, so $\\tfrac{7}{14} = \\tfrac12$.',
     },
   ],
+  'decimals-percentages': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Write $\\tfrac{7}{20}$ as a percentage.',
+      answer: 35,
+      unit: '%',
+      explain: '$\\tfrac{7}{20} = \\tfrac{35}{100} = 35\\%$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is 15% of 60?',
+      answer: 9,
+      explain: '$0.15 \\times 60 = 9$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'A price rises 10% and then falls 10%. Overall it is…',
+      options: [
+        { text: '1% lower than at the start', correct: true },
+        { text: 'Back to the start', why: 'The fall is 10% of a bigger amount.' },
+        { text: '1% higher than at the start', why: '$1.1 \\times 0.9 = 0.99$, which is lower.' },
+      ],
+      explain: '$1.1 \\times 0.9 = 0.99$: a 1% fall overall.',
+    },
+  ],
+  'ratios-proportions': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        'Simplify the ratio 18 : 24. What is the first number in its simplest form (the second is 4)?',
+      answer: 3,
+      explain: 'Divide both by 6: $18 : 24 = 3 : 4$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: '£45 is shared in the ratio 1 : 4. How much is the smaller share, in £?',
+      answer: 9,
+      unit: '£',
+      explain: '5 parts of £9; the smaller share is 1 part, £9.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'A car uses 6 litres of fuel for 75 km. How many litres for 200 km?',
+      answer: 16,
+      explain: '$\\tfrac{6}{75} \\times 200 = 16$ litres.',
+    },
+  ],
+  exponents: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is $3^4$?',
+      answer: 81,
+      explain: '$3 \\times 3 \\times 3 \\times 3 = 81$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is $2^{-3}$ as a decimal?',
+      answer: 0.125,
+      tolerance: 0.0001,
+      explain: '$2^{-3} = \\tfrac{1}{8} = 0.125$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Simplify $\\dfrac{a^7}{a^3}$.',
+      options: [
+        { text: '$a^4$', correct: true },
+        { text: '$a^{10}$', why: 'Dividing subtracts the exponents.' },
+        { text: '$a^{7/3}$', why: 'The exponents subtract; they are not divided.' },
+      ],
+      explain: 'Three factors cancel, leaving $7 - 3 = 4$: $a^4$.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
