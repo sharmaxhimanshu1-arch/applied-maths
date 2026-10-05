@@ -1778,6 +1778,488 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
         'With $p$ and $q$ you get $\\varphi = (p-1)(q-1)$ and then $d = e^{-1} \\bmod \\varphi$.',
     },
   ],
+  'number-line': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is $|-15|$?',
+      answer: 15,
+      explain: '−15 is 15 steps from 0.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'How far apart are −8 and −3?',
+      answer: 5,
+      explain: '$|-3 - (-8)| = |5| = 5$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which list is in order from smallest to largest?',
+      options: [
+        { text: '$-6, -1, 0, 4$', correct: true },
+        { text: '$-1, -6, 0, 4$', why: '−6 is to the left of −1, so it is smaller.' },
+        { text: '$0, -1, -6, 4$', why: 'Negative numbers are smaller than 0.' },
+      ],
+      explain: 'Read the number line from left to right: −6, −1, 0, 4.',
+    },
+  ],
+  'arithmetic-operations': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is $-7 + 3$?',
+      answer: -4,
+      explain: 'Start at −7 and jump 3 right, to −4.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is $-2 - (-9)$?',
+      answer: 7,
+      explain: 'Subtracting −9 means adding 9: $-2 + 9 = 7$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'What is $(-4) \\times 6$?',
+      answer: -24,
+      explain: 'One negative factor flips the answer to the negative side: −24.',
+    },
+  ],
+  fractions: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Fill in the gap: $\\tfrac25 = \\tfrac{?}{15}$.',
+      answer: 6,
+      explain: '15 is 5 × 3, so multiply the top by 3 too: $2 \\times 3 = 6$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: '$\\tfrac14 + \\tfrac23 = \\tfrac{?}{12}$. What is the numerator?',
+      answer: 11,
+      explain:
+        '$\\tfrac14 = \\tfrac{3}{12}$ and $\\tfrac23 = \\tfrac{8}{12}$, so the sum is $\\tfrac{11}{12}$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which fraction is equal to $\\tfrac12$?',
+      options: [
+        { text: '$\\tfrac{7}{14}$', correct: true },
+        { text: '$\\tfrac{2}{3}$', why: 'That is more than a half.' },
+        { text: '$\\tfrac{3}{8}$', why: 'A half of 8 is 4, not 3.' },
+      ],
+      explain: '7 is half of 14, so $\\tfrac{7}{14} = \\tfrac12$.',
+    },
+  ],
+  'decimals-percentages': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Write $\\tfrac{7}{20}$ as a percentage.',
+      answer: 35,
+      unit: '%',
+      explain: '$\\tfrac{7}{20} = \\tfrac{35}{100} = 35\\%$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is 15% of 60?',
+      answer: 9,
+      explain: '$0.15 \\times 60 = 9$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'A price rises 10% and then falls 10%. Overall it is…',
+      options: [
+        { text: '1% lower than at the start', correct: true },
+        { text: 'Back to the start', why: 'The fall is 10% of a bigger amount.' },
+        { text: '1% higher than at the start', why: '$1.1 \\times 0.9 = 0.99$, which is lower.' },
+      ],
+      explain: '$1.1 \\times 0.9 = 0.99$: a 1% fall overall.',
+    },
+  ],
+  'ratios-proportions': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        'Simplify the ratio 18 : 24. What is the first number in its simplest form (the second is 4)?',
+      answer: 3,
+      explain: 'Divide both by 6: $18 : 24 = 3 : 4$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: '£45 is shared in the ratio 1 : 4. How much is the smaller share, in £?',
+      answer: 9,
+      unit: '£',
+      explain: '5 parts of £9; the smaller share is 1 part, £9.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'A car uses 6 litres of fuel for 75 km. How many litres for 200 km?',
+      answer: 16,
+      explain: '$\\tfrac{6}{75} \\times 200 = 16$ litres.',
+    },
+  ],
+  exponents: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is $3^4$?',
+      answer: 81,
+      explain: '$3 \\times 3 \\times 3 \\times 3 = 81$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is $2^{-3}$ as a decimal?',
+      answer: 0.125,
+      tolerance: 0.0001,
+      explain: '$2^{-3} = \\tfrac{1}{8} = 0.125$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Simplify $\\dfrac{a^7}{a^3}$.',
+      options: [
+        { text: '$a^4$', correct: true },
+        { text: '$a^{10}$', why: 'Dividing subtracts the exponents.' },
+        { text: '$a^{7/3}$', why: 'The exponents subtract; they are not divided.' },
+      ],
+      explain: 'Three factors cancel, leaving $7 - 3 = 4$: $a^4$.',
+    },
+  ],
+  'roots-radicals': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is $\\sqrt{144}$?',
+      answer: 12,
+      explain: '$12 \\times 12 = 144$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Simplify $\\sqrt{75}$ to the form $k\\sqrt{m}$. What is $k$?',
+      answer: 5,
+      explain: '$75 = 25 \\times 3$, so $\\sqrt{75} = 5\\sqrt3$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Is $\\sqrt{16 + 9}$ equal to $\\sqrt{16} + \\sqrt9$?',
+      options: [
+        { text: 'No: it is 5, not 7', correct: true },
+        { text: 'Yes: both are 7', why: '$\\sqrt{16 + 9} = \\sqrt{25} = 5$.' },
+        { text: 'Yes: both are 5', why: '$\\sqrt{16} + \\sqrt9 = 4 + 3 = 7$.' },
+      ],
+      explain: 'Roots split over products, not sums: $\\sqrt{25} = 5$ but $4 + 3 = 7$.',
+    },
+  ],
+  'primes-factorization': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is the smallest prime factor of 221?',
+      answer: 13,
+      explain: '$221 = 13 \\times 17$; 2, 3, 5, 7 and 11 don’t divide it.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is the greatest common divisor of 18 and 30?',
+      answer: 6,
+      explain: '$18 = 2 \\times 3^2$, $30 = 2 \\times 3 \\times 5$; they share $2 \\times 3 = 6$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'Two lights flash every 8 and every 12 seconds. After how many seconds do they next flash together?',
+      answer: 24,
+      unit: 's',
+      explain: 'lcm(8, 12): $8 = 2^3$, $12 = 2^2 \\times 3$, so $2^3 \\times 3 = 24$.',
+    },
+  ],
+  'real-numbers': [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'Which number is rational?',
+      options: [
+        { text: '$0.\\overline{27}$', correct: true },
+        { text: '$\\sqrt3$', why: '3 is not a perfect square.' },
+        { text: '$\\pi$', why: 'π is irrational.' },
+      ],
+      explain:
+        'A repeating decimal is a fraction: $0.\\overline{27} = \\tfrac{27}{99} = \\tfrac{3}{11}$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Write $0.\\overline{3}$ as a fraction $\\tfrac{1}{?}$.',
+      answer: 3,
+      explain: 'If $x = 0.\\overline{3}$ then $10x - x = 3$, so $x = \\tfrac13$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Does $\\tfrac{7}{40}$ give a decimal that ends?',
+      options: [
+        { text: 'Yes: 40 has only 2s and 5s as prime factors', correct: true },
+        { text: 'No: 7 is prime', why: 'Only the denominator matters.' },
+        {
+          text: 'No: 40 is not a power of 10',
+          why: '$\\tfrac{7}{40} = \\tfrac{175}{1000} = 0.175$.',
+        },
+      ],
+      explain: '$40 = 2^3 \\times 5$, so the decimal ends: $0.175$.',
+    },
+  ],
+  'sets-venn': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        '30 people: 18 drink tea, 15 drink coffee, and 7 drink both. How many drink at least one of them?',
+      answer: 26,
+      explain: '$18 + 15 - 7 = 26$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'With the same numbers, how many of the 30 drink neither?',
+      answer: 4,
+      explain: '$30 - 26 = 4$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: "Which equals $(A \\cup B)'$?",
+      options: [
+        { text: "$A' \\cap B'$", correct: true },
+        { text: "$A' \\cup B'$", why: "That equals $(A \\cap B)'$." },
+        { text: '$A \\cap B$', why: 'That is the overlap, not what lies outside both.' },
+      ],
+      explain: 'Outside the union means outside A and outside B: De Morgan’s law.',
+    },
+  ],
+  'logic-truth-tables': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'How many rows does a truth table for four statements have?',
+      answer: 16,
+      explain: '$2^4 = 16$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Which statement means the same as $\\lnot(P \\land Q)$?',
+      options: [
+        { text: '$\\lnot P \\lor \\lnot Q$', correct: true },
+        { text: '$\\lnot P \\land \\lnot Q$', why: 'That is $\\lnot(P \\lor Q)$.' },
+        { text: '$P \\lor Q$', why: 'That has no negation at all.' },
+      ],
+      explain: 'De Morgan: “not both” means “at least one is false”.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which statement is equivalent to “if it is a square, then it is a rectangle”?',
+      options: [
+        { text: 'If it is not a rectangle, then it is not a square', correct: true },
+        {
+          text: 'If it is a rectangle, then it is a square',
+          why: 'That is the converse, which is false.',
+        },
+        {
+          text: 'If it is not a square, then it is not a rectangle',
+          why: 'That is the inverse; it is false too.',
+        },
+      ],
+      explain: 'An implication always matches its contrapositive.',
+    },
+  ],
+  counting: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'A café offers 3 sizes, 5 drinks and 2 kinds of milk. How many different orders?',
+      answer: 30,
+      explain: '$3 \\times 5 \\times 2 = 30$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'How many 3-letter codes can be made from the 26 letters, if letters may repeat?',
+      answer: 17576,
+      explain: '$26^3 = 17\\,576$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'A drawer has socks in 4 colours. How many must you take, in the dark, to be sure of a pair?',
+      answer: 5,
+      explain: 'The first 4 could all differ; the 5th must match one (pigeonhole).',
+    },
+  ],
+  'permutations-combinations': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'In how many orders can 4 books stand on a shelf?',
+      answer: 24,
+      explain: '$4! = 4 \\times 3 \\times 2 \\times 1 = 24$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'How many ways can a club of 7 choose a president and a treasurer (different people)?',
+      answer: 42,
+      explain: 'Order matters (the roles differ): $7 \\times 6 = 42$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'How many different 2-topping pizzas can you make from 8 toppings?',
+      answer: 28,
+      explain: 'Order doesn’t matter: $\\binom{8}{2} = \\tfrac{8 \\times 7}{2} = 28$.',
+    },
+  ],
+  induction: [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'Which two parts make a proof by induction?',
+      options: [
+        { text: 'A base case and an inductive step', correct: true },
+        { text: 'Many examples and a pattern', why: 'Examples are evidence, not proof.' },
+        {
+          text: 'An inductive step only',
+          why: 'Without a base case, nothing starts the chain.',
+        },
+        { text: 'A base case only', why: 'One case says nothing about the next.' },
+      ],
+      explain: 'The base case starts the chain; the step carries it from each $n$ to $n + 1$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'Using $1 + 3 + 5 + \\cdots + (2n - 1) = n^2$, find the sum of the first 12 odd numbers.',
+      answer: 144,
+      explain: '$12^2 = 144$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'In the inductive step you assume $P(n)$. What must you then show?',
+      options: [
+        { text: '$P(n + 1)$', correct: true },
+        { text: '$P(1)$', why: 'That is the base case, proved separately.' },
+        { text: '$P(n)$ again', why: 'That would be circular.' },
+        { text: '$P(n - 1)$', why: 'The step goes forward, from $n$ to $n + 1$.' },
+      ],
+      explain: 'The step proves “if $P(n)$ then $P(n + 1)$”.',
+    },
+  ],
+  'modular-arithmetic': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is $29 \\bmod 6$?',
+      answer: 5,
+      explain: '$29 = 4 \\times 6 + 5$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'A 24-hour clock shows 20:00. What hour does it show 30 hours later?',
+      answer: 2,
+      explain: '$(20 + 30) \\bmod 24 = 50 \\bmod 24 = 2$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which number has no multiplicative inverse mod 12?',
+      options: [
+        { text: '8', correct: true },
+        { text: '5', why: '$5 \\times 5 = 25 \\equiv 1 \\pmod{12}$.' },
+        { text: '7', why: '$7 \\times 7 = 49 \\equiv 1 \\pmod{12}$.' },
+        { text: '11', why: '$11 \\times 11 = 121 \\equiv 1 \\pmod{12}$.' },
+      ],
+      explain: '$\\gcd(8, 12) = 4 \\ne 1$, so no multiple of 8 is 1 mod 12.',
+    },
+  ],
+  'number-bases': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is $1101_2$ in base 10?',
+      answer: 13,
+      explain: '$8 + 4 + 1 = 13$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is the hexadecimal number $1\\text{F}_{16}$ in base 10?',
+      answer: 31,
+      explain: '$1 \\times 16 + 15 = 31$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'In base 5, what comes right after $44_5$?',
+      options: [
+        { text: '$100_5$', correct: true },
+        { text: '$45_5$', why: 'Base 5 has no digit 5.' },
+        { text: '$50_5$', why: 'Both places roll over, like 99 + 1 in base 10.' },
+        { text: '$40_5$', why: 'Adding 1 makes it bigger; both digits roll over and carry.' },
+      ],
+      explain: '$44_5 = 24$, and $24 + 1 = 25 = 5^2 = 100_5$.',
+    },
+  ],
+  'graphs-networks': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'A graph has degrees 1, 2, 2, 3 and 4. How many edges does it have?',
+      answer: 6,
+      explain: 'The degrees add to 12, and that is twice the number of edges: $12 \\div 2 = 6$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'How many edges does the complete graph on 7 nodes have?',
+      answer: 21,
+      explain: '$\\binom{7}{2} = \\tfrac{7 \\times 6}{2} = 21$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'A connected graph has 4 nodes of odd degree. Can it be drawn in one stroke?',
+      options: [
+        { text: 'No', correct: true },
+        {
+          text: 'Yes, starting at an odd node',
+          why: 'A stroke has only two ends, so at most 2 odd nodes.',
+        },
+        { text: 'Yes, from anywhere', why: 'Every odd node must be an end of the stroke.' },
+      ],
+      explain: 'An Euler trail needs 0 or 2 odd-degree nodes; 4 is too many (like Königsberg).',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
