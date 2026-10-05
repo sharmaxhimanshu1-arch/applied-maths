@@ -2113,6 +2113,95 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: 'The first 4 could all differ; the 5th must match one (pigeonhole).',
     },
   ],
+  'permutations-combinations': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'In how many orders can 4 books stand on a shelf?',
+      answer: 24,
+      explain: '$4! = 4 \\times 3 \\times 2 \\times 1 = 24$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'How many ways can a club of 7 choose a president and a treasurer (different people)?',
+      answer: 42,
+      explain: 'Order matters (the roles differ): $7 \\times 6 = 42$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'How many different 2-topping pizzas can you make from 8 toppings?',
+      answer: 28,
+      explain: 'Order doesn’t matter: $\\binom{8}{2} = \\tfrac{8 \\times 7}{2} = 28$.',
+    },
+  ],
+  induction: [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'Which two parts make a proof by induction?',
+      options: [
+        { text: 'A base case and an inductive step', correct: true },
+        { text: 'Many examples and a pattern', why: 'Examples are evidence, not proof.' },
+        {
+          text: 'An inductive step only',
+          why: 'Without a base case, nothing starts the chain.',
+        },
+        { text: 'A base case only', why: 'One case says nothing about the next.' },
+      ],
+      explain: 'The base case starts the chain; the step carries it from each $n$ to $n + 1$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt:
+        'Using $1 + 3 + 5 + \\cdots + (2n - 1) = n^2$, find the sum of the first 12 odd numbers.',
+      answer: 144,
+      explain: '$12^2 = 144$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'In the inductive step you assume $P(n)$. What must you then show?',
+      options: [
+        { text: '$P(n + 1)$', correct: true },
+        { text: '$P(1)$', why: 'That is the base case, proved separately.' },
+        { text: '$P(n)$ again', why: 'That would be circular.' },
+        { text: '$P(n - 1)$', why: 'The step goes forward, from $n$ to $n + 1$.' },
+      ],
+      explain: 'The step proves “if $P(n)$ then $P(n + 1)$”.',
+    },
+  ],
+  'modular-arithmetic': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is $29 \\bmod 6$?',
+      answer: 5,
+      explain: '$29 = 4 \\times 6 + 5$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'A 24-hour clock shows 20:00. What hour does it show 30 hours later?',
+      answer: 2,
+      explain: '$(20 + 30) \\bmod 24 = 50 \\bmod 24 = 2$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which number has no multiplicative inverse mod 12?',
+      options: [
+        { text: '8', correct: true },
+        { text: '5', why: '$5 \\times 5 = 25 \\equiv 1 \\pmod{12}$.' },
+        { text: '7', why: '$7 \\times 7 = 49 \\equiv 1 \\pmod{12}$.' },
+        { text: '11', why: '$11 \\times 11 = 121 \\equiv 1 \\pmod{12}$.' },
+      ],
+      explain: '$\\gcd(8, 12) = 4 \\ne 1$, so no multiple of 8 is 1 mod 12.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
