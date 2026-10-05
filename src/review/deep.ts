@@ -2024,6 +2024,95 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: '$40 = 2^3 \\times 5$, so the decimal ends: $0.175$.',
     },
   ],
+  'sets-venn': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt:
+        '30 people: 18 drink tea, 15 drink coffee, and 7 drink both. How many drink at least one of them?',
+      answer: 26,
+      explain: '$18 + 15 - 7 = 26$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'With the same numbers, how many of the 30 drink neither?',
+      answer: 4,
+      explain: '$30 - 26 = 4$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: "Which equals $(A \\cup B)'$?",
+      options: [
+        { text: "$A' \\cap B'$", correct: true },
+        { text: "$A' \\cup B'$", why: "That equals $(A \\cap B)'$." },
+        { text: '$A \\cap B$', why: 'That is the overlap, not what lies outside both.' },
+      ],
+      explain: 'Outside the union means outside A and outside B: De Morgan’s law.',
+    },
+  ],
+  'logic-truth-tables': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'How many rows does a truth table for four statements have?',
+      answer: 16,
+      explain: '$2^4 = 16$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Which statement means the same as $\\lnot(P \\land Q)$?',
+      options: [
+        { text: '$\\lnot P \\lor \\lnot Q$', correct: true },
+        { text: '$\\lnot P \\land \\lnot Q$', why: 'That is $\\lnot(P \\lor Q)$.' },
+        { text: '$P \\lor Q$', why: 'That has no negation at all.' },
+      ],
+      explain: 'De Morgan: “not both” means “at least one is false”.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which statement is equivalent to “if it is a square, then it is a rectangle”?',
+      options: [
+        { text: 'If it is not a rectangle, then it is not a square', correct: true },
+        {
+          text: 'If it is a rectangle, then it is a square',
+          why: 'That is the converse, which is false.',
+        },
+        {
+          text: 'If it is not a square, then it is not a rectangle',
+          why: 'That is the inverse; it is false too.',
+        },
+      ],
+      explain: 'An implication always matches its contrapositive.',
+    },
+  ],
+  counting: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'A café offers 3 sizes, 5 drinks and 2 kinds of milk. How many different orders?',
+      answer: 30,
+      explain: '$3 \\times 5 \\times 2 = 30$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'How many 3-letter codes can be made from the 26 letters, if letters may repeat?',
+      answer: 17576,
+      explain: '$26^3 = 17\\,576$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt:
+        'A drawer has socks in 4 colours. How many must you take, in the dark, to be sure of a pair?',
+      answer: 5,
+      explain: 'The first 4 could all differ; the 5th must match one (pigeonhole).',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
