@@ -1,5 +1,18 @@
 import { describe, expect, it } from 'vitest'
-import { compare, flip, halfPlane, linearTex, paren, quadrant, zeroPairs } from './algebra'
+import {
+  compare,
+  flip,
+  halfPlane,
+  lineMeet,
+  linearTex,
+  paren,
+  polyDegree,
+  polyEval,
+  polyMul,
+  polyTex,
+  quadrant,
+  zeroPairs,
+} from './algebra'
 
 describe('algebra helpers', () => {
   it('writes linear expressions', () => {
@@ -49,5 +62,24 @@ describe('algebra helpers', () => {
       if (above) expect(Math.min(edgeA, edgeB)).toBeGreaterThan(Math.max(ya, yb, view.yMax))
       else expect(Math.max(edgeA, edgeB)).toBeLessThan(Math.min(ya, yb, view.yMin))
     }
+  })
+})
+
+describe('polynomial and line helpers', () => {
+  it('evaluates, multiplies and writes polynomials', () => {
+    expect(polyEval([-2, 0, 1], 3)).toBe(7)
+    expect(polyDegree([1, 0, 0])).toBe(0)
+    expect(polyDegree([0, 0])).toBe(-1)
+    expect(polyMul([2, 1], [3, 1])).toEqual([6, 5, 1])
+    expect(polyMul([-3, 1], [3, 1])).toEqual([-9, 0, 1])
+    expect(polyTex([4, -1, 0, 2])).toBe('2x^{3} - x + 4')
+    expect(polyTex([0, 0, -1])).toBe('-x^{2}')
+    expect(polyTex([0])).toBe('0')
+  })
+
+  it('intersects lines', () => {
+    expect(lineMeet(1, 0, -1, 4)).toEqual({ kind: 'one', x: 2, y: 2 })
+    expect(lineMeet(2, 1, 2, -3)).toEqual({ kind: 'none' })
+    expect(lineMeet(2, 1, 2, 1)).toEqual({ kind: 'same' })
   })
 })

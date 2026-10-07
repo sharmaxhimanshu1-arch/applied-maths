@@ -70,3 +70,49 @@ export function halfPlane(
     [x0, edge],
   ]
 }
+
+/** A polynomial as coefficients, lowest power first: [c0, c1, c2] is c0 + c1·x + c2·x². */
+export type Poly = readonly number[]
+
+export const polyEval = (p: Poly, x: number) => p.reduceRight((acc, c) => acc * x + c, 0)
+
+/** The degree, ignoring zero leading coefficients (the zero polynomial has degree −1). */
+export function polyDegree(p: Poly): number {
+  for (let i = p.length - 1; i >= 0; i--) if (p[i] !== 0) return i
+  return -1
+}
+
+export function polyMul(p: Poly, q: Poly): number[] {
+  const out = Array<number>(Math.max(0, p.length + q.length - 1)).fill(0)
+  p.forEach((a, i) => q.forEach((b, j) => (out[i + j] += a * b)))
+  return out
+}
+
+/** A polynomial in TeX, highest power first: '2x^{3} - x + 4'. */
+export function polyTex(p: Poly, v = 'x'): string {
+  const terms: string[] = []
+  for (let i = p.length - 1; i >= 0; i--) {
+    const c = p[i]
+    if (c === 0) continue
+    const mag = Math.abs(c)
+    const power = i === 0 ? '' : i === 1 ? v : `${v}^{${i}}`
+    const coeff = i > 0 && mag === 1 ? '' : `${mag}`
+    const sign = c < 0 ? '-' : '+'
+    terms.push(
+      terms.length === 0 ? `${c < 0 ? '-' : ''}${coeff}${power}` : `${sign} ${coeff}${power}`,
+    )
+  }
+  return terms.length ? terms.join(' ') : '0'
+}
+
+/** Where y = m1·x + b1 meets y = m2·x + b2: one point, none (parallel), or the same line. */
+export function lineMeet(
+  m1: number,
+  b1: number,
+  m2: number,
+  b2: number,
+): { kind: 'one'; x: number; y: number } | { kind: 'none' } | { kind: 'same' } {
+  if (m1 === m2) return b1 === b2 ? { kind: 'same' } : { kind: 'none' }
+  const x = (b2 - b1) / (m1 - m2)
+  return { kind: 'one', x, y: m1 * x + b1 }
+}

@@ -2377,6 +2377,120 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: '−2, −1, 0, 1, 2: −3 is excluded and 2 is included.',
     },
   ],
+  'systems-of-equations': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Solve $x + y = 7$ and $x - y = 1$. What is $y$?',
+      answer: 3,
+      explain: 'Adding gives $2x = 8$, so $x = 4$ and $y = 3$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'How many solutions does $y = -x + 2$, $2y = -2x + 4$ have?',
+      options: [
+        { text: 'Infinitely many', correct: true },
+        { text: 'None', why: 'Divide the second by 2: it is the same line.' },
+        { text: 'Exactly one', why: 'The lines coincide, so every point on one is on the other.' },
+      ],
+      explain: 'The second equation is the first multiplied by 2: the same line.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'Two numbers add to 20 and differ by 6. What is the larger one?',
+      answer: 13,
+      explain: '$a + b = 20$, $a - b = 6$: adding gives $2a = 26$, so $a = 13$.',
+    },
+  ],
+  polynomials: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Expand $(x + 5)^2$. What is the coefficient of $x$?',
+      answer: 10,
+      explain: '$(x + 5)^2 = x^2 + 10x + 25$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'At most how many turning points can a degree-4 polynomial have?',
+      answer: 3,
+      explain: 'Degree $n$: at most $n - 1$ turning points.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'How do the ends of $y = 2x^4 - x$ point?',
+      options: [
+        { text: 'Both up', correct: true },
+        { text: 'Both down', why: 'The leading coefficient 2 is positive.' },
+        {
+          text: 'Down on the left, up on the right',
+          why: 'Even degree: both ends point the same way.',
+        },
+      ],
+      explain: 'Even degree with a positive leading coefficient: both ends rise.',
+    },
+  ],
+  factoring: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: '$x^2 + 9x + 20 = (x + p)(x + q)$. What is the smaller of $p$ and $q$?',
+      answer: 4,
+      explain: '$4 + 5 = 9$ and $4 \\times 5 = 20$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Factor $x^2 - 49$.',
+      options: [
+        { text: '$(x + 7)(x - 7)$', correct: true },
+        { text: '$(x - 7)^2$', why: 'That expands to $x^2 - 14x + 49$.' },
+        { text: '$(x - 49)(x + 1)$', why: 'That expands to $x^2 - 48x - 49$.' },
+      ],
+      explain: 'A difference of squares: $x^2 - 7^2 = (x + 7)(x - 7)$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'Solve $x^2 - 5x + 6 = 0$. What is the larger solution?',
+      answer: 3,
+      explain: '$(x - 2)(x - 3) = 0$, so $x = 2$ or $x = 3$.',
+    },
+  ],
+  'composition-inverses': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: '$f(x) = x^2$ and $g(x) = x - 3$. What is $f(g(5))$?',
+      answer: 4,
+      explain: '$g(5) = 2$, then $f(2) = 4$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: '$f(x) = 4x + 2$. What is $f^{-1}(10)$?',
+      answer: 2,
+      explain: 'Solve $4x + 2 = 10$: $x = 2$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which function has no inverse on all real numbers?',
+      options: [
+        { text: '$f(x) = x^2$', correct: true },
+        {
+          text: '$f(x) = x^3$',
+          why: 'Every output comes from exactly one input; the inverse is $\\sqrt[3]{x}$.',
+        },
+        { text: '$f(x) = 5x - 1$', why: 'Its inverse is $\\tfrac{x + 1}{5}$.' },
+      ],
+      explain: '$x^2$ sends 2 and −2 to the same output, so it can’t be undone.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
