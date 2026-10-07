@@ -2260,6 +2260,237 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: 'An Euler trail needs 0 or 2 odd-degree nodes; 4 is too many (like Königsberg).',
     },
   ],
+  'variables-expressions': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Evaluate $5 - 2x$ when $x = -3$.',
+      answer: 11,
+      explain: '$5 - 2(-3) = 5 + 6 = 11$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Simplify $4x + 3 - x + 2$.',
+      options: [
+        { text: '$3x + 5$', correct: true },
+        { text: '$8x$', why: 'Only like terms combine: $x$-terms with $x$-terms.' },
+        { text: '$5x + 5$', why: '$4x - x = 3x$, not $5x$.' },
+        { text: '$3x + 1$', why: 'The constants add: $3 + 2 = 5$.' },
+      ],
+      explain: '$4x - x = 3x$ and $3 + 2 = 5$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'Expand $4(x - 2)$. What is the constant term?',
+      answer: -8,
+      explain: '$4(x - 2) = 4x - 8$.',
+    },
+  ],
+  'coordinate-plane': [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'Which quadrant is $(-6, -1)$ in?',
+      options: [
+        { text: 'III', correct: true },
+        { text: 'II', why: 'Quadrant II has $y > 0$.' },
+        { text: 'IV', why: 'Quadrant IV has $x > 0$.' },
+        { text: 'I', why: 'Quadrant I has both positive.' },
+      ],
+      explain: 'Both coordinates are negative: left and down, quadrant III.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Reflect $(3, 5)$ in the $x$-axis. What is the new $y$-coordinate?',
+      answer: -5,
+      explain: 'The $x$-axis mirror flips the sign of $y$: $(3, 5) \\to (3, -5)$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'Start at $(-1, 4)$ and move 6 right. What is the new $x$-coordinate?',
+      answer: 5,
+      explain: '$-1 + 6 = 5$.',
+    },
+  ],
+  'functions-intro': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'If $g(x) = 10 - x^2$, what is $g(3)$?',
+      answer: 1,
+      explain: '$10 - 9 = 1$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'A vertical line crosses a curve at two points. What does that tell you?',
+      options: [
+        { text: 'The curve is not the graph of a function', correct: true },
+        {
+          text: 'The function has two roots',
+          why: 'Roots are crossings of the $x$-axis, a horizontal line.',
+        },
+        { text: 'Nothing', why: 'One input with two outputs breaks the definition of a function.' },
+      ],
+      explain: 'That input would have two outputs, so the curve fails the vertical line test.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'If $f(x) = 4x - 2$, which input gives $f(x) = 10$?',
+      answer: 3,
+      explain: '$4x - 2 = 10 \\Rightarrow 4x = 12 \\Rightarrow x = 3$.',
+    },
+  ],
+  inequalities: [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'Solve $5 - x \\ge 2$.',
+      options: [
+        { text: '$x \\le 3$', correct: true },
+        { text: '$x \\ge 3$', why: 'Dividing by −1 flips the sign.' },
+        {
+          text: '$x \\ge -3$',
+          why: 'Check $x = 0$: $5 \\ge 2$ ✓, but check $x = 4$: $1 \\ge 2$ ✗.',
+        },
+        { text: '$x \\le -3$', why: 'Check $x = 0$: it works, but $0 \\le -3$ is false.' },
+      ],
+      explain: '$-x \\ge -3$, then multiply by −1 and flip: $x \\le 3$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is the smallest whole number that satisfies $2x - 1 > 6$?',
+      answer: 4,
+      explain: '$2x > 7$, so $x > 3.5$. The smallest whole number above 3.5 is 4.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'How many integers satisfy $-3 < x \\le 2$?',
+      answer: 5,
+      explain: '−2, −1, 0, 1, 2: −3 is excluded and 2 is included.',
+    },
+  ],
+  'systems-of-equations': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Solve $x + y = 7$ and $x - y = 1$. What is $y$?',
+      answer: 3,
+      explain: 'Adding gives $2x = 8$, so $x = 4$ and $y = 3$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'How many solutions does $y = -x + 2$, $2y = -2x + 4$ have?',
+      options: [
+        { text: 'Infinitely many', correct: true },
+        { text: 'None', why: 'Divide the second by 2: it is the same line.' },
+        { text: 'Exactly one', why: 'The lines coincide, so every point on one is on the other.' },
+      ],
+      explain: 'The second equation is the first multiplied by 2: the same line.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'Two numbers add to 20 and differ by 6. What is the larger one?',
+      answer: 13,
+      explain: '$a + b = 20$, $a - b = 6$: adding gives $2a = 26$, so $a = 13$.',
+    },
+  ],
+  polynomials: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Expand $(x + 5)^2$. What is the coefficient of $x$?',
+      answer: 10,
+      explain: '$(x + 5)^2 = x^2 + 10x + 25$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'At most how many turning points can a degree-4 polynomial have?',
+      answer: 3,
+      explain: 'Degree $n$: at most $n - 1$ turning points.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'How do the ends of $y = 2x^4 - x$ point?',
+      options: [
+        { text: 'Both up', correct: true },
+        { text: 'Both down', why: 'The leading coefficient 2 is positive.' },
+        {
+          text: 'Down on the left, up on the right',
+          why: 'Even degree: both ends point the same way.',
+        },
+      ],
+      explain: 'Even degree with a positive leading coefficient: both ends rise.',
+    },
+  ],
+  factoring: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: '$x^2 + 9x + 20 = (x + p)(x + q)$. What is the smaller of $p$ and $q$?',
+      answer: 4,
+      explain: '$4 + 5 = 9$ and $4 \\times 5 = 20$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Factor $x^2 - 49$.',
+      options: [
+        { text: '$(x + 7)(x - 7)$', correct: true },
+        { text: '$(x - 7)^2$', why: 'That expands to $x^2 - 14x + 49$.' },
+        { text: '$(x - 49)(x + 1)$', why: 'That expands to $x^2 - 48x - 49$.' },
+      ],
+      explain: 'A difference of squares: $x^2 - 7^2 = (x + 7)(x - 7)$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'Solve $x^2 - 5x + 6 = 0$. What is the larger solution?',
+      answer: 3,
+      explain: '$(x - 2)(x - 3) = 0$, so $x = 2$ or $x = 3$.',
+    },
+  ],
+  'composition-inverses': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: '$f(x) = x^2$ and $g(x) = x - 3$. What is $f(g(5))$?',
+      answer: 4,
+      explain: '$g(5) = 2$, then $f(2) = 4$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: '$f(x) = 4x + 2$. What is $f^{-1}(10)$?',
+      answer: 2,
+      explain: 'Solve $4x + 2 = 10$: $x = 2$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which function has no inverse on all real numbers?',
+      options: [
+        { text: '$f(x) = x^2$', correct: true },
+        {
+          text: '$f(x) = x^3$',
+          why: 'Every output comes from exactly one input; the inverse is $\\sqrt[3]{x}$.',
+        },
+        { text: '$f(x) = 5x - 1$', why: 'Its inverse is $\\tfrac{x + 1}{5}$.' },
+      ],
+      explain: '$x^2$ sends 2 and −2 to the same output, so it can’t be undone.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
