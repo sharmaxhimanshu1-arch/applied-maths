@@ -44,12 +44,9 @@ test('a Try this prompt ticks itself when the visual reaches the goal', async ({
 })
 
 test('a lite lab widget ticks its prompts and checks its quick checks', async ({ page }) => {
-  await page.goto('./#/learn/variables-expressions')
-  const prompt = page.getByRole('listitem').filter({ hasText: 'Find the input that makes' })
+  await page.goto('./#/learn/law-of-large-numbers')
+  const prompt = page.getByRole('listitem').filter({ hasText: 'Flip just 10–20 times' })
   await expect(prompt).not.toHaveAttribute('data-done', 'true')
-  // The machine starts at x = 1 on 3x + 2; three steps right make x = 4 and 3x + 2 = 14
-  const input = page.getByRole('slider', { name: 'Input x' })
-  await input.focus()
-  for (let i = 0; i < 3; i++) await input.press('ArrowRight')
+  await page.getByRole('button', { name: 'Flip 10', exact: true }).click()
   await expect(prompt).toHaveAttribute('data-done', 'true')
 })

@@ -2260,6 +2260,123 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: 'An Euler trail needs 0 or 2 odd-degree nodes; 4 is too many (like Königsberg).',
     },
   ],
+  'variables-expressions': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'Evaluate $5 - 2x$ when $x = -3$.',
+      answer: 11,
+      explain: '$5 - 2(-3) = 5 + 6 = 11$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'Simplify $4x + 3 - x + 2$.',
+      options: [
+        { text: '$3x + 5$', correct: true },
+        { text: '$8x$', why: 'Only like terms combine: $x$-terms with $x$-terms.' },
+        { text: '$5x + 5$', why: '$4x - x = 3x$, not $5x$.' },
+        { text: '$3x + 1$', why: 'The constants add: $3 + 2 = 5$.' },
+      ],
+      explain: '$4x - x = 3x$ and $3 + 2 = 5$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'Expand $4(x - 2)$. What is the constant term?',
+      answer: -8,
+      explain: '$4(x - 2) = 4x - 8$.',
+    },
+  ],
+  'coordinate-plane': [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'Which quadrant is $(-6, -1)$ in?',
+      options: [
+        { text: 'III', correct: true },
+        { text: 'II', why: 'Quadrant II has $y > 0$.' },
+        { text: 'IV', why: 'Quadrant IV has $x > 0$.' },
+        { text: 'I', why: 'Quadrant I has both positive.' },
+      ],
+      explain: 'Both coordinates are negative: left and down, quadrant III.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'Reflect $(3, 5)$ in the $x$-axis. What is the new $y$-coordinate?',
+      answer: -5,
+      explain: 'The $x$-axis mirror flips the sign of $y$: $(3, 5) \\to (3, -5)$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'Start at $(-1, 4)$ and move 6 right. What is the new $x$-coordinate?',
+      answer: 5,
+      explain: '$-1 + 6 = 5$.',
+    },
+  ],
+  'functions-intro': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'If $g(x) = 10 - x^2$, what is $g(3)$?',
+      answer: 1,
+      explain: '$10 - 9 = 1$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'A vertical line crosses a curve at two points. What does that tell you?',
+      options: [
+        { text: 'The curve is not the graph of a function', correct: true },
+        {
+          text: 'The function has two roots',
+          why: 'Roots are crossings of the $x$-axis, a horizontal line.',
+        },
+        { text: 'Nothing', why: 'One input with two outputs breaks the definition of a function.' },
+      ],
+      explain: 'That input would have two outputs, so the curve fails the vertical line test.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'If $f(x) = 4x - 2$, which input gives $f(x) = 10$?',
+      answer: 3,
+      explain: '$4x - 2 = 10 \\Rightarrow 4x = 12 \\Rightarrow x = 3$.',
+    },
+  ],
+  inequalities: [
+    {
+      kind: 'mcq',
+      id: 'r1',
+      prompt: 'Solve $5 - x \\ge 2$.',
+      options: [
+        { text: '$x \\le 3$', correct: true },
+        { text: '$x \\ge 3$', why: 'Dividing by −1 flips the sign.' },
+        {
+          text: '$x \\ge -3$',
+          why: 'Check $x = 0$: $5 \\ge 2$ ✓, but check $x = 4$: $1 \\ge 2$ ✗.',
+        },
+        { text: '$x \\le -3$', why: 'Check $x = 0$: it works, but $0 \\le -3$ is false.' },
+      ],
+      explain: '$-x \\ge -3$, then multiply by −1 and flip: $x \\le 3$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'What is the smallest whole number that satisfies $2x - 1 > 6$?',
+      answer: 4,
+      explain: '$2x > 7$, so $x > 3.5$. The smallest whole number above 3.5 is 4.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'How many integers satisfy $-3 < x \\le 2$?',
+      answer: 5,
+      explain: '−2, −1, 0, 1, 2: −3 is excluded and 2 is included.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
