@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import {
+  cabs,
+  cadd,
+  cargDeg,
+  cmul,
   compare,
+  complexTex,
+  fibonacciLike,
+  GOLDEN_RATIO,
+  sequenceTerms,
   flip,
   halfPlane,
   lineMeet,
@@ -81,5 +89,28 @@ describe('polynomial and line helpers', () => {
     expect(lineMeet(1, 0, -1, 4)).toEqual({ kind: 'one', x: 2, y: 2 })
     expect(lineMeet(2, 1, 2, -3)).toEqual({ kind: 'none' })
     expect(lineMeet(2, 1, 2, 1)).toEqual({ kind: 'same' })
+  })
+})
+
+describe('sequences and complex numbers', () => {
+  it('lists terms', () => {
+    expect(sequenceTerms('arithmetic', 2, 3, 4)).toEqual([2, 5, 8, 11])
+    expect(sequenceTerms('geometric', 3, -2, 4)).toEqual([3, -6, 12, -24])
+    expect(fibonacciLike(1, 1, 7)).toEqual([1, 1, 2, 3, 5, 8, 13])
+    const f = fibonacciLike(2, 5, 30)
+    expect(f[29] / f[28]).toBeCloseTo(GOLDEN_RATIO, 9)
+  })
+
+  it('does complex arithmetic', () => {
+    expect(cadd([3, 2], [1, -5])).toEqual([4, -3])
+    expect(cmul([2, 1], [1, 3])).toEqual([-1, 7])
+    expect(cmul([0, 1], [0, 1])).toEqual([-1, 0])
+    expect(cabs([3, 4])).toBe(5)
+    expect(cargDeg([0, 1])).toBeCloseTo(90)
+    expect(cargDeg([0, -1])).toBeCloseTo(270)
+    expect(complexTex([3, -2])).toBe('3 - 2i')
+    expect(complexTex([0, 1])).toBe('i')
+    expect(complexTex([0, -1])).toBe('-i')
+    expect(complexTex([-4, 0])).toBe('-4')
   })
 })

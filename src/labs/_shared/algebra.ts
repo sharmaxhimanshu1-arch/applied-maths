@@ -116,3 +116,44 @@ export function lineMeet(
   const x = (b2 - b1) / (m1 - m2)
   return { kind: 'one', x, y: m1 * x + b1 }
 }
+
+/** The first n terms of an arithmetic (add d) or geometric (multiply by r) sequence from a. */
+export function sequenceTerms(
+  kind: 'arithmetic' | 'geometric',
+  a: number,
+  step: number,
+  n: number,
+): number[] {
+  return Array.from({ length: n }, (_, k) => (kind === 'arithmetic' ? a + k * step : a * step ** k))
+}
+
+/** Terms of a Fibonacci-style sequence: each term is the sum of the two before. */
+export function fibonacciLike(first: number, second: number, n: number): number[] {
+  const out = [first, second]
+  while (out.length < n) out.push(out[out.length - 1] + out[out.length - 2])
+  return out.slice(0, n)
+}
+
+export const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2
+
+/** A complex number as [re, im]. */
+export type Complex = readonly [number, number]
+
+export const cadd = (z: Complex, w: Complex): Complex => [z[0] + w[0], z[1] + w[1]]
+export const cmul = (z: Complex, w: Complex): Complex => [
+  z[0] * w[0] - z[1] * w[1],
+  z[0] * w[1] + z[1] * w[0],
+]
+export const cabs = (z: Complex) => Math.hypot(z[0], z[1])
+/** The angle of z in degrees, from 0 up to (not including) 360. */
+export const cargDeg = (z: Complex) => ((Math.atan2(z[1], z[0]) * 180) / Math.PI + 360) % 360
+
+/** z written as a + bi, e.g. '3 - 2i', 'i', '-4'. */
+export function complexTex(z: Complex, fmt: (x: number) => string = (x) => `${x}`): string {
+  const [re, im] = z
+  const imMag = Math.abs(im)
+  const imPart = imMag === 1 ? 'i' : `${fmt(imMag)}i`
+  if (im === 0) return fmt(re)
+  if (re === 0) return `${im < 0 ? '-' : ''}${imPart}`
+  return `${fmt(re)} ${im < 0 ? '-' : '+'} ${imPart}`
+}
