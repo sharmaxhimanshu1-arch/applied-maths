@@ -2491,6 +2491,89 @@ const deep: Partial<Record<ConceptId, QuickCheck[]>> = {
       explain: '$x^2$ sends 2 and −2 to the same output, so it can’t be undone.',
     },
   ],
+  sequences: [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is the 20th term of $5, 8, 11, 14, \\ldots$?',
+      answer: 62,
+      explain: '$d = 3$, so $a_{20} = 5 + 19 \\cdot 3 = 62$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: 'A geometric sequence starts $81, 27, 9, \\ldots$. What is the 5th term?',
+      answer: 1,
+      explain: 'The ratio is $\\tfrac{1}{3}$: 81, 27, 9, 3, 1.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'Which rule describes $4, 7, 10, 13, \\ldots$?',
+      options: [
+        { text: '$a_n = 3n + 1$', correct: true },
+        { text: '$a_n = 4n$', why: 'That gives 4, 8, 12, …' },
+        { text: '$a_n = n + 3$', why: 'That gives 4, 5, 6, …' },
+        { text: '$a_n = 4 \\cdot 3^{n-1}$', why: 'That is geometric: 4, 12, 36, …' },
+      ],
+      explain: '$a_n = 4 + (n - 1) \\cdot 3 = 3n + 1$.',
+    },
+  ],
+  'complex-numbers': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: '$(1 + 2i)(3 - i) = a + bi$. What is $a$?',
+      answer: 5,
+      explain: '$3 - i + 6i - 2i^2 = 3 + 5i + 2 = 5 + 5i$.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r2',
+      prompt: 'What is $i^{10}$?',
+      options: [
+        { text: '$-1$', correct: true },
+        { text: '$1$', why: '$10 = 2 \\cdot 4 + 2$, so it equals $i^2$.' },
+        { text: '$i$', why: 'Powers of $i$ repeat every 4: $i^{10} = i^2$.' },
+        { text: '$-i$', why: 'That is $i^3$ (or $i^7$, $i^{11}$).' },
+      ],
+      explain: 'Powers of $i$ cycle every 4, and $10 \\bmod 4 = 2$: $i^{10} = i^2 = -1$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r3',
+      prompt: 'What is $|6 - 8i|$?',
+      answer: 10,
+      explain: '$\\sqrt{36 + 64} = \\sqrt{100} = 10$.',
+    },
+  ],
+  'polynomial-rational-functions': [
+    {
+      kind: 'numeric',
+      id: 'r1',
+      prompt: 'What is the degree of $p(x) = (x - 1)^3(x + 2)^2$?',
+      answer: 5,
+      explain: 'Add the multiplicities: $3 + 2 = 5$.',
+    },
+    {
+      kind: 'numeric',
+      id: 'r2',
+      prompt: '$f(x) = \\dfrac{x + 5}{x + 1}$ has a vertical asymptote $x = \\;?$',
+      answer: -1,
+      explain: 'The bottom is zero at $x = -1$, where the top is 4, not 0.',
+    },
+    {
+      kind: 'mcq',
+      id: 'r3',
+      prompt: 'What is the horizontal asymptote of $f(x) = \\dfrac{4}{x^2 + 1}$?',
+      options: [
+        { text: '$y = 0$', correct: true },
+        { text: '$y = 4$', why: 'The bottom grows without bound, so $f$ shrinks to 0.' },
+        { text: 'There is none', why: 'Higher degree on the bottom gives $y = 0$.' },
+      ],
+      explain: 'The denominator has the higher degree, so $f(x) \\to 0$ far out.',
+    },
+  ],
   limits: [
     {
       kind: 'numeric',
